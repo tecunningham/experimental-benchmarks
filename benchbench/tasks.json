@@ -1,0 +1,10 @@
+[
+  {"id": "collatz", "prompt": "Write a Python script that finds the starting number under 100000 with the longest Collatz chain, plus a few other statistics about chain lengths. Run it and report the results."},
+  {"id": "sysinfo", "prompt": "Find out about this machine: OS and kernel version, number of CPUs, memory, disk usage, Python version, and which compilers/interpreters are installed. Summarise."},
+  {"id": "sqlite", "prompt": "Using Python's sqlite3 module, create a database with tables for 8 fictional employees and 3 departments, then compute average salary per department, the highest-paid employee per department, and headcount. Show the query outputs."},
+  {"id": "c_program", "prompt": "Write a C program that prints the first 30 prime numbers and the sum of primes below one million. Compile it with gcc (with -Wall) and run it. Fix any warnings."},
+  {"id": "git_repo", "prompt": "Initialise a git repository here, create a small Python package with two modules across three commits (with sensible commit messages), then show git log --stat and git diff between the first and last commit."},
+  {"id": "text_stats", "prompt": "Get the text of Python's 'import this' (the Zen of Python) and compute word frequencies, the longest line, and the number of lines containing 'better'. Use shell tools (wc, sort, uniq, grep, awk) as much as possible."},
+  {"id": "bugfix", "prompt": "Create a file stats.py with a function median(xs) that has an off-by-one bug for even-length lists, plus a test file using unittest. Run the tests, see them fail, fix the bug, and run the tests again."},
+  {"id": "pystdlib", "prompt": "Explore the Python standard library installed on this machine: find where it lives, how many .py files it has, the 5 largest modules by line count, and print the docstring of the `bisect` module."}
+]
