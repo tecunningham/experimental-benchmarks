@@ -1,15 +1,101 @@
-# Experimental benchmarks: ReplyBench and BenchBench
+# Can models predict what their actions will do?
 
-Two minimal proof-of-concept benchmarks for **predicting the consequences of actions**. Both are scored
-immediately and continuously, and the predicting model gets no tools and no internet access.
+**Two prototype benchmarks that score a model on predicting the *consequences of actions*, not world events.**
+Both are scored instantly from data the model has never seen, use continuous metrics, and cost under $1 per
+model to run.
 
-- **ReplyBench-HN** asks how a community responds to an input. Given a Hacker News submission (title, domain,
-  author, post time), predict its final points, its comment count, and P(points ≥ 50).
-- **BenchBench** asks what a tool call returns. Given an agent's shell trace so far, predict the exact output
-  of the next Bash command.
+<p align="center"><img src="figures/headline.svg" alt="Results: ReplyBench AUC 0.74–0.82 but worse-than-base-rate Brier; BenchBench similarity ~0.9 when output follows from code, 0.59–0.74 when it depends on machine state" width="100%"></p>
 
-Both are deliberately tiny: 200 stories and 76 tool calls. The point is to check that the pipelines work and
-that the scores spread across models. They are not yet reliable measurements.
+## Takeaways
+
+1. **Models know what Hacker News likes, but not how little it cares.** Opus 5.5 picks out stories that will
+   reach 50 points with AUC 0.82, yet every model is *worse calibrated than a constant base rate*. A typical
+   submission gets 2 points; the models expect far more.
+2. **Models already "run code in their heads".** When a tool's output follows from code earlier in the trace
+   (SQL aggregates, the sum of primes below 10⁶, unittest failures), all three models reproduce it almost
+   perfectly (similarity ≈ 0.9).
+3. **The headroom is in the environment.** When the output depends on the machine (Python version, file
+   counts, memory), similarity drops to 0.59–0.74, and it scales with model size. That is the part of
+   "simulating the world" that agents can't yet do without tools.
+4. **Unlike existing forecasting benchmarks, nothing has to resolve.** FutureSim, ForecastBench and
+   PredictionArena predict world events, so they wait months or go stale. Here the ground truth already exists
+   in held-out data, so a run is scored immediately.
+
+## The two benchmarks
+
+| | **ReplyBench** | **BenchBench** |
+|---|---|---|
+| Question | *How will people respond to this action?* | *What will this tool call return?* |
+| Prototype | Hacker News submissions after the training cutoff: predict points, comments, P(≥50 points) | Agent shell traces: given the trace so far, predict the next command's exact output |
+| Example | “Cops Can Bypass iPhone's Automatic Reboot…” (404media) → Opus 5.5 predicted 150 points, actual **293**. “Official Proton Drive CLI” → predicted 120, actual **1**. | `find /usr/lib/python3.13 -name '*.py' \| wc -l` → Haiku 5.5 predicted 537, actual **591** |
+| Size | 200 stories, 3 models | 8 traces, 76 tool calls, 3 models |
+| Code | [`replybench/`](replybench/) | [`benchbench/`](benchbench/) |
+
+| | FutureSim | ForecastBench | PredictionArena | **ReplyBench** | **BenchBench** |
+|---|---|---|---|---|---|
+| Predicts | World events | World events | World events, through trading | Response to an action | Effect of an agent's own action |
+| Time to score | 0, but goes stale | Weeks to years | Days to weeks | Instant | Instant |
+| Cost per run | $50–2,000 | Low | $10k at risk | <$1 | <$1 |
+
+## Next steps to make this real
+
+The prototypes show that the pipelines work and that the scores spread across models. To become a benchmark
+people trust, each one needs three things: **data nobody has seen**, **an outcome that is the consequence of
+an action**, and **a known noise ceiling**.
+
+### ReplyBench
+
+1. **Use private data.** This is the biggest lever. METR's own records are contamination-proof by
+   construction:
+   - GitHub PRs: merged? how many review rounds? time to merge?
+   - Slack and email: does it get a reply, how fast, what reaction?
+   - Issue trackers: does the bug get fixed?
+
+   Partner datasets would do the same at scale: support tickets, sales outreach, ad campaigns.
+2. **Get causal data.** A/B-test archives answer the observational-not-causal objection. The task becomes
+   "which of these two variants won?", with the audience held fixed. The Upworthy Research Archive (32k
+   headline tests) is a public development set; fresh, private A/B results from partner companies would be
+   the held-out test set.
+3. **Add more public streams with a monthly refresh**, so the benchmark is always past the training cutoff:
+   - Hacker News, Reddit, and GitHub PR outcomes in public repos.
+   - OpenReview scores (ICLR reviews land each November).
+   - Kickstarter funding, Stack Overflow accepted answers.
+4. **Measure the noise ceiling.** HN reposts of the same URL give a natural test-retest measurement of how
+   predictable an outcome can be at all. Report scores as a fraction of that ceiling.
+5. **Score full predictive distributions** (quantiles, then log score). Report discrimination and calibration
+   separately, and let models see the empirical distribution so that calibration isn't the whole story.
+6. **Plot compute against score.** Give an agent an offline corpus (the author's history, similar past
+   posts) and a thinking budget, and plot spend vs. score, as the design doc recommends.
+
+### BenchBench
+
+1. **Use real agent transcripts.** METR has thousands of runs across diverse tasks with many tool types:
+   long traces, real environments, and outputs that matter. Most of the value is here. Before sending
+   transcripts of held-out tasks to model APIs, check the data-handling rules for eval data.
+2. **Broaden the tools:**
+   - Web fetches served from a frozen cache.
+   - Test suites and compiler errors.
+   - ML experiments (loss after N steps) and API responses.
+3. **Score only what is informative.**
+   - Drop trivial steps, such as file writes.
+   - Weight each step by how surprising it is to a weak baseline.
+   - Swap raw string similarity for checks on the key facts (exit code, numbers, pass/fail), with
+     probabilistic answers.
+4. **Measure the ceiling.** Re-run each command to quantify irreducible nondeterminism (timestamps, hashes,
+   memory).
+5. **Validate the core claim:**
+   - Correlate BenchBench scores with agentic task success (e.g. time horizon) across models.
+   - Run agents on *simulated* tool outputs and see how far they still get. If you score 100% on BenchBench,
+     you don't need the tools.
+
+### Shared
+
+- Port to [Inspect](https://inspect.aisi.org.uk/) and run non-Claude models (GPT, Gemini, open weights).
+- Keep a public dev split and a private, rotating test split.
+- Grow ReplyBench to ≥2k items and BenchBench to ≥1k steps, so that model differences fall outside the noise
+  (the current error bar on Spearman ρ is about ±0.07).
+
+---
 
 ## Running
 
@@ -112,7 +198,7 @@ Mean similarity on non-trivial steps, by task:
   and experiments.
 - Weight steps by how hard they are to guess, e.g. by the information content of the output.
 
-## How these compare to existing prediction benchmarks
+## Full comparison with existing prediction benchmarks
 
 | | **FutureSim** (Goel et al. 2026) | **ForecastBench** (Karger et al.) | **PredictionArena** (Zhang et al. 2026) | **ReplyBench-HN** (this repo) | **BenchBench** (this repo) |
 |---|---|---|---|---|---|
