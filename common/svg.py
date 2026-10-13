@@ -9,10 +9,10 @@ STYLE = """<style>
 .bg{fill:#fcfcfb}.t1{fill:#0b0b0b}.t2{fill:#52514e}.t3{fill:#8a8984}.grid{stroke:#e4e3df}
 .s1{fill:#2a78d6}.s2{fill:#eb6834}.s3{fill:#1baf7a}.neutral{fill:#b9b8b2}.ref{stroke:#52514e}.ci{stroke:#0b0b0b;stroke-width:1.5;fill:none}
 .s4{fill:#eda100}.line-s1{stroke:#2a78d6}.line-s2{stroke:#eb6834}.line-s3{stroke:#1baf7a}.line-s4{stroke:#eda100}
-.heat{fill:#2a78d6}.tw{fill:#ffffff}
+.heat{fill:#2a78d6}.tw{fill:#ffffff}.cil{stroke:#8a8984;stroke-width:1}
 .d1{fill:#2a78d6;stroke:#fcfcfb}.d2{fill:#eb6834;stroke:#fcfcfb}.d3{fill:#1baf7a;stroke:#fcfcfb}.d4{fill:#eda100;stroke:#fcfcfb}
 @media (prefers-color-scheme: dark){.bg{fill:#1a1a19}.t1{fill:#f0efec}.t2{fill:#c3c2b7}.t3{fill:#8f8e88}
-.grid{stroke:#33332f}.s1{fill:#3987e5}.s2{fill:#d95926}.s3{fill:#199e70}.neutral{fill:#5a5954}.ref{stroke:#c3c2b7}.ci{stroke:#f0efec}.line-s1{stroke:#3987e5}.line-s2{stroke:#d95926}.line-s3{stroke:#199e70}.s4{fill:#c98500}.line-s4{stroke:#c98500}.heat{fill:#3987e5}
+.grid{stroke:#33332f}.s1{fill:#3987e5}.s2{fill:#d95926}.s3{fill:#199e70}.neutral{fill:#5a5954}.ref{stroke:#c3c2b7}.ci{stroke:#f0efec}.line-s1{stroke:#3987e5}.line-s2{stroke:#d95926}.line-s3{stroke:#199e70}.s4{fill:#c98500}.line-s4{stroke:#c98500}.heat{fill:#3987e5}.cil{stroke:#8f8e88}
 .d1{fill:#3987e5;stroke:#1a1a19}.d2{fill:#d95926;stroke:#1a1a19}.d3{fill:#199e70;stroke:#1a1a19}.d4{fill:#c98500;stroke:#1a1a19}}
 text{font-size:12px}.h{font-size:15px;font-weight:600}.v{font-size:11px;font-weight:600}.tick{font-size:10px}
 </style>"""
@@ -168,3 +168,49 @@ def heatmap(c, x0, y0, rows, cols, vals, vmin, vmax, fmt, label_w=90, cw=86, ch=
                   f'rx="3" fill-opacity="{a:.2f}"/>')
             c.text(x0 + label_w + j * cw + cw / 2, y + ch / 2 + 4, fmt(v), "v tw" if a > 0.55 else "v t1", "middle")
     return y0 + len(rows) * ch
+
+
+def xy_scatter(c, x0, y0, w, h, pts, xr, yr, fmtx, fmty, title=None, xticks=4, yticks=4, fit=True):
+    """Linear scatter with error bars and direct labels.
+
+    pts: [(x, (xlo, xhi) | None, y, (ylo, yhi) | None, css_class, label)]; a dashed OLS line if fit.
+    """
+    px = lambda v: x0 + w * (min(max(v, xr[0]), xr[1]) - xr[0]) / (xr[1] - xr[0])
+    py = lambda v: y0 + h - h * (min(max(v, yr[0]), yr[1]) - yr[0]) / (yr[1] - yr[0])
+    if title:
+        c.text(x0, y0 - 10, title, "t1", extra='font-weight="600"')
+    for t in range(xticks + 1):
+        v = xr[0] + (xr[1] - xr[0]) * t / xticks
+        c.add(f'<line class="grid" x1="{px(v):.1f}" x2="{px(v):.1f}" y1="{y0}" y2="{y0 + h}"/>')
+        c.text(px(v), y0 + h + 14, fmtx(v), "tick t3", "middle")
+    for t in range(yticks + 1):
+        v = yr[0] + (yr[1] - yr[0]) * t / yticks
+        c.add(f'<line class="grid" x1="{x0}" x2="{x0 + w}" y1="{py(v):.1f}" y2="{py(v):.1f}"/>')
+        c.text(x0 - 6, py(v) + 3, fmty(v), "tick t3", "end")
+    if fit and len(pts) > 2:
+        xs, ys = [p[0] for p in pts], [p[2] for p in pts]
+        mx, my = sum(xs) / len(xs), sum(ys) / len(ys)
+        b = sum((a - mx) * (b_ - my) for a, b_ in zip(xs, ys)) / max(sum((a - mx) ** 2 for a in xs), 1e-12)
+        x1, x2 = min(xs), max(xs)
+        c.add(f'<line class="ref" stroke-dasharray="4 3" x1="{px(x1):.1f}" y1="{py(my + b * (x1 - mx)):.1f}" '
+              f'x2="{px(x2):.1f}" y2="{py(my + b * (x2 - mx)):.1f}"/>')
+    for x, xci, y, yci, cls, label in pts:
+        if xci:
+            c.add(f'<line class="cil" x1="{px(xci[0]):.1f}" x2="{px(xci[1]):.1f}" y1="{py(y):.1f}" y2="{py(y):.1f}"/>')
+        if yci:
+            c.add(f'<line class="cil" x1="{px(x):.1f}" x2="{px(x):.1f}" y1="{py(yci[0]):.1f}" y2="{py(yci[1]):.1f}"/>')
+    for x, xci, y, yci, cls, label in pts:
+        c.add(f'<circle class="{cls.replace("s", "d")}" cx="{px(x):.1f}" cy="{py(y):.1f}" r="5" stroke-width="2"/>')
+    # direct labels with simple collision avoidance: try right, left, above, below; skip if all collide
+    placed = [(px(x) - 5, py(y) - 5, px(x) + 5, py(y) + 5) for x, _, y, *_ in pts]
+    hit = lambda b: any(b[0] < q[2] and q[0] < b[2] and b[1] < q[3] and q[1] < b[3] for q in placed)
+    for x, _, y, _, _, label in sorted(pts, key=lambda p: -p[2]):
+        tw, cx, cy = 5.6 * len(label), px(x), py(y)
+        for bx, by, anchor in [(cx + 8, cy + 3, "start"), (cx - 8, cy + 3, "end"), (cx, cy - 9, "middle"),
+                               (cx, cy + 16, "middle")]:
+            left = bx if anchor == "start" else bx - tw if anchor == "end" else bx - tw / 2
+            box = (left, by - 9, left + tw, by + 2)
+            if not hit(box) and box[0] >= x0 - 4 and box[2] <= min(x0 + w + 40, c.w - 6):
+                c.text(bx, by, label, "tick t2", anchor)
+                placed.append(box)
+                break

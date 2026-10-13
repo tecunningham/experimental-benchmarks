@@ -49,3 +49,10 @@ def mean_ci(xs, B=2000, seed=0):
     m = sum(xs) / len(xs)
     lo, hi = bootstrap_ci(lambda idx: sum(xs[i] for i in idx) / len(idx), len(xs), B, seed)
     return m, lo, hi
+
+
+def corr_ci(xs, ys, fn, B=2000, seed=0):
+    """Correlation fn(xs, ys) with a percentile bootstrap CI over the (x, y) pairs (e.g. models)."""
+    r = fn(xs, ys)
+    lo, hi = bootstrap_ci(lambda idx: fn([xs[i] for i in idx], [ys[i] for i in idx]), len(xs), B, seed)
+    return r, lo, hi

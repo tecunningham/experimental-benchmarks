@@ -16,8 +16,8 @@ items = {i["id"]: i for i in map(json.loads, open(D / "items.jsonl"))}
 grades = {r["id"]: r["grades"] for r in map(json.loads, open("rolloutbench/real/grades.jsonl"))}
 preds = {f.stem.removeprefix("pred-"): {r["id"]: r["prediction"] for r in map(json.loads, open(f))}
          for f in sorted(D.glob("pred-*.jsonl"))}
-models = sorted(preds)
 ids = [i for i in items if i in grades]
+models = [m for m in sorted(preds) if all(m in grades[i] for i in ids)]  # predicted and judged
 
 
 def sim(a, b):
@@ -59,3 +59,15 @@ for m in models:
         sub = [grades[i][m]["score"] for i in novel if items[i]["category"] == c]
         cells.append(f"{statistics.mean(sub):.1f}" if sub else "–")
     print(f"| {m} | " + " | ".join(cells) + " |")
+
+# per-model summary with 95% bootstrap CIs, for figures and ECI correlations
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from common.stats import mean_ci
+
+summary = {"n": len(ids), "models": {m: {
+    "score": list(mean_ci([grades[i][m]["score"] for i in ids])),
+    "outcome_right": list(mean_ci([float(bool(grades[i][m]["outcome_right"])) for i in ids])),
+    "score_novel": list(mean_ci([grades[i][m]["score"] for i in novel])),
+} for m in models}}
+Path("rolloutbench/real/summary.json").write_text(json.dumps(summary, indent=1))
