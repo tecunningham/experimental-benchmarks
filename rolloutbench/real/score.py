@@ -13,7 +13,9 @@ from pathlib import Path
 
 D = Path("rolloutbench/data/real")
 items = {i["id"]: i for i in map(json.loads, open(D / "items.jsonl"))}
-grades = {r["id"]: r["grades"] for r in map(json.loads, open("rolloutbench/real/grades.jsonl"))}
+grades = {}  # id -> model -> grade (grades.jsonl has one row per graded prediction)
+for r in map(json.loads, open("rolloutbench/real/grades.jsonl")):
+    grades.setdefault(r["id"], {})[r["model"]] = r
 preds = {f.stem.removeprefix("pred-"): {r["id"]: r["prediction"] for r in map(json.loads, open(f))}
          for f in sorted(D.glob("pred-*.jsonl"))}
 ids = [i for i in items if i in grades]

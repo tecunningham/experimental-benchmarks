@@ -1,11 +1,9 @@
-"""Grade predictions against the real tool result with a blind LLM judge.
+"""Grade each prediction on its own against the real tool result (no other predictions in view).
 
-For each item, the judge sees the call, the real result, and every model's prediction (shuffled,
-anonymised), and scores each one 0-10 on the information that matters, ignoring formatting.
+Grades are cached per (item, model) in grades.jsonl, so adding a model only grades that model.
 """
 import argparse
 import json
-import random
 import re
 import sys
 from concurrent.futures import ThreadPoolExecutor
@@ -14,7 +12,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from common.llm import complete
 
-SYSTEM = "You are a strict, consistent grader. You compare predicted tool results with the real ones."
+SYSTEM = "You are a strict, consistent grader. You compare a predicted tool result with the real one."
+GRADES = Path("rolloutbench/real/grades.jsonl")
 
 PROMPT = """An AI agent made this tool call:
 <tool_call name="{tool}">
@@ -26,33 +25,31 @@ The REAL result was:
 {target}
 </real_result>
 
-Several forecasters, without running the call, predicted the result:
-{preds}
+A forecaster, without running the call, predicted the result:
+<prediction>
+{pred}
+</prediction>
 
-Score each prediction from 0 to 10 for how well it anticipated the real result: the outcome (success,
-failure, error type), the facts, numbers, names, file contents, search hits, or reply that would matter for
-the agent's next decision. Ignore formatting, phrasing and length.
+Score the prediction from 0 to 10 for how well it anticipated the real result: the outcome (success, failure,
+error type), the facts, numbers, names, file contents, search hits, or reply that would matter for the agent's
+next decision. Ignore formatting, phrasing and length.
 - 10: essentially the same information
 - 7: right outcome and most key details
 - 4: right general outcome, but key details wrong or missing
 - 1: mostly wrong, with a few correct elements
 - 0: wrong outcome or unrelated
-Also say for each whether it got the basic outcome right (e.g. succeeded vs failed, found vs not found, yes vs no).
+Also say whether it got the basic outcome right (e.g. succeeded vs failed, found vs not found, yes vs no).
 
-Respond with ONLY JSON: {{"<label>": {{"score": <0-10>, "outcome_right": <true|false>}}, ...}}"""
+Respond with ONLY JSON: {{"score": <0-10>, "outcome_right": <true|false>}}"""
 
 
-def judge(it, preds, model, seed):
-    names = list(preds)
-    random.Random(f"{seed}-{it['id']}").shuffle(names)
-    labels = {n: chr(ord("A") + i) for i, n in enumerate(names)}
-    block = "\n\n".join(f"<prediction label=\"{labels[n]}\">\n{preds[n][:3000]}\n</prediction>" for n in names)
+def grade(it, pred, model):
     prompt = PROMPT.format(tool=it["tool"], call=json.dumps(it["call"], ensure_ascii=False)[:3000],
-                           target=it["target"], preds=block)
+                           target=it["target"], pred=pred[:3000])
     for _ in range(3):
         try:
             g = json.loads(re.search(r"\{.*\}", complete(prompt, model, SYSTEM), re.S).group(0))
-            return {n: g[labels[n]] for n in names}
+            return {"score": float(g["score"]), "outcome_right": bool(g["outcome_right"])}
         except Exception as e:
             print("retry:", e, file=sys.stderr)
     return None
@@ -61,22 +58,24 @@ def judge(it, preds, model, seed):
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--judge", default="claude-opus-5-5")
-    p.add_argument("--data", default="rolloutbench/data/real/items.jsonl")
-    p.add_argument("--seed", type=int, default=0)
+    p.add_argument("--workers", type=int, default=10)
     a = p.parse_args()
-    items = [json.loads(l) for l in open(a.data)]
+    items = {i["id"]: i for i in map(json.loads, open("rolloutbench/data/real/items.jsonl"))}
     preds = {}
     for f in sorted(Path("rolloutbench/data/real").glob("pred-*.jsonl")):
-        for r in map(json.loads, open(f)):
-            preds.setdefault(r["id"], {})[f.stem.removeprefix("pred-")] = r["prediction"]
-    with ThreadPoolExecutor(8) as ex:
-        grades = list(ex.map(lambda it: judge(it, preds[it["id"]], a.judge, a.seed), items))
-    with open("rolloutbench/real/grades.jsonl", "w") as f:
-        for it, g in zip(items, grades):
+        rows = [json.loads(l) for l in open(f)]
+        if len(rows) == len(items):  # only finished runs
+            preds[f.stem.removeprefix("pred-")] = {r["id"]: r["prediction"] for r in rows}
+    done = {(r["id"], r["model"]) for r in map(json.loads, open(GRADES))} if GRADES.exists() else set()
+    todo = [(i, m) for m in preds for i in items if (i, m) not in done]
+    print(f"{len(todo)} predictions to grade ({len(preds)} models)", flush=True)
+    with ThreadPoolExecutor(a.workers) as ex, open(GRADES, "a") as f:
+        for (i, m), g in zip(todo, ex.map(lambda t: grade(items[t[0]], preds[t[1]][t[0]], a.judge), todo)):
             if g:
-                f.write(json.dumps({"id": it["id"], "source": it["source"], "category": it["category"],
-                                    "tool": it["tool"], "grades": g}) + "\n")
-    print(f"graded {sum(g is not None for g in grades)}/{len(items)}")
+                it = items[i]
+                f.write(json.dumps({"id": i, "model": m, "source": it["source"], "category": it["category"],
+                                    "tool": it["tool"], **g}) + "\n")
+                f.flush()
 
 
 if __name__ == "__main__":

@@ -11,7 +11,10 @@ from common.stats import mean_ci
 from common.svg import TIER_CLASS, Canvas, hbars, heatmap
 
 OUT = Path("rolloutbench/figures")
-grades = [json.loads(l) for l in open("rolloutbench/real/grades.jsonl")]
+_by_id = {}  # one row per graded prediction -> [{category, grades: {model: grade}}] per item
+for r in map(json.loads, open("rolloutbench/real/grades.jsonl")):
+    _by_id.setdefault(r["id"], {"category": r["category"], "grades": {}})["grades"][r["model"]] = r
+grades = list(_by_id.values())
 models = [(m, n) for m, n, _ in MODELS if all(m in g["grades"] for g in grades)]
 LEGEND = [(t, TIER_CLASS[t]) for t in TIERS if any(TIER[m] == t for m, _ in models)]
 ROWH = 19
