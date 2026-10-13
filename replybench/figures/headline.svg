@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="262" viewBox="0 0 720 262" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">
+<style>
+.bg{fill:#fcfcfb}.t1{fill:#0b0b0b}.t2{fill:#52514e}.t3{fill:#8a8984}.grid{stroke:#e4e3df}
+.s1{fill:#2a78d6}.s2{fill:#eb6834}.s3{fill:#1baf7a}.neutral{fill:#b9b8b2}.ref{stroke:#52514e}
+.d1{fill:#2a78d6;stroke:#fcfcfb}.d2{fill:#eb6834;stroke:#fcfcfb}.d3{fill:#1baf7a;stroke:#fcfcfb}
+@media (prefers-color-scheme: dark){.bg{fill:#1a1a19}.t1{fill:#f0efec}.t2{fill:#c3c2b7}.t3{fill:#8f8e88}
+.grid{stroke:#33332f}.s1{fill:#3987e5}.s2{fill:#d95926}.s3{fill:#199e70}.neutral{fill:#5a5954}.ref{stroke:#c3c2b7}
+.d1{fill:#3987e5;stroke:#1a1a19}.d2{fill:#d95926;stroke:#1a1a19}.d3{fill:#199e70;stroke:#1a1a19}}
+text{font-size:12px}.h{font-size:15px;font-weight:600}.v{font-size:11px;font-weight:600}.tick{font-size:10px}
+</style>
+<rect class="bg" width="720" height="262" rx="8"/>
+<text class="h t1" x="24.0" y="34.0" text-anchor="start" >Ranking: who will hit 50 points?</text>
+<text class="t2" x="24.0" y="52.0" text-anchor="start" >AUC · higher is better</text>
+<line class="grid" x1="108.0" x2="108.0" y1="74" y2="214"/>
+<text class="tick t3" x="108.0" y="228.0" text-anchor="middle" >0.00</text>
+<line class="grid" x1="158.5" x2="158.5" y1="74" y2="214"/>
+<text class="tick t3" x="158.5" y="228.0" text-anchor="middle" >0.25</text>
+<line class="grid" x1="209.0" x2="209.0" y1="74" y2="214"/>
+<text class="tick t3" x="209.0" y="228.0" text-anchor="middle" >0.50</text>
+<line class="grid" x1="259.5" x2="259.5" y1="74" y2="214"/>
+<text class="tick t3" x="259.5" y="228.0" text-anchor="middle" >0.75</text>
+<line class="grid" x1="310.0" x2="310.0" y1="74" y2="214"/>
+<text class="tick t3" x="310.0" y="228.0" text-anchor="middle" >1.00</text>
+<text class="t2" x="100.0" y="94.0" text-anchor="end" >Base rate</text>
+<path class="neutral" d="M108.0,78.0 h97.0 a4,4 0 0 1 4,4 v16.0 a4,4 0 0 1 -4,4 h-97.0 z"/>
+<text class="v t1" x="215.0" y="94.0" text-anchor="start" >0.50</text>
+<text class="t2" x="100.0" y="130.0" text-anchor="end" >Haiku 5.5</text>
+<path class="s1" d="M108.0,114.0 h145.9 a4,4 0 0 1 4,4 v16.0 a4,4 0 0 1 -4,4 h-145.9 z"/>
+<text class="v t1" x="263.9" y="130.0" text-anchor="start" >0.74</text>
+<text class="t2" x="100.0" y="166.0" text-anchor="end" >Sonnet 5.5</text>
+<path class="s2" d="M108.0,150.0 h158.9 a4,4 0 0 1 4,4 v16.0 a4,4 0 0 1 -4,4 h-158.9 z"/>
+<text class="v t1" x="276.9" y="166.0" text-anchor="start" >0.81</text>
+<text class="t2" x="100.0" y="202.0" text-anchor="end" >Opus 5.5</text>
+<path class="s3" d="M108.0,186.0 h161.7 a4,4 0 0 1 4,4 v16.0 a4,4 0 0 1 -4,4 h-161.7 z"/>
+<text class="v t1" x="279.7" y="202.0" text-anchor="start" >0.82</text>
+<text class="h t1" x="374.0" y="34.0" text-anchor="start" >Calibration: how likely?</text>
+<text class="t2" x="374.0" y="52.0" text-anchor="start" >Brier score · lower is better</text>
+<line class="grid" x1="458.0" x2="458.0" y1="74" y2="214"/>
+<text class="tick t3" x="458.0" y="228.0" text-anchor="middle" >0.000</text>
+<line class="grid" x1="508.5" x2="508.5" y1="74" y2="214"/>
+<text class="tick t3" x="508.5" y="228.0" text-anchor="middle" >0.020</text>
+<line class="grid" x1="559.0" x2="559.0" y1="74" y2="214"/>
+<text class="tick t3" x="559.0" y="228.0" text-anchor="middle" >0.040</text>
+<line class="grid" x1="609.5" x2="609.5" y1="74" y2="214"/>
+<text class="tick t3" x="609.5" y="228.0" text-anchor="middle" >0.060</text>
+<line class="grid" x1="660.0" x2="660.0" y1="74" y2="214"/>
+<text class="tick t3" x="660.0" y="228.0" text-anchor="middle" >0.080</text>
+<text class="t2" x="450.0" y="94.0" text-anchor="end" >Base rate</text>
+<path class="neutral" d="M458.0,78.0 h138.4 a4,4 0 0 1 4,4 v16.0 a4,4 0 0 1 -4,4 h-138.4 z"/>
+<text class="v t1" x="606.4" y="94.0" text-anchor="start" >0.056</text>
+<text class="t2" x="450.0" y="130.0" text-anchor="end" >Haiku 5.5</text>
+<path class="s1" d="M458.0,114.0 h177.4 a4,4 0 0 1 4,4 v16.0 a4,4 0 0 1 -4,4 h-177.4 z"/>
+<text class="v t1" x="645.4" y="130.0" text-anchor="start" >0.072</text>
+<text class="t2" x="450.0" y="166.0" text-anchor="end" >Sonnet 5.5</text>
+<path class="s2" d="M458.0,150.0 h185.6 a4,4 0 0 1 4,4 v16.0 a4,4 0 0 1 -4,4 h-185.6 z"/>
+<text class="v t1" x="653.6" y="166.0" text-anchor="start" >0.075</text>
+<text class="t2" x="450.0" y="202.0" text-anchor="end" >Opus 5.5</text>
+<path class="s3" d="M458.0,186.0 h146.0 a4,4 0 0 1 4,4 v16.0 a4,4 0 0 1 -4,4 h-146.0 z"/>
+<text class="v t1" x="614.0" y="202.0" text-anchor="start" >0.059</text>
+<line class="ref" stroke-dasharray="3 3" x1="600.4" x2="600.4" y1="70" y2="214"/>
+<text class="t3" x="24.0" y="248.0" text-anchor="start" >200 random HN stories, 1–6 Oct 2026 (after training cutoff). Dashed line: base-rate Brier.</text>
+</svg>

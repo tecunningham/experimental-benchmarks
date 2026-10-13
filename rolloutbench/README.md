@@ -3,7 +3,21 @@
 **Can a model predict what happens when it acts?** Take a trace from a real model run. At each tool call,
 hide the result and ask the model to predict it.
 
-[← back to overview](../README.md)
+[← all benchmarks](../README.md) · [how it compares](../docs/comparison.md)
+
+<p align="center"><img src="figures/headline.svg" alt="RolloutBench on 249 real-world tool calls: judge score 3.2 / 4.4 / 5.3 out of 10 and outcome right 65% / 74% / 80% for Haiku / Sonnet / Opus" width="100%"></p>
+
+## Takeaways
+
+- **On real-world traces, predicting tool results is far from solved.** Across 249 tool calls from real agent
+  sessions (a person's workstation, an ML agent running GPU jobs), the best model scores 5.3/10. The spread
+  is wide: Haiku 3.2, Sonnet 4.4, Opus 5.3.
+- **Outcomes are easier than details.** Opus gets the basic outcome (succeeded or failed, found or not found)
+  right 80% of the time, but the specific numbers, names and contents much less often. That is the
+  continuous headroom.
+- **The live world is the hard part.** API responses and web content score lowest. In a synthetic sandbox
+  pilot, outputs that follow from code were nearly solved (similarity ≈ 0.9). This is why real-world traces
+  matter, and it's the key difference from AgentWorldBench, which uses benchmark-task trajectories.
 
 ## Why
 
@@ -19,7 +33,7 @@ perfectly wouldn't need the tools at all; it could plan entirely in its head.
 
 | | |
 |---|---|
-| **Cheap** | It needs only one forward pass per tool call and no live environment. The prototype costs under $1 per model. |
+| **Cheap** | It needs only one forward pass per tool call and no live environment. The real-trace test costs about $5–10 per model. |
 | **Real-world** | The traces come from real use, so the score measures exactly the predictions that matter for real decisions. |
 | **Unsaturatable** | A slightly better prediction is always possible. Scores are continuous, and the ceiling is the world's own noise, not 100%. |
 | **Decision-relevant** | A model that predicts better in a situation should be able to make better decisions there. |
@@ -88,7 +102,9 @@ people's actual work, not benchmark tasks:
 | claude-sonnet-5-5 | 4.39 ± 0.21 | 3.88 ± 0.21 | 72% | 0.41 |
 | claude-opus-5-5 | **5.27 ± 0.21** | **4.87 ± 0.22** | **78%** | **0.45** |
 
-Judge score by tool category, novel items:
+<p align="center"><img src="figures/by_tool.svg" alt="Judge score by tool category for three models: GPU job and sub-agent highest, API call lowest" width="100%"></p>
+
+The same breakdown restricted to novel items (where the answer can't be copied from the history):
 
 | predictor | shell (59) | API call (35) | web (29) | GPU job (27) | sub-agent (26) | file read (24) | human reply (2) |
 |---|---|---|---|---|---|---|---|
@@ -130,6 +146,8 @@ python3 rolloutbench/real/score.py                       # tables above
 
 The first prototype used traces from a Claude agent (Haiku 5.5, Bash only) working 8 small sandbox tasks in
 [`tasks.json`](tasks.json). It produced 76 tool calls, scored by string similarity.
+
+<p align="center"><img src="figures/sandbox.svg" alt="Sandbox pilot: similarity about 0.9 for outputs that follow from code, 0.59-0.74 for outputs that depend on the machine" width="100%"></p>
 
 | model | similarity (all) | similarity (non-trivial) | exact (all) |
 |---|---|---|---|
@@ -216,3 +234,4 @@ ground truth from **real-world** agent sessions.
   different dates.
 
 Reproduce the sandbox pilot with `rolloutbench/make_traces.py`, `run.py` and `score.py`.
+Regenerate the figures with `python3 rolloutbench/make_figures.py`.
