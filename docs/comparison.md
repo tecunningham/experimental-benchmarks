@@ -31,3 +31,22 @@
 - Sources for the comparison: arXiv 2605.15188 (FutureSim), arXiv 2606.24597 (AgentWorldBench), arXiv 2409.19839 and forecastbench.org
   (ForecastBench), and arXiv 2604.07355 (PredictionArena). Figures are as reported by the authors and were not
   re-verified here.
+
+## Other closely related work
+
+- **Predicting tool and environment outputs:**
+  - EnvSimBench ([arXiv 2605.07247](https://arxiv.org/abs/2605.07247)), WebWorld-Bench
+    ([arXiv 2602.14721](https://arxiv.org/abs/2602.14721)), SWE-World ([arXiv 2602.03419](https://arxiv.org/abs/2602.03419)),
+    Trace2Env ([arXiv 2610.06100](https://arxiv.org/abs/2610.06100)): simulation fidelity on constructed, benchmark or
+    web-only environments.
+  - TraceDance ([arXiv 2609.33295](https://arxiv.org/abs/2609.33295)): real deployment sessions, but it predicts actions
+    rather than outcomes.
+  - See the [RolloutBench related work](../rolloutbench/README.md#related-work).
+- **Predicting human responses:**
+  - SimBench, Centaur, Hewitt et al., and Upworthy A/B-test prediction (LOLA; Spotify 2026).
+  - PR-merge and popularity prediction.
+  - See the [ReplyBench related work](../replybench/README.md#related-work).
+- **Prediction as a proxy for capability:**
+  - Richens et al., "General agents need world models" ([ICML 2025](https://arxiv.org/abs/2506.01622)).
+  - SimBench's r = 0.94 with MMLU-Pro.
+  - Compression vs. benchmarks ([arXiv 2404.09937](https://arxiv.org/abs/2404.09937)).

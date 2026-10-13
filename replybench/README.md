@@ -107,6 +107,24 @@ Full tables per task: [`email/results/scores.md`](email/results/scores.md), [`pr
 
 <p align="center"><img src="figures/calibration.svg" alt="Scatter plots of predicted vs actual HN points for the newest model in each tier; most dots lie below the diagonal, meaning stories were over-predicted" width="100%"></p>
 
+## Related work
+
+Predicting human responses has been studied piecemeal. What's new here is putting several real-world reactions
+that occurred after the training cutoff into one refreshable benchmark, framed as predicting the consequences
+of actions.
+
+| Work | What is predicted | Data | Contrast with ReplyBench |
+|---|---|---|---|
+| SimBench ([Hu et al., ICLR 2026](https://arxiv.org/abs/2510.17516)) | Group-level human behaviour, 20 datasets, 45 LLMs | Real experiments and surveys | Lab and survey responses rather than real-world reactions. Its simulation skill correlates with MMLU-Pro at r = 0.94, similar to our AUC–ECI correlations |
+| Centaur / Psych-101 ([Binz et al., Nature 2025](https://doi.org/10.1038/s41586-025-09215-4)) | Trial-by-trial choices in 160 psychology experiments | Real lab data | A fine-tuned model of lab behaviour |
+| Hewitt, Ashokkumar, Ghezae & Willer (2024 working paper) | Effects in 70 survey experiments; GPT-4 correlates with actual effects at r ≈ 0.85 | Real experiments | Treatment effects, not individual reactions |
+| Generative agents of 1,000 people ([Park et al., 2024](https://arxiv.org/abs/2411.10109)) | Individuals' survey answers, from interviews | Real people | Survey answers, with the person's own interview as context |
+| LOLA ([Ye et al., 2024](https://arxiv.org/abs/2406.02611)); LLM-based A/B testing ([Persson et al., Spotify, 2026](https://arxiv.org/abs/2606.17165)) | Which Upworthy headline variant wins | Real A/B tests | A causal, much harder task: prompted LLMs are near chance, and raw outputs recover only ~39% of the effect. A good model for ReplyBench's planned causal task |
+| Predicting empirical AI research outcomes ([Wen et al., NeurIPS 2025](https://arxiv.org/abs/2506.00794)) | Which of two research ideas works better | Real experiments | Off-the-shelf models near chance |
+| MathlibPR ([ICML 2026](https://arxiv.org/abs/2605.07147)); Gousios et al. ([ICSE 2014](https://doi.org/10.1145/2568225.2568260)) | Whether a PR gets merged | Real PRs | One repository, or pre-LLM classifiers; our PR task spans 20 projects |
+| Enterprise email replies (Yang, Dumais, Bennett & Awadallah, SIGIR 2017) | Whether and when an email gets a reply | Real enterprise email | Pre-LLM; we found no LLM benchmark for email replies |
+| Reddit-V (RANLP 2025), MMG-Pop ([2026](https://arxiv.org/abs/2606.27539)) | Post popularity | Real social media | Zero-shot LLMs are weak there. Our HN sample is random over *all* submissions, so many items are easy to call, which is one reason our HN AUC (0.82) is higher |
+
 ## Next steps
 
 1. **Scale each task to 1,000+ items** so that differences between models fall outside the CIs.

@@ -217,9 +217,30 @@ Other related work:
 | CRUXEval ([Gu et al., 2024](https://arxiv.org/abs/2401.03065)), LiveCodeBench output prediction ([Jain et al., 2024](https://arxiv.org/abs/2403.07974)) | Output of short programs | Synthetic or contest code | Deterministic and self-contained; our sandbox pilot shows this is close to solved |
 | CWM ([FAIR, 2025](https://arxiv.org/abs/2510.02387)) | An LLM trained on execution traces to model code execution | Python and Docker traces | A training approach; RolloutBench could evaluate models like it |
 | Text world models survey ([Li et al., 2026](https://arxiv.org/abs/2606.09032)) | Survey of models that predict webpages, terminal output, API responses and user replies | – | An umbrella reference |
+| EnvSimBench ([Liu et al., 2026](https://arxiv.org/abs/2605.07247)) | "Environment simulation ability" as a measurable capability: 400 samples, 167 environments, programmatically checkable labels | Constructed tool environments | The closest framing to ours, but on constructed environments and with no link to general or agentic capability |
+| WebWorld-Bench ([Qwen and Zhejiang University, 2026](https://arxiv.org/abs/2602.14721)) | Fidelity of an open-web simulator, on held-out real web transitions | Real web | Web only; built to train a simulator |
+| SWE-World ([RUCAIBox, 2026](https://arxiv.org/abs/2602.03419)) | stdout, stderr, exit codes and test reports, from a learned transition model | Real Docker execution on SWE benchmark tasks | Built to replace the environment during training; benchmark tasks |
+| Trace2Env ([Long et al., 2026](https://arxiv.org/abs/2610.06100)) | Next observations from a simulator built out of historical traces | Interaction traces in 9 environments | A training tool, scored on simulator fidelity rather than model capability |
+| RWML ([Yu et al., 2026](https://arxiv.org/abs/2602.05842)) | Next-state prediction as a training signal, because "agents struggle to predict consequences of their actions" | ALFWorld, τ²-Bench | A training method, not an evaluation |
+| TraceDance ([Min et al., 2026](https://arxiv.org/abs/2609.33295)) | The agent's next *action* at decision points in 252K real deployment sessions | Real-world sessions | The same kind of data as ours, but it scores actions, not the environment's response |
+| Beyond Next-Observation Prediction ([Cai et al., 2026](https://arxiv.org/abs/2606.25421)) | Argues that raw next-observation targets are poorly aligned with what matters for decisions | – | A critique that our question-based scoring (asking about decision-relevant outcomes) partly answers |
 
-As far as we can tell, no existing benchmark scores predictions of tool, sub-agent and human results against
-ground truth from **real-world** agent sessions.
+**Why prediction should track agency.** Richens, Abel, Bellot and Everitt (Google DeepMind), "General agents
+need world models" ([ICML 2025](https://arxiv.org/abs/2506.01622)), prove that any agent that generalises
+across multi-step goals must contain a predictive world model whose accuracy grows with its competence. That
+is the formal version of RolloutBench's premise.
+
+Empirically:
+- **SimBench** ([Hu et al., ICLR 2026](https://arxiv.org/abs/2510.17516)) finds that LLMs' ability to simulate
+  human behaviour correlates with MMLU-Pro at r = 0.94.
+- **Compression and benchmarks** ([Huang et al., 2024](https://arxiv.org/abs/2404.09937)): compression on fresh
+  text is roughly linear in benchmark scores.
+- **Our result:** r = 0.93–0.97 with ECI is in line with both.
+
+As far as we can tell, no existing benchmark hides the results in **real-world** agent sessions and scores
+predictions of tool, sub-agent and human results against ground truth. None proposes this as a cheap, safe
+proxy for agentic capability either. The nearest are AgentWorldBench and EnvSimBench (simulation as a
+capability, on benchmark or constructed environments) and TraceDance (real sessions, but predicting actions).
 
 ## Next steps
 
