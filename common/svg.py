@@ -1,22 +1,23 @@
 """Tiny dependency-free SVG chart helpers, so every figure in the repo shares one look.
 
 Colours come from a validated categorical palette (light + dark steps); text never wears series colour.
-Models always keep the same colour: Haiku = slot 1, Sonnet = slot 2, Opus = slot 3.
+Colour encodes model tier, in fixed slot order: Haiku = 1, Sonnet = 2, Opus = 3, Fable = 4.
 """
 import math
 
 STYLE = """<style>
 .bg{fill:#fcfcfb}.t1{fill:#0b0b0b}.t2{fill:#52514e}.t3{fill:#8a8984}.grid{stroke:#e4e3df}
 .s1{fill:#2a78d6}.s2{fill:#eb6834}.s3{fill:#1baf7a}.neutral{fill:#b9b8b2}.ref{stroke:#52514e}.ci{stroke:#0b0b0b;stroke-width:1.5;fill:none}
-.line-s1{stroke:#2a78d6}.line-s2{stroke:#eb6834}.line-s3{stroke:#1baf7a}
-.d1{fill:#2a78d6;stroke:#fcfcfb}.d2{fill:#eb6834;stroke:#fcfcfb}.d3{fill:#1baf7a;stroke:#fcfcfb}
+.s4{fill:#eda100}.line-s1{stroke:#2a78d6}.line-s2{stroke:#eb6834}.line-s3{stroke:#1baf7a}.line-s4{stroke:#eda100}
+.heat{fill:#2a78d6}.tw{fill:#ffffff}
+.d1{fill:#2a78d6;stroke:#fcfcfb}.d2{fill:#eb6834;stroke:#fcfcfb}.d3{fill:#1baf7a;stroke:#fcfcfb}.d4{fill:#eda100;stroke:#fcfcfb}
 @media (prefers-color-scheme: dark){.bg{fill:#1a1a19}.t1{fill:#f0efec}.t2{fill:#c3c2b7}.t3{fill:#8f8e88}
-.grid{stroke:#33332f}.s1{fill:#3987e5}.s2{fill:#d95926}.s3{fill:#199e70}.neutral{fill:#5a5954}.ref{stroke:#c3c2b7}.ci{stroke:#f0efec}.line-s1{stroke:#3987e5}.line-s2{stroke:#d95926}.line-s3{stroke:#199e70}
-.d1{fill:#3987e5;stroke:#1a1a19}.d2{fill:#d95926;stroke:#1a1a19}.d3{fill:#199e70;stroke:#1a1a19}}
+.grid{stroke:#33332f}.s1{fill:#3987e5}.s2{fill:#d95926}.s3{fill:#199e70}.neutral{fill:#5a5954}.ref{stroke:#c3c2b7}.ci{stroke:#f0efec}.line-s1{stroke:#3987e5}.line-s2{stroke:#d95926}.line-s3{stroke:#199e70}.s4{fill:#c98500}.line-s4{stroke:#c98500}.heat{fill:#3987e5}
+.d1{fill:#3987e5;stroke:#1a1a19}.d2{fill:#d95926;stroke:#1a1a19}.d3{fill:#199e70;stroke:#1a1a19}.d4{fill:#c98500;stroke:#1a1a19}}
 text{font-size:12px}.h{font-size:15px;font-weight:600}.v{font-size:11px;font-weight:600}.tick{font-size:10px}
 </style>"""
 FONT = "-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif"
-MODEL_CLASS = {"Haiku 5.5": "s1", "Sonnet 5.5": "s2", "Opus 5.5": "s3"}
+TIER_CLASS = {"Haiku": "s1", "Sonnet": "s2", "Opus": "s3", "Fable": "s4"}
 
 
 def esc(s):
@@ -151,3 +152,19 @@ def reliability(c, x0, y0, size, curves, title=None, ticks=(0, 0.25, 0.5, 0.75, 
         c.add(f'<path class="line-{cls}" d="{d}" fill="none" stroke-width="2"/>')
         for x, y, n in pts:
             c.add(f'<circle class="d{cls[-1]}" cx="{px(x):.1f}" cy="{py(y):.1f}" r="{3 + min(n, 60) ** 0.5 / 2:.1f}" stroke-width="2"/>')
+
+
+def heatmap(c, x0, y0, rows, cols, vals, vmin, vmax, fmt, label_w=90, cw=86, ch=24):
+    """Sequential one-hue grid: vals[i][j] for row i, column j; darker = higher."""
+    for j, col in enumerate(cols):
+        c.text(x0 + label_w + j * cw + cw / 2, y0 - 8, col, "t2", "middle")
+    for i, row in enumerate(rows):
+        y = y0 + i * ch
+        c.text(x0 + label_w - 8, y + ch / 2 + 4, row, "t2", "end")
+        for j in range(len(cols)):
+            v = vals[i][j]
+            a = 0.08 + 0.92 * (min(max(v, vmin), vmax) - vmin) / (vmax - vmin)
+            c.add(f'<rect class="heat" x="{x0 + label_w + j * cw + 1}" y="{y + 1}" width="{cw - 2}" height="{ch - 2}" '
+                  f'rx="3" fill-opacity="{a:.2f}"/>')
+            c.text(x0 + label_w + j * cw + cw / 2, y + ch / 2 + 4, fmt(v), "v tw" if a > 0.55 else "v t1", "middle")
+    return y0 + len(rows) * ch

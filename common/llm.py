@@ -30,4 +30,8 @@ def complete(prompt: str, model: str, system: str = "", max_tokens: int = 4096) 
         out = subprocess.run(cmd, input=prompt, capture_output=True, text=True, cwd=d, timeout=900)
     if out.returncode != 0:
         raise RuntimeError(out.stderr[-2000:] or out.stdout[-2000:])
-    return json.loads(out.stdout)["result"]
+    res = json.loads(out.stdout)
+    served = list(res.get("modelUsage", {}))
+    if served and model not in served:  # the CLI can silently substitute a different model
+        raise RuntimeError(f"requested {model}, served by {served}")
+    return res["result"]
