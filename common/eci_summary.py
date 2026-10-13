@@ -14,6 +14,7 @@ from common.svg import TIER_CLASS, Canvas, hbars, xy_scatter
 
 S = {t: json.load(open(f"replybench/{t}/results/summary.json")) for t in ("email", "pr", "hn")}
 S["rollout"] = json.load(open("rolloutbench/real/summary.json"))
+S["rollq"] = json.load(open("rolloutbench/real/summary_questions.json"))
 METRICS = [  # (label, source, key, benchmark)
     ("Email reply · AUC", "email", "auc", "ReplyBench"),
     ("Email reply · Brier skill", "email", "bss", "ReplyBench"),
@@ -21,6 +22,8 @@ METRICS = [  # (label, source, key, benchmark)
     ("PR merge · Brier skill", "pr", "bss", "ReplyBench"),
     ("HN 50+ points · AUC", "hn", "auc", "ReplyBench"),
     ("HN points · Spearman", "hn", "spearman_points", "ReplyBench"),
+    ("Tool result · question Brier skill", "rollq", "skill", "RolloutBench"),
+    ("Tool result · hard-question skill", "rollq", "skill_hard", "RolloutBench"),
     ("Tool result · judge score", "rollout", "score", "RolloutBench"),
     ("Tool result · outcome right", "rollout", "outcome_right", "RolloutBench"),
 ]
@@ -83,6 +86,6 @@ scatter_fig("replybench/figures/eci.svg",
              ("HN · AUC", "hn", "auc", (0.4, 1.0), lambda v: f"{v:.1f}", 3)],
             "ReplyBench vs. general capability", "Ranking skill (AUC) against ECI; whiskers are 95% CIs on both axes")
 scatter_fig("rolloutbench/figures/eci.svg",
-            [("Judge score (0–10)", "rollout", "score", (2, 8), lambda v: f"{v:.0f}", 3),
-             ("Outcome right", "rollout", "outcome_right", (0.5, 0.9), lambda v: f"{v:.0%}", 4)],
+            [("Questions · Brier skill", "rollq", "skill", (0.2, 0.6), lambda v: f"{v:.1f}", 4),
+             ("Judge score (0–10)", "rollout", "score", (2, 6), lambda v: f"{v:.0f}", 4)],
             "RolloutBench vs. general capability", "Real-trace scores against ECI; whiskers are 95% CIs on both axes")

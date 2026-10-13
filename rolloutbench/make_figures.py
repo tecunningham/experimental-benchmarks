@@ -19,19 +19,27 @@ models = [(m, n) for m, n, _ in MODELS if all(m in g["grades"] for g in grades)]
 LEGEND = [(t, TIER_CLASS[t]) for t in TIERS if any(TIER[m] == t for m, _ in models)]
 ROWH = 19
 
-# 1. headline: real-trace judge score and outcome accuracy, all models, 95% CIs
+# 1. headline: exact question score (main) and judge score, all models, 95% CIs
+Q = json.load(open("rolloutbench/real/summary_questions.json"))
+qm = [(m, n) for m, n in models if m in Q["models"]]
+blind = Q["models"].get("claude-opus-5-5-blind")
 score = {m: mean_ci([g["grades"][m]["score"] for g in grades]) for m, _ in models}
-right = {m: mean_ci([float(bool(g["grades"][m]["outcome_right"])) for g in grades]) for m, _ in models}
-c = Canvas(720, 140 + len(models) * ROWH)
-c.title(24, 30, "How close is the predicted result?", "Blind judge score, 0–10")
-c.title(384, 30, "Is the basic outcome right?", "Succeeded/failed, found/not found, …")
-c.legend(24 + 84, 70, LEGEND)
-end = hbars(c, 24, 94, 340, [(n, score[m][0], TIER_CLASS[TIER[m]]) for m, n in models], 10, lambda v: f"{v:.1f}",
-            cis=[score[m][1:] for m, _ in models], bh=13, gap=6)
-hbars(c, 384, 94, 320, [("", right[m][0], TIER_CLASS[TIER[m]]) for m, _ in models], 1, lambda v: f"{v:.0%}",
-      cis=[right[m][1:] for m, _ in models], label_w=0, bh=13, gap=6)
-c.text(24, end + 12, f"{len(grades)} tool calls from 75 real agent sessions (Jun–Sep 2026). Whiskers: 95% bootstrap CIs.", "t3")
-c.h = int(end + 26)
+qrows = [(n, Q["models"][m]["skill"][0], TIER_CLASS[TIER[m]]) for m, n in qm]
+qcis = [Q["models"][m]["skill"][1:] for m, _ in qm]
+if blind:
+    qrows.append(("Questions only", blind["skill"][0], "neutral"))
+    qcis.append(blind["skill"][1:])
+c = Canvas(720, 160 + len(qrows) * ROWH)
+c.title(24, 30, "Exact: questions about each result", f"Brier skill vs. uniform guessing ({Q['n_questions']} questions)")
+c.title(384, 30, "Judged: how close is the prediction?", "Independent judge score, 0–10")
+c.legend(24 + 84, 70, LEGEND + ([("baseline", "neutral")] if blind else []))
+end = hbars(c, 24, 94, 340, qrows, 0.6, lambda v: f"{v:.2f}", cis=qcis, bh=13, gap=6, ticks=3)
+hbars(c, 384, 94, 320, [("", score[m][0], TIER_CLASS[TIER[m]]) for m, _ in models], 8, lambda v: f"{v:.1f}",
+      cis=[score[m][1:] for m, _ in models], label_w=0, bh=13, gap=6)
+c.text(24, end + 12, f"{len(grades)} tool calls from 75 real agent sessions (Jun–Sep 2026). "
+                     "“Questions only”: a model shown just the questions, no session or call.", "t3")
+c.text(24, end + 28, "Whiskers: 95% bootstrap CIs over tool calls.", "t3")
+c.h = int(end + 42)
 (OUT / "headline.svg").write_text(c.svg())
 
 # 2. by tool category: heatmap of mean judge score (categories with >= 10 calls)

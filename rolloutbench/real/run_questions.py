@@ -42,7 +42,15 @@ def ask(it, qs, model, blind):
     prompt = PROMPT.format(context=context(it, blind), questions=qtext)
     for _ in range(3):
         try:
-            ps = json.loads(re.search(r"\[\s*\[.*\]\s*\]", complete(prompt, model, SYSTEM), re.S).group(0))
+            text = complete(prompt, model, SYSTEM)
+            ps = None  # last "[[...]]" that decodes to lists of numbers (reasoning may contain other brackets)
+            for mt in re.finditer(r"\[\s*\[", text):
+                try:
+                    cand = json.JSONDecoder().raw_decode(text[mt.start():])[0]
+                    if all(isinstance(x, list) and all(isinstance(v, (int, float)) for v in x) for x in cand):
+                        ps = cand
+                except ValueError:
+                    pass
             out = []
             for q, p in zip(qs, ps):
                 p = [max(float(x), 0.0) for x in p][:len(q["options"])]
@@ -61,14 +69,18 @@ def main():
     p.add_argument("--model", required=True)
     p.add_argument("--blind", action="store_true")
     p.add_argument("--workers", type=int, default=8)
+    p.add_argument("--fill", action="store_true", help="only ask items missing from an existing output file")
     a = p.parse_args()
     items = {i["id"]: i for i in map(json.loads, open("rolloutbench/data/real/items.jsonl"))}
     qs = [(r["id"], r["questions"]) for r in map(json.loads, open("rolloutbench/data/real/questions.jsonl")) if r["questions"]]
-    with ThreadPoolExecutor(a.workers) as ex:
-        res = list(ex.map(lambda t: ask(items[t[0]], t[1], a.model, a.blind), qs))
     out = Path(f"rolloutbench/real/qpreds/{a.model}{'-blind' if a.blind else ''}.jsonl")
     out.parent.mkdir(exist_ok=True)
-    with open(out, "w") as f:
+    if a.fill and out.exists():
+        have = {json.loads(l)["id"] for l in open(out)}
+        qs = [(i, q) for i, q in qs if i not in have]
+    with ThreadPoolExecutor(a.workers) as ex:
+        res = list(ex.map(lambda t: ask(items[t[0]], t[1], a.model, a.blind), qs))
+    with open(out, "a" if a.fill else "w") as f:
         for (i, _), r in zip(qs, res):
             if r:
                 f.write(json.dumps({"id": i, "probs": [[round(x, 4) for x in p] for p in r]}) + "\n")
