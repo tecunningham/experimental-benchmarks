@@ -8,19 +8,21 @@ model to run.
 > and dangerous. To act well, a model has to know what its actions will do, so prediction is a cheap, safe and
 > unsaturatable proxy.
 
-<p align="center"><img src="figures/headline.svg" alt="Results: ReplyBench AUC 0.74–0.82 but worse-than-base-rate Brier; RolloutBench similarity ~0.9 when output follows from code, 0.59–0.74 when it depends on machine state" width="100%"></p>
+<p align="center"><img src="figures/headline.svg" alt="Results: ReplyBench AUC 0.74–0.82 but worse-than-base-rate Brier; RolloutBench on real-world traces, judge score 3.2 / 4.4 / 5.3 out of 10 for Haiku / Sonnet / Opus" width="100%"></p>
 
 ## Takeaways
 
 1. **Models know what Hacker News likes, but not how little it cares.** Opus 5.5 picks out stories that will
    reach 50 points with AUC 0.82, yet every model is *worse calibrated than a constant base rate*. A typical
    submission gets 2 points; the models expect far more.
-2. **Models already "run code in their heads".** When a tool's output follows from code earlier in the trace
-   (SQL aggregates, the sum of primes below 10⁶, unittest failures), all three models reproduce it almost
-   perfectly (similarity ≈ 0.9).
-3. **The headroom is in the environment.** When the output depends on the machine (Python version, file
-   counts, memory), similarity drops to 0.59–0.74, and it scales with model size. That is the part of
-   "simulating the world" that agents can't yet do without tools.
+2. **On real-world agent traces, predicting tool results is far from solved.** On 249 tool calls from real
+   sessions (a person's workstation, an ML agent launching GPU jobs), a blind judge scores the models' predicted
+   results at 3.2 (Haiku), 4.4 (Sonnet) and 5.3 (Opus) out of 10. Opus gets the basic outcome right 78% of the
+   time, but the details much less often.
+3. **Synthetic traces are too easy, so real ones matter.** In a sandbox pilot, models reproduced outputs that
+   follow from code almost perfectly (similarity ≈ 0.9). The headroom is in results that depend on the state of
+   the world: API responses, web content, job status. That is also the key difference from AgentWorldBench
+   (Qwen, 2026), which uses benchmark-task trajectories.
 4. **Unlike existing forecasting benchmarks, nothing has to resolve.** FutureSim, ForecastBench and
    PredictionArena predict world events, so they wait months or go stale. Here the ground truth already exists
    in held-out data, so a run is scored immediately.
@@ -31,16 +33,17 @@ model to run.
 |---|---|---|
 | Question | *How will people respond to this action?* | *What will this tool call return?* |
 | Idea | Predict how a person or system responds to an input (an email, a PR, a post, a paper) | Take a trace from a real model run and predict the result of every tool call (shell, web fetch, GPU run, API call, email, sub-agent), with no internet |
-| Prototype | Hacker News submissions after the training cutoff: predict points, comments, P(≥50 points) | Agent shell traces: given the trace so far, predict the next command's exact output |
-| Example | “Cops Can Bypass iPhone's Automatic Reboot…” (404media) → Opus 5.5 predicted 150 points, actual **293**. “Official Proton Drive CLI” → predicted 120, actual **1**. | `find /usr/lib/python3.13 -name '*.py' \| wc -l` → Haiku 5.5 predicted 537, actual **591** |
-| Size | 200 stories, 3 models | 8 traces, 76 tool calls, 3 models |
+| Prototype | Hacker News submissions after the training cutoff: predict points, comments, P(≥50 points) | 249 tool calls (shell, web, APIs, GPU jobs, sub-agents, human replies) from 75 public real-world sessions, Jun–Sep 2026 |
+| Example | “Cops Can Bypass iPhone's Automatic Reboot…” (404media) → Opus 5.5 predicted 150 points, actual **293**. “Official Proton Drive CLI” → predicted 120, actual **1**. | `hf_jobs ps` → Opus 5.5 predicted one running job; actual: **"No running jobs found"** (judge score 0/10) |
+| Size | 200 stories, 3 models | 249 tool calls, 3 models, blind LLM judge (plus a 76-call sandbox pilot) |
 | More | [`replybench/`](replybench/) | **[RolloutBench page →](rolloutbench/README.md)** |
 
-| | FutureSim | ForecastBench | PredictionArena | **ReplyBench** | **RolloutBench** |
-|---|---|---|---|---|---|
-| Predicts | World events | World events | World events, through trading | Response to an action | Effect of an agent's own action |
-| Time to score | 0, but goes stale | Weeks to years | Days to weeks | Instant | Instant |
-| Cost per run | $50–2,000 | Low | $10k at risk | <$1 | <$1 |
+| | FutureSim | ForecastBench | PredictionArena | AgentWorldBench | **ReplyBench** | **RolloutBench** |
+|---|---|---|---|---|---|---|
+| Predicts | World events | World events | World events, through trading | Next observation in agent trajectories | Response to an action | Result of an agent's tool call |
+| Data | News replay | Markets and data series | Live markets | Benchmark tasks in sandboxes | Real HN posts | **Real-world agent sessions** |
+| Time to score | 0, but goes stale | Weeks to years | Days to weeks | Instant | Instant | Instant |
+| Cost per run | $50–2,000 | Low | $10k at risk | Low | <$1 | ~$5–10 |
 
 ## Next steps to make this real
 
@@ -74,10 +77,11 @@ an action**, and **a known noise ceiling**.
 
 ### RolloutBench
 
-The biggest step is moving from sandbox traces to **real-world traces**: staff agent sessions, research-agent
-runs with web fetches and GPU jobs. After that, add the other tool types (web, API, email, sub-agents, lab
-experiments), score key facts rather than raw strings, measure the noise ceiling, and check that scores
-predict real agentic success. Details are in the [RolloutBench page](rolloutbench/README.md#next-steps).
+The real-trace test works. The next steps are scale and breadth: more public sessions refreshed monthly,
+private staff and METR agent sessions (contamination-proof), more human replies and lab experiments, scoring of
+key facts with a judge from another model family, a noise ceiling, and a check that scores predict real agentic
+success. Details are in the [RolloutBench page](rolloutbench/README.md#next-steps), along with
+[related work](rolloutbench/README.md#related-work) (AgentWorldBench, ToolEmu, WebDreamer, CRUXEval, …).
 
 ### Shared
 
@@ -96,10 +100,11 @@ pip install anthropic                     # optional: used if ANTHROPIC_API_KEY 
 python3 replybench/fetch_hn.py --start 2026-10-01 --end 2026-10-06 --n 200
 python3 replybench/run.py --model claude-opus-5-5
 python3 replybench/score.py
-# RolloutBench
-python3 rolloutbench/make_traces.py --model claude-haiku-5-5   # records agent traces for rolloutbench/tasks.json
-python3 rolloutbench/run.py --model claude-opus-5-5
-python3 rolloutbench/score.py
+# RolloutBench on real-world traces (see rolloutbench/README.md for the sandbox pilot)
+python3 rolloutbench/real/build.py
+python3 rolloutbench/real/run.py --model claude-opus-5-5
+python3 rolloutbench/real/judge.py
+python3 rolloutbench/real/score.py
 ```
 
 `common/llm.py` is the only model interface. Outside the Anthropic API path, it runs `claude -p` with no
@@ -136,20 +141,20 @@ sample is uniform over all submissions.
 
 ## Full comparison with existing prediction benchmarks
 
-| | **FutureSim** (Goel et al. 2026) | **ForecastBench** (Karger et al.) | **PredictionArena** (Zhang et al. 2026) | **ReplyBench-HN** (this repo) | **RolloutBench** (this repo) |
-|---|---|---|---|---|---|
-| What is predicted | Short-answer questions about world events. An agent replays the news day by day (24 Dec 2025 – Mar 2026) and updates its forecasts. | Binary probabilities on future events: market questions plus questions generated from time-series data (FRED, ACLED, Wikipedia, …) | Nothing stated explicitly. Agents trade Kalshi and Polymarket markets with real money ($10k each). | Community response to a post: points, comments, P(≥50 points) | Exact output of the next tool call in an agent trace |
-| Source of ground truth | 330 questions generated from Al Jazeera articles in CCNews | Market resolutions and data releases | Market settlements | HN API | Recorded tool outputs |
-| Effects of *own actions*? | No (world events) | No (world events) | Partly: P&L depends on the agent's trades, but it is predicting the world | Yes in kind: the effect of an action (posting) on people | Yes: the effect of the agent's own actions on its environment |
-| Delay before scoring | None when evaluated, but it goes stale once models are trained past Mar 2026 | Weeks to years (horizons from 7 days to 10 years) | Days to weeks (study ran 57 days) | About a week of data collection, then instant | Instant (traces are recorded once) |
-| Contamination control | Window after training cutoff, plus a date-gated search corpus in a sandbox | Fully live (only unresolved questions) | Fully live | Window after training cutoff; refresh by pulling new weeks | Fresh traces on a fresh machine; outputs are machine-specific |
-| Scoring | Top-1 accuracy, Brier skill score | Brier score, now a difficulty-adjusted "Brier Index" | Return, settlement win rate | Spearman, log-MAE, Brier, AUC (continuous) | String similarity, exact match (continuous) |
-| Cost per model run | High: an agentic multi-month replay, roughly $50–2,000 | Low (plain LLM calls), but you wait for resolution | High: real capital at risk plus agent compute | Very low: 8 calls | Low: 76 calls |
-| Headline result | Best: GPT-5.5 in Codex, ~25% accuracy. Open models have negative Brier skill score. | Top AI systems are roughly at superforecaster parity (FRI, Jul 2026); disputed on market questions | Every model in the main cohort lost money on Kalshi (−16% to −31%) | Opus ρ = 0.36, AUC 0.82, but worse calibrated than a constant | Opus 0.88 similarity; computation is near-solved, environment state is not |
-| Saturation risk | Medium (accuracy ~25%) | Near-saturated relative to the human reference | Noisy, so hard to tell | Low: irreducible noise caps achievable ρ well below 1 | Low if traces include genuinely unpredictable environment state |
+|  | **FutureSim** (Goel et al. 2026) | **ForecastBench** (Karger et al.) | **PredictionArena** (Zhang et al. 2026) | **AgentWorldBench** (Zuo et al. 2026) | **ReplyBench-HN** (this repo) | **RolloutBench** (this repo) |
+|---|---|---|---|---|---|---|
+| What is predicted | Short-answer questions about world events. An agent replays the news day by day (24 Dec 2025 – Mar 2026) and updates its forecasts. | Binary probabilities on future events: market questions plus questions generated from time-series data (FRED, ACLED, Wikipedia, …) | Nothing stated explicitly. Agents trade Kalshi and Polymarket markets with real money ($10k each). | The next environment observation given an agent's action/observation history (MCP, search, terminal, SWE, Android, web, OS) | Community response to a post: points, comments, P(≥50 points) | The result of each tool call in a real agent session: shell, web, APIs, GPU jobs, sub-agents, human replies |
+| Source of ground truth | 330 questions generated from Al Jazeera articles in CCNews | Market resolutions and data releases | Market settlements | 2,170 observations from frontier agents running benchmark tasks (Terminal-Bench, OSWorld, …) in sandboxes | HN API | 249 recorded results from 75 public real-world sessions (Jun–Sep 2026) |
+| Effects of *own actions*? | No (world events) | No (world events) | Partly: P&L depends on the agent's trades, but it is predicting the world | Yes, in benchmark environments | Yes in kind: the effect of an action (posting) on people | Yes: the effect of the agent's own actions in the real world |
+| Delay before scoring | None when evaluated, but it goes stale once models are trained past Mar 2026 | Weeks to years (horizons from 7 days to 10 years) | Days to weeks (study ran 57 days) | Instant | About a week of data collection, then instant | Instant (traces are recorded once) |
+| Contamination control | Window after training cutoff, plus a date-gated search corpus in a sandbox | Fully live (only unresolved questions) | Fully live | Static release of recorded trajectories | Window after training cutoff; refresh by pulling new weeks | Sessions after the training cutoff; refresh with new public or private sessions |
+| Scoring | Top-1 accuracy, Brier skill score | Brier score, now a difficulty-adjusted "Brier Index" | Return, settlement win rate | LLM judge on 5 dimensions, 0–100 | Spearman, log-MAE, Brier, AUC (continuous) | Blind LLM judge 0–10, outcome accuracy, string similarity |
+| Cost per model run | High: an agentic multi-month replay, roughly $50–2,000 | Low (plain LLM calls), but you wait for resolution | High: real capital at risk plus agent compute | Low (one call per sample) | Very low: 8 calls | Low: 249 calls plus judging |
+| Headline result | Best: GPT-5.5 in Codex, ~25% accuracy. Open models have negative Brier skill score. | Top AI systems are roughly at superforecaster parity (FRI, Jul 2026); disputed on market questions | Every model in the main cohort lost money on Kalshi (−16% to −31%) | Frontier models tightly clustered at ~54–59 | Opus ρ = 0.36, AUC 0.82, but worse calibrated than a constant | Opus 5.3, Sonnet 4.4, Haiku 3.2 out of 10; outcome right 78% for Opus |
+| Saturation risk | Medium (accuracy ~25%) | Near-saturated relative to the human reference | Noisy, so hard to tell | Clustered scores suggest limited spread | Low: irreducible noise caps achievable ρ well below 1 | Low: real-world state is hard to predict, and scores are well spread |
 
 **Takeaways.**
-- **Prediction target.** All three existing benchmarks predict *world events*. ReplyBench and RolloutBench
+- **Prediction target.** The three forecasting benchmarks predict *world events*. ReplyBench and RolloutBench
   instead predict the *consequences of a specific action*, which is the capability that matters for an agent
   pursuing goals.
 - **Scoring delay.** The existing benchmarks have to wait for the world to resolve (ForecastBench,
@@ -159,7 +164,10 @@ sample is uniform over all submissions.
 - **What it costs.**
   - The private dataset has to stay private and fresh.
   - For ReplyBench, the setup is observational rather than causal.
-- Sources for the comparison: arXiv 2605.15188 (FutureSim), arXiv 2409.19839 and forecastbench.org
+- **Versus AgentWorldBench.** It also predicts the results of agent actions, but its trajectories come from
+  benchmark tasks in sandboxes. RolloutBench uses real-world sessions, where results depend on the actual
+  state of machines, websites, jobs and people.
+- Sources for the comparison: arXiv 2605.15188 (FutureSim), arXiv 2606.24597 (AgentWorldBench), arXiv 2409.19839 and forecastbench.org
   (ForecastBench), and arXiv 2604.07355 (PredictionArena). Figures are as reported by the authors and were not
   re-verified here.
 
@@ -167,7 +175,7 @@ sample is uniform over all submissions.
 
 - **Sample size.** Both benchmarks are small, so differences between models are noisy. For example, the
   standard error on Spearman ρ with n = 200 is about 0.07.
-- **RolloutBench traces are synthetic.** They come from sandbox tasks, not real-world use; see
-  [its caveats](rolloutbench/README.md#caveats).
+- **RolloutBench sources are narrow and the judge is Opus.** The 249 calls come from two public datasets, and
+  the judge may favour its own model family. See [its caveats](rolloutbench/README.md#caveats).
 - **Batched predictions.** ReplyBench predicts 25 stories per call, so the model can calibrate them against
   each other within a batch.

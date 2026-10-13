@@ -145,7 +145,7 @@ def main():
                 if not cat or len(e["text"].strip()) < 20:
                     continue
                 pool.append({
-                    "id": f"{src}/{f.stem[-36:]}/{k}", "source": src, "category": cat, "tool": e["call"]["name"],
+                    "id": f"{src}/{f.stem.split('__', 1)[-1]}/{k}", "source": src, "category": cat, "tool": e["call"]["name"],
                     "date": e["ts"][:10], "history": history([x for x in evs[:k] if x is not e["call"]]),
                     "call": e["call"]["input"],
                     "target": trunc(e["text"], TARGET_CHARS), "is_error": e["is_error"],

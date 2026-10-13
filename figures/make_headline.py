@@ -1,5 +1,4 @@
 """Render figures/headline.svg from the scored results (no plotting deps)."""
-import difflib
 import json
 import math
 import statistics
@@ -22,22 +21,10 @@ for f, name in MODELS:
     p50 = [min(max(float(pr[i]["p50"]), 0), 1) for i in ids]
     rb.append((name, auc(p50, hit), statistics.mean((p - h) ** 2 for p, h in zip(p50, hit))))
 
-# --- RolloutBench numbers: similarity on non-trivial steps, split by what the output depends on
-EMPTY = "(Bash completed with no output)"
-MACHINE = {"sysinfo", "pystdlib"}  # outputs depend on this machine's state, not just the code
-traces = [json.loads(l) for l in open("rolloutbench/data/traces.jsonl")]
-truth_bb = {(t["task_id"], k): s["output"] for t in traces for k, s in enumerate(t["steps"])}
-sim = lambda a, b: difflib.SequenceMatcher(None, a.strip()[:3000], b.strip()[:3000], autojunk=False).ratio()
-bb = []
-for f, name in MODELS:
-    pr = {(p["task_id"], p["step"]): p["prediction"] for p in map(json.loads, open(f"rolloutbench/results/{f}.jsonl"))}
-    groups = {"code": [], "machine": []}
-    for k, v in truth_bb.items():
-        if v.strip() != EMPTY:
-            groups["machine" if k[0] in MACHINE else "code"].append(sim(pr[k], v))
-    bb.append((name, statistics.mean(groups["code"]), statistics.mean(groups["machine"])))
-n_code = sum(1 for k, v in truth_bb.items() if v.strip() != EMPTY and k[0] not in MACHINE)
-n_mach = sum(1 for k, v in truth_bb.items() if v.strip() != EMPTY and k[0] in MACHINE)
+# --- RolloutBench numbers: blind judge score (0-10) on real-world traces, all items
+grades = [json.loads(l) for l in open("rolloutbench/real/grades.jsonl")]
+rl = [(name, statistics.mean(g["grades"][f]["score"] for g in grades)) for f, name in MODELS]
+n_real = len(grades)
 
 # --- SVG
 W, H = 960, 284
@@ -83,27 +70,9 @@ hbars(334, 34, 290, "ReplyBench · calibration", "Brier score for the same quest
       [(n, b, "neutral" if n == "Base rate" else "s1") for n, _, b in rb], 0.08, lambda v: f"{v:.3f}",
       note="Lower is better · all models lose to the base rate", ref=rb[0][2])
 
-# grouped bars for RolloutBench
-x0, y0, w = 644, 34, 300
-a(f'<text class="h t1" x="{x0}" y="{y0}">RolloutBench · predict tool output</text>')
-a(f'<text class="sub t2" x="{x0}" y="{y0 + 18}">Similarity of predicted vs. real output</text>')
-lab, top, bh, gap = 78, y0 + 44, 12, 14
-pw = w - lab - 44
-for t in range(0, 5):
-    gx = x0 + lab + pw * t / 4
-    a(f'<line class="grid" x1="{gx:.1f}" x2="{gx:.1f}" y1="{top - 4}" y2="{top + 3 * (2 * bh + 2 + gap) - gap + 4}"/>')
-    a(f'<text class="t3" x="{gx:.1f}" y="{top + 3 * (2 * bh + 2 + gap) + 12}" text-anchor="middle" font-size="10">{t / 4:.2f}</text>')
-for i, (name, c, m) in enumerate(bb):
-    y = top + i * (2 * bh + 2 + gap)
-    a(f'<text class="t2" x="{x0 + lab - 8}" y="{y + bh + 4}" text-anchor="end">{name}</text>')
-    for j, (v, cls) in enumerate([(c, "s1"), (m, "s2")]):
-        yy = y + j * (bh + 2)
-        bw = pw * v
-        a(f'<path class="{cls}" d="M{x0 + lab},{yy} h{bw - 4:.1f} a4,4 0 0 1 4,4 v{bh - 8} a4,4 0 0 1 -4,4 h{-(bw - 4):.1f} z"/>')
-        a(f'<text class="v t1" x="{x0 + lab + bw + 6:.1f}" y="{yy + bh - 2}">{v:.2f}</text>')
-ly = top + 3 * (2 * bh + 2 + gap) + 30
-a(f'<rect class="s1" x="{x0}" y="{ly - 9}" width="10" height="10" rx="2"/><text class="t2" x="{x0 + 14}" y="{ly}" font-size="11">Output follows from the code ({n_code} calls)</text>')
-a(f'<rect class="s2" x="{x0}" y="{ly + 7}" width="10" height="10" rx="2"/><text class="t2" x="{x0 + 14}" y="{ly + 16}" font-size="11">Output depends on machine state ({n_mach} calls)</text>')
+hbars(644, 34, 300, "RolloutBench · real-world traces", f"Predict tool results from real sessions (judge, 0–10)",
+      [(n, v, "s1") for n, v in rl], 10, lambda v: f"{v:.1f}",
+      note=f"Higher is better · {n_real} tool calls, Jun–Sep 2026")
 a("</svg>")
 Path("figures/headline.svg").write_text("\n".join(out))
-print("rb", rb, "\nbb", bb, n_code, n_mach)
+print("rb", rb, "\nrl", rl)
