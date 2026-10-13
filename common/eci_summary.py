@@ -86,6 +86,6 @@ scatter_fig("replybench/figures/eci.svg",
              ("HN · AUC", "hn", "auc", (0.4, 1.0), lambda v: f"{v:.1f}", 3)],
             "ReplyBench vs. general capability", "Ranking skill (AUC) against ECI; whiskers are 95% CIs on both axes")
 scatter_fig("rolloutbench/figures/eci.svg",
-            [("Questions · Brier skill", "rollq", "skill", (0.2, 0.6), lambda v: f"{v:.1f}", 4),
+            [("Questions · Brier skill", "rollq", "skill", (0.0, 0.6), lambda v: f"{v:.1f}", 3),
              ("Judge score (0–10)", "rollout", "score", (2, 6), lambda v: f"{v:.0f}", 4)],
             "RolloutBench vs. general capability", "Real-trace scores against ECI; whiskers are 95% CIs on both axes")

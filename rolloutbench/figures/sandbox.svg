@@ -1,16 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="720" height="185" viewBox="0 0 720 185" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="394" viewBox="0 0 720 394" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">
 <style>
 .bg{fill:#fcfcfb}.t1{fill:#0b0b0b}.t2{fill:#52514e}.t3{fill:#8a8984}.grid{stroke:#e4e3df}
 .s1{fill:#2a78d6}.s2{fill:#eb6834}.s3{fill:#1baf7a}.neutral{fill:#b9b8b2}.ref{stroke:#52514e}.ci{stroke:#0b0b0b;stroke-width:1.5;fill:none}
 .s4{fill:#eda100}.line-s1{stroke:#2a78d6}.line-s2{stroke:#eb6834}.line-s3{stroke:#1baf7a}.line-s4{stroke:#eda100}
-.heat{fill:#2a78d6}.tw{fill:#ffffff}
+.heat{fill:#2a78d6}.tw{fill:#ffffff}.cil{stroke:#8a8984;stroke-width:1}
 .d1{fill:#2a78d6;stroke:#fcfcfb}.d2{fill:#eb6834;stroke:#fcfcfb}.d3{fill:#1baf7a;stroke:#fcfcfb}.d4{fill:#eda100;stroke:#fcfcfb}
 @media (prefers-color-scheme: dark){.bg{fill:#1a1a19}.t1{fill:#f0efec}.t2{fill:#c3c2b7}.t3{fill:#8f8e88}
-.grid{stroke:#33332f}.s1{fill:#3987e5}.s2{fill:#d95926}.s3{fill:#199e70}.neutral{fill:#5a5954}.ref{stroke:#c3c2b7}.ci{stroke:#f0efec}.line-s1{stroke:#3987e5}.line-s2{stroke:#d95926}.line-s3{stroke:#199e70}.s4{fill:#c98500}.line-s4{stroke:#c98500}.heat{fill:#3987e5}
+.grid{stroke:#33332f}.s1{fill:#3987e5}.s2{fill:#d95926}.s3{fill:#199e70}.neutral{fill:#5a5954}.ref{stroke:#c3c2b7}.ci{stroke:#f0efec}.line-s1{stroke:#3987e5}.line-s2{stroke:#d95926}.line-s3{stroke:#199e70}.s4{fill:#c98500}.line-s4{stroke:#c98500}.heat{fill:#3987e5}.cil{stroke:#8f8e88}
 .d1{fill:#3987e5;stroke:#1a1a19}.d2{fill:#d95926;stroke:#1a1a19}.d3{fill:#199e70;stroke:#1a1a19}.d4{fill:#c98500;stroke:#1a1a19}}
 text{font-size:12px}.h{font-size:15px;font-weight:600}.v{font-size:11px;font-weight:600}.tick{font-size:10px}
 </style>
-<rect class="bg" width="720" height="185" rx="8"/>
+<rect class="bg" width="720" height="394" rx="8"/>
 <text class="h t1" x="24.0" y="30.0" text-anchor="start" >Sandbox pilot: code is easy, the machine is not</text>
 <text class="t2" x="24.0" y="48.0" text-anchor="start" >Similarity of predicted vs. real shell output (synthetic tasks)</text>
 <rect class="s1" x="470" y="21" width="10" height="10" rx="2"/>
@@ -19,51 +19,141 @@ text{font-size:12px}.h{font-size:15px;font-weight:600}.v{font-size:11px;font-wei
 <text class="t2" x="543.0" y="30.0" text-anchor="start" >Sonnet</text>
 <rect class="s3" x="595" y="21" width="10" height="10" rx="2"/>
 <text class="t2" x="609.0" y="30.0" text-anchor="start" >Opus</text>
+<rect class="s4" x="647" y="21" width="10" height="10" rx="2"/>
+<text class="t2" x="661.0" y="30.0" text-anchor="start" >Fable</text>
 <text class="h t1" x="108.0" y="64.0" text-anchor="start" >Output follows from code (27)</text>
-<line class="grid" x1="108.0" x2="108.0" y1="80" y2="139"/>
-<text class="tick t3" x="108.0" y="153.0" text-anchor="middle" >0.00</text>
-<line class="grid" x1="161.0" x2="161.0" y1="80" y2="139"/>
-<text class="tick t3" x="161.0" y="153.0" text-anchor="middle" >0.25</text>
-<line class="grid" x1="214.0" x2="214.0" y1="80" y2="139"/>
-<text class="tick t3" x="214.0" y="153.0" text-anchor="middle" >0.50</text>
-<line class="grid" x1="267.0" x2="267.0" y1="80" y2="139"/>
-<text class="tick t3" x="267.0" y="153.0" text-anchor="middle" >0.75</text>
-<line class="grid" x1="320.0" x2="320.0" y1="80" y2="139"/>
-<text class="tick t3" x="320.0" y="153.0" text-anchor="middle" >1.00</text>
-<text class="t2" x="100.0" y="94.5" text-anchor="end" >Haiku 5.5</text>
-<path class="s1" d="M108.0,84.0 h192.4 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-192.4 z"/>
-<path class="ci" d="M289.0,90.5 H315.1 M289.0,86.5 V94.5 M315.1,86.5 V94.5"/>
-<text class="v t1" x="321.1" y="94.5" text-anchor="start" >0.93</text>
-<text class="t2" x="100.0" y="113.5" text-anchor="end" >Sonnet 5.5</text>
-<path class="s2" d="M108.0,103.0 h182.4 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-182.4 z"/>
-<path class="ci" d="M272.3,109.5 H311.2 M272.3,105.5 V113.5 M311.2,105.5 V113.5"/>
-<text class="v t1" x="317.2" y="113.5" text-anchor="start" >0.88</text>
-<text class="t2" x="100.0" y="132.5" text-anchor="end" >Opus 5.5</text>
-<path class="s3" d="M108.0,122.0 h191.8 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-191.8 z"/>
-<path class="ci" d="M288.3,128.5 H314.6 M288.3,124.5 V132.5 M314.6,124.5 V132.5"/>
-<text class="v t1" x="320.6" y="132.5" text-anchor="start" >0.92</text>
+<line class="grid" x1="108.0" x2="108.0" y1="80" y2="348"/>
+<text class="tick t3" x="108.0" y="362.0" text-anchor="middle" >0.00</text>
+<line class="grid" x1="161.0" x2="161.0" y1="80" y2="348"/>
+<text class="tick t3" x="161.0" y="362.0" text-anchor="middle" >0.25</text>
+<line class="grid" x1="214.0" x2="214.0" y1="80" y2="348"/>
+<text class="tick t3" x="214.0" y="362.0" text-anchor="middle" >0.50</text>
+<line class="grid" x1="267.0" x2="267.0" y1="80" y2="348"/>
+<text class="tick t3" x="267.0" y="362.0" text-anchor="middle" >0.75</text>
+<line class="grid" x1="320.0" x2="320.0" y1="80" y2="348"/>
+<text class="tick t3" x="320.0" y="362.0" text-anchor="middle" >1.00</text>
+<text class="t2" x="100.0" y="94.5" text-anchor="end" >Haiku 4.5</text>
+<path class="s1" d="M108.0,84.0 h168.6 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-168.6 z"/>
+<path class="ci" d="M257.5,90.5 H300.5 M257.5,86.5 V94.5 M300.5,86.5 V94.5"/>
+<text class="v t1" x="306.5" y="94.5" text-anchor="start" >0.81</text>
+<text class="t2" x="100.0" y="113.5" text-anchor="end" >Haiku 5.5</text>
+<path class="s1" d="M108.0,103.0 h192.4 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-192.4 z"/>
+<path class="ci" d="M289.0,109.5 H315.1 M289.0,105.5 V113.5 M315.1,105.5 V113.5"/>
+<text class="v t1" x="321.1" y="113.5" text-anchor="start" >0.93</text>
+<text class="t2" x="100.0" y="132.5" text-anchor="end" >Sonnet 4.5</text>
+<path class="s2" d="M108.0,122.0 h171.7 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-171.7 z"/>
+<path class="ci" d="M259.1,128.5 H304.8 M259.1,124.5 V132.5 M304.8,124.5 V132.5"/>
+<text class="v t1" x="310.8" y="132.5" text-anchor="start" >0.83</text>
+<text class="t2" x="100.0" y="151.5" text-anchor="end" >Sonnet 4.6</text>
+<path class="s2" d="M108.0,141.0 h183.5 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-183.5 z"/>
+<path class="ci" d="M276.7,147.5 H310.7 M276.7,143.5 V151.5 M310.7,143.5 V151.5"/>
+<text class="v t1" x="316.7" y="151.5" text-anchor="start" >0.88</text>
+<text class="t2" x="100.0" y="170.5" text-anchor="end" >Sonnet 5</text>
+<path class="s2" d="M108.0,160.0 h168.2 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-168.2 z"/>
+<path class="ci" d="M253.3,166.5 H303.3 M253.3,162.5 V170.5 M303.3,162.5 V170.5"/>
+<text class="v t1" x="309.3" y="170.5" text-anchor="start" >0.81</text>
+<text class="t2" x="100.0" y="189.5" text-anchor="end" >Sonnet 5.5</text>
+<path class="s2" d="M108.0,179.0 h182.4 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-182.4 z"/>
+<path class="ci" d="M272.3,185.5 H311.2 M272.3,181.5 V189.5 M311.2,181.5 V189.5"/>
+<text class="v t1" x="317.2" y="189.5" text-anchor="start" >0.88</text>
+<text class="t2" x="100.0" y="208.5" text-anchor="end" >Opus 4.5</text>
+<path class="s3" d="M108.0,198.0 h175.8 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-175.8 z"/>
+<path class="ci" d="M264.5,204.5 H306.5 M264.5,200.5 V208.5 M306.5,200.5 V208.5"/>
+<text class="v t1" x="312.5" y="208.5" text-anchor="start" >0.85</text>
+<text class="t2" x="100.0" y="227.5" text-anchor="end" >Opus 4.6</text>
+<path class="s3" d="M108.0,217.0 h172.9 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-172.9 z"/>
+<path class="ci" d="M259.1,223.5 H307.1 M259.1,219.5 V227.5 M307.1,219.5 V227.5"/>
+<text class="v t1" x="313.1" y="227.5" text-anchor="start" >0.83</text>
+<text class="t2" x="100.0" y="246.5" text-anchor="end" >Opus 4.7</text>
+<path class="s3" d="M108.0,236.0 h187.1 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-187.1 z"/>
+<path class="ci" d="M279.5,242.5 H313.3 M279.5,238.5 V246.5 M313.3,238.5 V246.5"/>
+<text class="v t1" x="319.3" y="246.5" text-anchor="start" >0.90</text>
+<text class="t2" x="100.0" y="265.5" text-anchor="end" >Opus 4.8</text>
+<path class="s3" d="M108.0,255.0 h184.3 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-184.3 z"/>
+<path class="ci" d="M277.3,261.5 H311.3 M277.3,257.5 V265.5 M311.3,257.5 V265.5"/>
+<text class="v t1" x="317.3" y="265.5" text-anchor="start" >0.89</text>
+<text class="t2" x="100.0" y="284.5" text-anchor="end" >Opus 5</text>
+<path class="s3" d="M108.0,274.0 h185.4 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-185.4 z"/>
+<path class="ci" d="M278.5,280.5 H312.1 M278.5,276.5 V284.5 M312.1,276.5 V284.5"/>
+<text class="v t1" x="318.1" y="284.5" text-anchor="start" >0.89</text>
+<text class="t2" x="100.0" y="303.5" text-anchor="end" >Opus 5.5</text>
+<path class="s3" d="M108.0,293.0 h191.8 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-191.8 z"/>
+<path class="ci" d="M288.3,299.5 H314.6 M288.3,295.5 V303.5 M314.6,295.5 V303.5"/>
+<text class="v t1" x="320.6" y="303.5" text-anchor="start" >0.92</text>
+<text class="t2" x="100.0" y="322.5" text-anchor="end" >Fable 5</text>
+<path class="s4" d="M108.0,312.0 h191.4 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-191.4 z"/>
+<path class="ci" d="M287.6,318.5 H314.5 M287.6,314.5 V322.5 M314.5,314.5 V322.5"/>
+<text class="v t1" x="320.5" y="322.5" text-anchor="start" >0.92</text>
+<text class="t2" x="100.0" y="341.5" text-anchor="end" >Fable 5.1</text>
+<path class="s4" d="M108.0,331.0 h189.2 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-189.2 z"/>
+<path class="ci" d="M285.9,337.5 H313.0 M285.9,333.5 V341.5 M313.0,333.5 V341.5"/>
+<text class="v t1" x="319.0" y="341.5" text-anchor="start" >0.91</text>
 <text class="h t1" x="384.0" y="64.0" text-anchor="start" >Output depends on machine state (27)</text>
-<line class="grid" x1="384.0" x2="384.0" y1="80" y2="139"/>
-<text class="tick t3" x="384.0" y="153.0" text-anchor="middle" >0.00</text>
-<line class="grid" x1="453.0" x2="453.0" y1="80" y2="139"/>
-<text class="tick t3" x="453.0" y="153.0" text-anchor="middle" >0.25</text>
-<line class="grid" x1="522.0" x2="522.0" y1="80" y2="139"/>
-<text class="tick t3" x="522.0" y="153.0" text-anchor="middle" >0.50</text>
-<line class="grid" x1="591.0" x2="591.0" y1="80" y2="139"/>
-<text class="tick t3" x="591.0" y="153.0" text-anchor="middle" >0.75</text>
-<line class="grid" x1="660.0" x2="660.0" y1="80" y2="139"/>
-<text class="tick t3" x="660.0" y="153.0" text-anchor="middle" >1.00</text>
+<line class="grid" x1="384.0" x2="384.0" y1="80" y2="348"/>
+<text class="tick t3" x="384.0" y="362.0" text-anchor="middle" >0.00</text>
+<line class="grid" x1="453.0" x2="453.0" y1="80" y2="348"/>
+<text class="tick t3" x="453.0" y="362.0" text-anchor="middle" >0.25</text>
+<line class="grid" x1="522.0" x2="522.0" y1="80" y2="348"/>
+<text class="tick t3" x="522.0" y="362.0" text-anchor="middle" >0.50</text>
+<line class="grid" x1="591.0" x2="591.0" y1="80" y2="348"/>
+<text class="tick t3" x="591.0" y="362.0" text-anchor="middle" >0.75</text>
+<line class="grid" x1="660.0" x2="660.0" y1="80" y2="348"/>
+<text class="tick t3" x="660.0" y="362.0" text-anchor="middle" >1.00</text>
 <text class="t2" x="376.0" y="94.5" text-anchor="end" ></text>
-<path class="s1" d="M384.0,84.0 h157.8 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-157.8 z"/>
-<path class="ci" d="M508.5,90.5 H581.0 M508.5,86.5 V94.5 M581.0,86.5 V94.5"/>
-<text class="v t1" x="587.0" y="94.5" text-anchor="start" >0.59</text>
+<path class="s1" d="M384.0,84.0 h143.0 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-143.0 z"/>
+<path class="ci" d="M493.2,90.5 H566.1 M493.2,86.5 V94.5 M566.1,86.5 V94.5"/>
+<text class="v t1" x="572.1" y="94.5" text-anchor="start" >0.53</text>
 <text class="t2" x="376.0" y="113.5" text-anchor="end" ></text>
-<path class="s2" d="M384.0,103.0 h176.3 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-176.3 z"/>
-<path class="ci" d="M529.7,109.5 H596.9 M529.7,105.5 V113.5 M596.9,105.5 V113.5"/>
-<text class="v t1" x="602.9" y="113.5" text-anchor="start" >0.65</text>
+<path class="s1" d="M384.0,103.0 h157.8 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-157.8 z"/>
+<path class="ci" d="M508.5,109.5 H581.0 M508.5,105.5 V113.5 M581.0,105.5 V113.5"/>
+<text class="v t1" x="587.0" y="113.5" text-anchor="start" >0.59</text>
 <text class="t2" x="376.0" y="132.5" text-anchor="end" ></text>
-<path class="s3" d="M384.0,122.0 h200.4 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-200.4 z"/>
-<path class="ci" d="M556.0,128.5 H616.9 M556.0,124.5 V132.5 M616.9,124.5 V132.5"/>
-<text class="v t1" x="622.9" y="132.5" text-anchor="start" >0.74</text>
-<text class="t3" x="24.0" y="171.0" text-anchor="start" >76 calls from 8 synthetic sandbox tasks. Whiskers: 95% bootstrap CIs.</text>
+<path class="s2" d="M384.0,122.0 h163.0 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-163.0 z"/>
+<path class="ci" d="M515.9,128.5 H582.8 M515.9,124.5 V132.5 M582.8,124.5 V132.5"/>
+<text class="v t1" x="588.8" y="132.5" text-anchor="start" >0.61</text>
+<text class="t2" x="376.0" y="151.5" text-anchor="end" ></text>
+<path class="s2" d="M384.0,141.0 h177.2 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-177.2 z"/>
+<path class="ci" d="M528.5,147.5 H600.3 M528.5,143.5 V151.5 M600.3,143.5 V151.5"/>
+<text class="v t1" x="606.3" y="151.5" text-anchor="start" >0.66</text>
+<text class="t2" x="376.0" y="170.5" text-anchor="end" ></text>
+<path class="s2" d="M384.0,160.0 h155.0 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-155.0 z"/>
+<path class="ci" d="M505.8,166.5 H579.2 M505.8,162.5 V170.5 M579.2,162.5 V170.5"/>
+<text class="v t1" x="585.2" y="170.5" text-anchor="start" >0.58</text>
+<text class="t2" x="376.0" y="189.5" text-anchor="end" ></text>
+<path class="s2" d="M384.0,179.0 h176.3 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-176.3 z"/>
+<path class="ci" d="M529.7,185.5 H596.9 M529.7,181.5 V189.5 M596.9,181.5 V189.5"/>
+<text class="v t1" x="602.9" y="189.5" text-anchor="start" >0.65</text>
+<text class="t2" x="376.0" y="208.5" text-anchor="end" ></text>
+<path class="s3" d="M384.0,198.0 h177.4 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-177.4 z"/>
+<path class="ci" d="M530.3,204.5 H597.2 M530.3,200.5 V208.5 M597.2,200.5 V208.5"/>
+<text class="v t1" x="603.2" y="208.5" text-anchor="start" >0.66</text>
+<text class="t2" x="376.0" y="227.5" text-anchor="end" ></text>
+<path class="s3" d="M384.0,217.0 h154.9 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-154.9 z"/>
+<path class="ci" d="M508.4,223.5 H578.3 M508.4,219.5 V227.5 M578.3,219.5 V227.5"/>
+<text class="v t1" x="584.3" y="227.5" text-anchor="start" >0.58</text>
+<text class="t2" x="376.0" y="246.5" text-anchor="end" ></text>
+<path class="s3" d="M384.0,236.0 h159.8 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-159.8 z"/>
+<path class="ci" d="M509.7,242.5 H583.1 M509.7,238.5 V246.5 M583.1,238.5 V246.5"/>
+<text class="v t1" x="589.1" y="246.5" text-anchor="start" >0.59</text>
+<text class="t2" x="376.0" y="265.5" text-anchor="end" ></text>
+<path class="s3" d="M384.0,255.0 h163.9 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-163.9 z"/>
+<path class="ci" d="M515.0,261.5 H588.4 M515.0,257.5 V265.5 M588.4,257.5 V265.5"/>
+<text class="v t1" x="594.4" y="265.5" text-anchor="start" >0.61</text>
+<text class="t2" x="376.0" y="284.5" text-anchor="end" ></text>
+<path class="s3" d="M384.0,274.0 h178.3 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-178.3 z"/>
+<path class="ci" d="M532.9,280.5 H597.6 M532.9,276.5 V284.5 M597.6,276.5 V284.5"/>
+<text class="v t1" x="603.6" y="284.5" text-anchor="start" >0.66</text>
+<text class="t2" x="376.0" y="303.5" text-anchor="end" ></text>
+<path class="s3" d="M384.0,293.0 h200.4 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-200.4 z"/>
+<path class="ci" d="M556.0,299.5 H616.9 M556.0,295.5 V303.5 M616.9,295.5 V303.5"/>
+<text class="v t1" x="622.9" y="303.5" text-anchor="start" >0.74</text>
+<text class="t2" x="376.0" y="322.5" text-anchor="end" ></text>
+<path class="s4" d="M384.0,312.0 h194.0 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-194.0 z"/>
+<path class="ci" d="M549.9,318.5 H609.6 M549.9,314.5 V322.5 M609.6,314.5 V322.5"/>
+<text class="v t1" x="615.6" y="322.5" text-anchor="start" >0.72</text>
+<text class="t2" x="376.0" y="341.5" text-anchor="end" ></text>
+<path class="s4" d="M384.0,331.0 h185.9 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-185.9 z"/>
+<path class="ci" d="M543.0,337.5 H603.4 M543.0,333.5 V341.5 M603.4,333.5 V341.5"/>
+<text class="v t1" x="609.4" y="341.5" text-anchor="start" >0.69</text>
+<text class="t3" x="24.0" y="380.0" text-anchor="start" >76 calls from 8 synthetic sandbox tasks. Whiskers: 95% bootstrap CIs.</text>
 </svg>

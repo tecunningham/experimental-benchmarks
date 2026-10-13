@@ -36,9 +36,8 @@ c.legend(24 + 84, 70, LEGEND + ([("baseline", "neutral")] if blind else []))
 end = hbars(c, 24, 94, 340, qrows, 0.6, lambda v: f"{v:.2f}", cis=qcis, bh=13, gap=6, ticks=3)
 hbars(c, 384, 94, 320, [("", score[m][0], TIER_CLASS[TIER[m]]) for m, _ in models], 8, lambda v: f"{v:.1f}",
       cis=[score[m][1:] for m, _ in models], label_w=0, bh=13, gap=6)
-c.text(24, end + 12, f"{len(grades)} tool calls from 75 real agent sessions (Jun–Sep 2026). "
-                     "“Questions only”: a model shown just the questions, no session or call.", "t3")
-c.text(24, end + 28, "Whiskers: 95% bootstrap CIs over tool calls.", "t3")
+c.text(24, end + 12, f"{len(grades)} tool calls from 75 real agent sessions (Jun–Sep 2026). Whiskers: 95% bootstrap CIs.", "t3")
+c.text(24, end + 28, "“Questions only”: Opus 5.5 shown just the questions, with no session or call (leakage baseline).", "t3")
 c.h = int(end + 42)
 (OUT / "headline.svg").write_text(c.svg())
 

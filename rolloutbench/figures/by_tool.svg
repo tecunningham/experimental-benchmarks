@@ -1,62 +1,205 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="720" height="190" viewBox="0 0 720 190" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="454" viewBox="0 0 720 454" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">
 <style>
 .bg{fill:#fcfcfb}.t1{fill:#0b0b0b}.t2{fill:#52514e}.t3{fill:#8a8984}.grid{stroke:#e4e3df}
 .s1{fill:#2a78d6}.s2{fill:#eb6834}.s3{fill:#1baf7a}.neutral{fill:#b9b8b2}.ref{stroke:#52514e}.ci{stroke:#0b0b0b;stroke-width:1.5;fill:none}
 .s4{fill:#eda100}.line-s1{stroke:#2a78d6}.line-s2{stroke:#eb6834}.line-s3{stroke:#1baf7a}.line-s4{stroke:#eda100}
-.heat{fill:#2a78d6}.tw{fill:#ffffff}
+.heat{fill:#2a78d6}.tw{fill:#ffffff}.cil{stroke:#8a8984;stroke-width:1}
 .d1{fill:#2a78d6;stroke:#fcfcfb}.d2{fill:#eb6834;stroke:#fcfcfb}.d3{fill:#1baf7a;stroke:#fcfcfb}.d4{fill:#eda100;stroke:#fcfcfb}
 @media (prefers-color-scheme: dark){.bg{fill:#1a1a19}.t1{fill:#f0efec}.t2{fill:#c3c2b7}.t3{fill:#8f8e88}
-.grid{stroke:#33332f}.s1{fill:#3987e5}.s2{fill:#d95926}.s3{fill:#199e70}.neutral{fill:#5a5954}.ref{stroke:#c3c2b7}.ci{stroke:#f0efec}.line-s1{stroke:#3987e5}.line-s2{stroke:#d95926}.line-s3{stroke:#199e70}.s4{fill:#c98500}.line-s4{stroke:#c98500}.heat{fill:#3987e5}
+.grid{stroke:#33332f}.s1{fill:#3987e5}.s2{fill:#d95926}.s3{fill:#199e70}.neutral{fill:#5a5954}.ref{stroke:#c3c2b7}.ci{stroke:#f0efec}.line-s1{stroke:#3987e5}.line-s2{stroke:#d95926}.line-s3{stroke:#199e70}.s4{fill:#c98500}.line-s4{stroke:#c98500}.heat{fill:#3987e5}.cil{stroke:#8f8e88}
 .d1{fill:#3987e5;stroke:#1a1a19}.d2{fill:#d95926;stroke:#1a1a19}.d3{fill:#199e70;stroke:#1a1a19}.d4{fill:#c98500;stroke:#1a1a19}}
 text{font-size:12px}.h{font-size:15px;font-weight:600}.v{font-size:11px;font-weight:600}.tick{font-size:10px}
 </style>
-<rect class="bg" width="720" height="190" rx="8"/>
+<rect class="bg" width="720" height="454" rx="8"/>
 <text class="h t1" x="24.0" y="30.0" text-anchor="start" >Judge score by kind of tool call (0–10, darker = better)</text>
 <text class="t2" x="24.0" y="48.0" text-anchor="start" >Templated results (sub-agent reports, job status) are easiest; live world state (APIs, web) is hardest</text>
 <text class="t2" x="157.0" y="80.0" text-anchor="middle" >GPU job (40)</text>
 <text class="t2" x="255.0" y="80.0" text-anchor="middle" >sub-agent (30)</text>
 <text class="t2" x="353.0" y="80.0" text-anchor="middle" >shell (70)</text>
-<text class="t2" x="451.0" y="80.0" text-anchor="middle" >web (40)</text>
-<text class="t2" x="549.0" y="80.0" text-anchor="middle" >file read (25)</text>
+<text class="t2" x="451.0" y="80.0" text-anchor="middle" >file read (25)</text>
+<text class="t2" x="549.0" y="80.0" text-anchor="middle" >web (40)</text>
 <text class="t2" x="647.0" y="80.0" text-anchor="middle" >API call (40)</text>
-<text class="t2" x="100.0" y="104.0" text-anchor="end" >Haiku 5.5</text>
-<rect class="heat" x="109" y="89" width="96" height="22" rx="3" fill-opacity="0.56"/>
-<text class="v tw" x="157.0" y="104.0" text-anchor="middle" >4.6</text>
-<rect class="heat" x="207" y="89" width="96" height="22" rx="3" fill-opacity="0.51"/>
-<text class="v t1" x="255.0" y="104.0" text-anchor="middle" >4.3</text>
-<rect class="heat" x="305" y="89" width="96" height="22" rx="3" fill-opacity="0.29"/>
-<text class="v t1" x="353.0" y="104.0" text-anchor="middle" >2.8</text>
-<rect class="heat" x="403" y="89" width="96" height="22" rx="3" fill-opacity="0.23"/>
-<text class="v t1" x="451.0" y="104.0" text-anchor="middle" >2.5</text>
-<rect class="heat" x="501" y="89" width="96" height="22" rx="3" fill-opacity="0.35"/>
-<text class="v t1" x="549.0" y="104.0" text-anchor="middle" >3.2</text>
-<rect class="heat" x="599" y="89" width="96" height="22" rx="3" fill-opacity="0.19"/>
-<text class="v t1" x="647.0" y="104.0" text-anchor="middle" >2.2</text>
-<text class="t2" x="100.0" y="128.0" text-anchor="end" >Sonnet 5.5</text>
-<rect class="heat" x="109" y="113" width="96" height="22" rx="3" fill-opacity="0.80"/>
-<text class="v tw" x="157.0" y="128.0" text-anchor="middle" >6.2</text>
-<rect class="heat" x="207" y="113" width="96" height="22" rx="3" fill-opacity="0.64"/>
+<text class="t2" x="100.0" y="104.0" text-anchor="end" >Haiku 4.5</text>
+<rect class="heat" x="109" y="89" width="96" height="22" rx="3" fill-opacity="0.52"/>
+<text class="v t1" x="157.0" y="104.0" text-anchor="middle" >4.3</text>
+<rect class="heat" x="207" y="89" width="96" height="22" rx="3" fill-opacity="0.33"/>
+<text class="v t1" x="255.0" y="104.0" text-anchor="middle" >3.1</text>
+<rect class="heat" x="305" y="89" width="96" height="22" rx="3" fill-opacity="0.39"/>
+<text class="v t1" x="353.0" y="104.0" text-anchor="middle" >3.5</text>
+<rect class="heat" x="403" y="89" width="96" height="22" rx="3" fill-opacity="0.33"/>
+<text class="v t1" x="451.0" y="104.0" text-anchor="middle" >3.1</text>
+<rect class="heat" x="501" y="89" width="96" height="22" rx="3" fill-opacity="0.26"/>
+<text class="v t1" x="549.0" y="104.0" text-anchor="middle" >2.7</text>
+<rect class="heat" x="599" y="89" width="96" height="22" rx="3" fill-opacity="0.15"/>
+<text class="v t1" x="647.0" y="104.0" text-anchor="middle" >1.9</text>
+<text class="t2" x="100.0" y="128.0" text-anchor="end" >Haiku 5.5</text>
+<rect class="heat" x="109" y="113" width="96" height="22" rx="3" fill-opacity="0.58"/>
+<text class="v tw" x="157.0" y="128.0" text-anchor="middle" >4.8</text>
+<rect class="heat" x="207" y="113" width="96" height="22" rx="3" fill-opacity="0.65"/>
 <text class="v tw" x="255.0" y="128.0" text-anchor="middle" >5.2</text>
-<rect class="heat" x="305" y="113" width="96" height="22" rx="3" fill-opacity="0.56"/>
-<text class="v tw" x="353.0" y="128.0" text-anchor="middle" >4.6</text>
-<rect class="heat" x="403" y="113" width="96" height="22" rx="3" fill-opacity="0.46"/>
-<text class="v t1" x="451.0" y="128.0" text-anchor="middle" >4.0</text>
-<rect class="heat" x="501" y="113" width="96" height="22" rx="3" fill-opacity="0.47"/>
-<text class="v t1" x="549.0" y="128.0" text-anchor="middle" >4.0</text>
+<rect class="heat" x="305" y="113" width="96" height="22" rx="3" fill-opacity="0.36"/>
+<text class="v t1" x="353.0" y="128.0" text-anchor="middle" >3.3</text>
+<rect class="heat" x="403" y="113" width="96" height="22" rx="3" fill-opacity="0.40"/>
+<text class="v t1" x="451.0" y="128.0" text-anchor="middle" >3.6</text>
+<rect class="heat" x="501" y="113" width="96" height="22" rx="3" fill-opacity="0.29"/>
+<text class="v t1" x="549.0" y="128.0" text-anchor="middle" >2.9</text>
 <rect class="heat" x="599" y="113" width="96" height="22" rx="3" fill-opacity="0.25"/>
 <text class="v t1" x="647.0" y="128.0" text-anchor="middle" >2.6</text>
-<text class="t2" x="100.0" y="152.0" text-anchor="end" >Opus 5.5</text>
-<rect class="heat" x="109" y="137" width="96" height="22" rx="3" fill-opacity="0.84"/>
-<text class="v tw" x="157.0" y="152.0" text-anchor="middle" >6.5</text>
-<rect class="heat" x="207" y="137" width="96" height="22" rx="3" fill-opacity="0.81"/>
-<text class="v tw" x="255.0" y="152.0" text-anchor="middle" >6.2</text>
-<rect class="heat" x="305" y="137" width="96" height="22" rx="3" fill-opacity="0.67"/>
-<text class="v tw" x="353.0" y="152.0" text-anchor="middle" >5.4</text>
-<rect class="heat" x="403" y="137" width="96" height="22" rx="3" fill-opacity="0.64"/>
-<text class="v tw" x="451.0" y="152.0" text-anchor="middle" >5.2</text>
-<rect class="heat" x="501" y="137" width="96" height="22" rx="3" fill-opacity="0.62"/>
-<text class="v tw" x="549.0" y="152.0" text-anchor="middle" >5.0</text>
-<rect class="heat" x="599" y="137" width="96" height="22" rx="3" fill-opacity="0.43"/>
-<text class="v t1" x="647.0" y="152.0" text-anchor="middle" >3.8</text>
-<text class="t3" x="24.0" y="178.0" text-anchor="start" >Per-category n is 25–70, so differences of ~1 point within a column are within noise.</text>
+<text class="t2" x="100.0" y="152.0" text-anchor="end" >Sonnet 4.5</text>
+<rect class="heat" x="109" y="137" width="96" height="22" rx="3" fill-opacity="0.55"/>
+<text class="v tw" x="157.0" y="152.0" text-anchor="middle" >4.6</text>
+<rect class="heat" x="207" y="137" width="96" height="22" rx="3" fill-opacity="0.28"/>
+<text class="v t1" x="255.0" y="152.0" text-anchor="middle" >2.8</text>
+<rect class="heat" x="305" y="137" width="96" height="22" rx="3" fill-opacity="0.47"/>
+<text class="v t1" x="353.0" y="152.0" text-anchor="middle" >4.0</text>
+<rect class="heat" x="403" y="137" width="96" height="22" rx="3" fill-opacity="0.50"/>
+<text class="v t1" x="451.0" y="152.0" text-anchor="middle" >4.2</text>
+<rect class="heat" x="501" y="137" width="96" height="22" rx="3" fill-opacity="0.26"/>
+<text class="v t1" x="549.0" y="152.0" text-anchor="middle" >2.7</text>
+<rect class="heat" x="599" y="137" width="96" height="22" rx="3" fill-opacity="0.21"/>
+<text class="v t1" x="647.0" y="152.0" text-anchor="middle" >2.3</text>
+<text class="t2" x="100.0" y="176.0" text-anchor="end" >Sonnet 4.6</text>
+<rect class="heat" x="109" y="161" width="96" height="22" rx="3" fill-opacity="0.75"/>
+<text class="v tw" x="157.0" y="176.0" text-anchor="middle" >5.9</text>
+<rect class="heat" x="207" y="161" width="96" height="22" rx="3" fill-opacity="0.36"/>
+<text class="v t1" x="255.0" y="176.0" text-anchor="middle" >3.3</text>
+<rect class="heat" x="305" y="161" width="96" height="22" rx="3" fill-opacity="0.48"/>
+<text class="v t1" x="353.0" y="176.0" text-anchor="middle" >4.1</text>
+<rect class="heat" x="403" y="161" width="96" height="22" rx="3" fill-opacity="0.49"/>
+<text class="v t1" x="451.0" y="176.0" text-anchor="middle" >4.2</text>
+<rect class="heat" x="501" y="161" width="96" height="22" rx="3" fill-opacity="0.30"/>
+<text class="v t1" x="549.0" y="176.0" text-anchor="middle" >2.9</text>
+<rect class="heat" x="599" y="161" width="96" height="22" rx="3" fill-opacity="0.21"/>
+<text class="v t1" x="647.0" y="176.0" text-anchor="middle" >2.3</text>
+<text class="t2" x="100.0" y="200.0" text-anchor="end" >Sonnet 5</text>
+<rect class="heat" x="109" y="185" width="96" height="22" rx="3" fill-opacity="0.79"/>
+<text class="v tw" x="157.0" y="200.0" text-anchor="middle" >6.1</text>
+<rect class="heat" x="207" y="185" width="96" height="22" rx="3" fill-opacity="0.66"/>
+<text class="v tw" x="255.0" y="200.0" text-anchor="middle" >5.3</text>
+<rect class="heat" x="305" y="185" width="96" height="22" rx="3" fill-opacity="0.48"/>
+<text class="v t1" x="353.0" y="200.0" text-anchor="middle" >4.1</text>
+<rect class="heat" x="403" y="185" width="96" height="22" rx="3" fill-opacity="0.47"/>
+<text class="v t1" x="451.0" y="200.0" text-anchor="middle" >4.0</text>
+<rect class="heat" x="501" y="185" width="96" height="22" rx="3" fill-opacity="0.32"/>
+<text class="v t1" x="549.0" y="200.0" text-anchor="middle" >3.0</text>
+<rect class="heat" x="599" y="185" width="96" height="22" rx="3" fill-opacity="0.22"/>
+<text class="v t1" x="647.0" y="200.0" text-anchor="middle" >2.4</text>
+<text class="t2" x="100.0" y="224.0" text-anchor="end" >Sonnet 5.5</text>
+<rect class="heat" x="109" y="209" width="96" height="22" rx="3" fill-opacity="0.81"/>
+<text class="v tw" x="157.0" y="224.0" text-anchor="middle" >6.2</text>
+<rect class="heat" x="207" y="209" width="96" height="22" rx="3" fill-opacity="0.71"/>
+<text class="v tw" x="255.0" y="224.0" text-anchor="middle" >5.6</text>
+<rect class="heat" x="305" y="209" width="96" height="22" rx="3" fill-opacity="0.58"/>
+<text class="v tw" x="353.0" y="224.0" text-anchor="middle" >4.7</text>
+<rect class="heat" x="403" y="209" width="96" height="22" rx="3" fill-opacity="0.46"/>
+<text class="v t1" x="451.0" y="224.0" text-anchor="middle" >4.0</text>
+<rect class="heat" x="501" y="209" width="96" height="22" rx="3" fill-opacity="0.51"/>
+<text class="v t1" x="549.0" y="224.0" text-anchor="middle" >4.3</text>
+<rect class="heat" x="599" y="209" width="96" height="22" rx="3" fill-opacity="0.28"/>
+<text class="v t1" x="647.0" y="224.0" text-anchor="middle" >2.8</text>
+<text class="t2" x="100.0" y="248.0" text-anchor="end" >Opus 4.5</text>
+<rect class="heat" x="109" y="233" width="96" height="22" rx="3" fill-opacity="0.66"/>
+<text class="v tw" x="157.0" y="248.0" text-anchor="middle" >5.3</text>
+<rect class="heat" x="207" y="233" width="96" height="22" rx="3" fill-opacity="0.44"/>
+<text class="v t1" x="255.0" y="248.0" text-anchor="middle" >3.9</text>
+<rect class="heat" x="305" y="233" width="96" height="22" rx="3" fill-opacity="0.39"/>
+<text class="v t1" x="353.0" y="248.0" text-anchor="middle" >3.5</text>
+<rect class="heat" x="403" y="233" width="96" height="22" rx="3" fill-opacity="0.41"/>
+<text class="v t1" x="451.0" y="248.0" text-anchor="middle" >3.7</text>
+<rect class="heat" x="501" y="233" width="96" height="22" rx="3" fill-opacity="0.33"/>
+<text class="v t1" x="549.0" y="248.0" text-anchor="middle" >3.1</text>
+<rect class="heat" x="599" y="233" width="96" height="22" rx="3" fill-opacity="0.20"/>
+<text class="v t1" x="647.0" y="248.0" text-anchor="middle" >2.3</text>
+<text class="t2" x="100.0" y="272.0" text-anchor="end" >Opus 4.6</text>
+<rect class="heat" x="109" y="257" width="96" height="22" rx="3" fill-opacity="0.59"/>
+<text class="v tw" x="157.0" y="272.0" text-anchor="middle" >4.8</text>
+<rect class="heat" x="207" y="257" width="96" height="22" rx="3" fill-opacity="0.45"/>
+<text class="v t1" x="255.0" y="272.0" text-anchor="middle" >3.9</text>
+<rect class="heat" x="305" y="257" width="96" height="22" rx="3" fill-opacity="0.45"/>
+<text class="v t1" x="353.0" y="272.0" text-anchor="middle" >3.9</text>
+<rect class="heat" x="403" y="257" width="96" height="22" rx="3" fill-opacity="0.48"/>
+<text class="v t1" x="451.0" y="272.0" text-anchor="middle" >4.1</text>
+<rect class="heat" x="501" y="257" width="96" height="22" rx="3" fill-opacity="0.42"/>
+<text class="v t1" x="549.0" y="272.0" text-anchor="middle" >3.7</text>
+<rect class="heat" x="599" y="257" width="96" height="22" rx="3" fill-opacity="0.25"/>
+<text class="v t1" x="647.0" y="272.0" text-anchor="middle" >2.6</text>
+<text class="t2" x="100.0" y="296.0" text-anchor="end" >Opus 4.7</text>
+<rect class="heat" x="109" y="281" width="96" height="22" rx="3" fill-opacity="0.77"/>
+<text class="v tw" x="157.0" y="296.0" text-anchor="middle" >6.0</text>
+<rect class="heat" x="207" y="281" width="96" height="22" rx="3" fill-opacity="0.65"/>
+<text class="v tw" x="255.0" y="296.0" text-anchor="middle" >5.2</text>
+<rect class="heat" x="305" y="281" width="96" height="22" rx="3" fill-opacity="0.54"/>
+<text class="v t1" x="353.0" y="296.0" text-anchor="middle" >4.5</text>
+<rect class="heat" x="403" y="281" width="96" height="22" rx="3" fill-opacity="0.31"/>
+<text class="v t1" x="451.0" y="296.0" text-anchor="middle" >3.0</text>
+<rect class="heat" x="501" y="281" width="96" height="22" rx="3" fill-opacity="0.26"/>
+<text class="v t1" x="549.0" y="296.0" text-anchor="middle" >2.7</text>
+<rect class="heat" x="599" y="281" width="96" height="22" rx="3" fill-opacity="0.25"/>
+<text class="v t1" x="647.0" y="296.0" text-anchor="middle" >2.6</text>
+<text class="t2" x="100.0" y="320.0" text-anchor="end" >Opus 4.8</text>
+<rect class="heat" x="109" y="305" width="96" height="22" rx="3" fill-opacity="0.73"/>
+<text class="v tw" x="157.0" y="320.0" text-anchor="middle" >5.8</text>
+<rect class="heat" x="207" y="305" width="96" height="22" rx="3" fill-opacity="0.68"/>
+<text class="v tw" x="255.0" y="320.0" text-anchor="middle" >5.4</text>
+<rect class="heat" x="305" y="305" width="96" height="22" rx="3" fill-opacity="0.49"/>
+<text class="v t1" x="353.0" y="320.0" text-anchor="middle" >4.1</text>
+<rect class="heat" x="403" y="305" width="96" height="22" rx="3" fill-opacity="0.46"/>
+<text class="v t1" x="451.0" y="320.0" text-anchor="middle" >4.0</text>
+<rect class="heat" x="501" y="305" width="96" height="22" rx="3" fill-opacity="0.31"/>
+<text class="v t1" x="549.0" y="320.0" text-anchor="middle" >3.0</text>
+<rect class="heat" x="599" y="305" width="96" height="22" rx="3" fill-opacity="0.25"/>
+<text class="v t1" x="647.0" y="320.0" text-anchor="middle" >2.6</text>
+<text class="t2" x="100.0" y="344.0" text-anchor="end" >Opus 5</text>
+<rect class="heat" x="109" y="329" width="96" height="22" rx="3" fill-opacity="0.78"/>
+<text class="v tw" x="157.0" y="344.0" text-anchor="middle" >6.0</text>
+<rect class="heat" x="207" y="329" width="96" height="22" rx="3" fill-opacity="0.60"/>
+<text class="v tw" x="255.0" y="344.0" text-anchor="middle" >4.9</text>
+<rect class="heat" x="305" y="329" width="96" height="22" rx="3" fill-opacity="0.56"/>
+<text class="v tw" x="353.0" y="344.0" text-anchor="middle" >4.6</text>
+<rect class="heat" x="403" y="329" width="96" height="22" rx="3" fill-opacity="0.49"/>
+<text class="v t1" x="451.0" y="344.0" text-anchor="middle" >4.2</text>
+<rect class="heat" x="501" y="329" width="96" height="22" rx="3" fill-opacity="0.36"/>
+<text class="v t1" x="549.0" y="344.0" text-anchor="middle" >3.3</text>
+<rect class="heat" x="599" y="329" width="96" height="22" rx="3" fill-opacity="0.28"/>
+<text class="v t1" x="647.0" y="344.0" text-anchor="middle" >2.8</text>
+<text class="t2" x="100.0" y="368.0" text-anchor="end" >Opus 5.5</text>
+<rect class="heat" x="109" y="353" width="96" height="22" rx="3" fill-opacity="0.83"/>
+<text class="v tw" x="157.0" y="368.0" text-anchor="middle" >6.4</text>
+<rect class="heat" x="207" y="353" width="96" height="22" rx="3" fill-opacity="0.78"/>
+<text class="v tw" x="255.0" y="368.0" text-anchor="middle" >6.1</text>
+<rect class="heat" x="305" y="353" width="96" height="22" rx="3" fill-opacity="0.66"/>
+<text class="v tw" x="353.0" y="368.0" text-anchor="middle" >5.3</text>
+<rect class="heat" x="403" y="353" width="96" height="22" rx="3" fill-opacity="0.60"/>
+<text class="v tw" x="451.0" y="368.0" text-anchor="middle" >4.9</text>
+<rect class="heat" x="501" y="353" width="96" height="22" rx="3" fill-opacity="0.61"/>
+<text class="v tw" x="549.0" y="368.0" text-anchor="middle" >4.9</text>
+<rect class="heat" x="599" y="353" width="96" height="22" rx="3" fill-opacity="0.39"/>
+<text class="v t1" x="647.0" y="368.0" text-anchor="middle" >3.5</text>
+<text class="t2" x="100.0" y="392.0" text-anchor="end" >Fable 5</text>
+<rect class="heat" x="109" y="377" width="96" height="22" rx="3" fill-opacity="0.77"/>
+<text class="v tw" x="157.0" y="392.0" text-anchor="middle" >6.0</text>
+<rect class="heat" x="207" y="377" width="96" height="22" rx="3" fill-opacity="0.76"/>
+<text class="v tw" x="255.0" y="392.0" text-anchor="middle" >6.0</text>
+<rect class="heat" x="305" y="377" width="96" height="22" rx="3" fill-opacity="0.55"/>
+<text class="v t1" x="353.0" y="392.0" text-anchor="middle" >4.6</text>
+<rect class="heat" x="403" y="377" width="96" height="22" rx="3" fill-opacity="0.55"/>
+<text class="v t1" x="451.0" y="392.0" text-anchor="middle" >4.6</text>
+<rect class="heat" x="501" y="377" width="96" height="22" rx="3" fill-opacity="0.29"/>
+<text class="v t1" x="549.0" y="392.0" text-anchor="middle" >2.9</text>
+<rect class="heat" x="599" y="377" width="96" height="22" rx="3" fill-opacity="0.34"/>
+<text class="v t1" x="647.0" y="392.0" text-anchor="middle" >3.2</text>
+<text class="t2" x="100.0" y="416.0" text-anchor="end" >Fable 5.1</text>
+<rect class="heat" x="109" y="401" width="96" height="22" rx="3" fill-opacity="0.83"/>
+<text class="v tw" x="157.0" y="416.0" text-anchor="middle" >6.4</text>
+<rect class="heat" x="207" y="401" width="96" height="22" rx="3" fill-opacity="0.68"/>
+<text class="v tw" x="255.0" y="416.0" text-anchor="middle" >5.4</text>
+<rect class="heat" x="305" y="401" width="96" height="22" rx="3" fill-opacity="0.58"/>
+<text class="v tw" x="353.0" y="416.0" text-anchor="middle" >4.7</text>
+<rect class="heat" x="403" y="401" width="96" height="22" rx="3" fill-opacity="0.56"/>
+<text class="v tw" x="451.0" y="416.0" text-anchor="middle" >4.6</text>
+<rect class="heat" x="501" y="401" width="96" height="22" rx="3" fill-opacity="0.50"/>
+<text class="v t1" x="549.0" y="416.0" text-anchor="middle" >4.2</text>
+<rect class="heat" x="599" y="401" width="96" height="22" rx="3" fill-opacity="0.35"/>
+<text class="v t1" x="647.0" y="416.0" text-anchor="middle" >3.3</text>
+<text class="t3" x="24.0" y="442.0" text-anchor="start" >Per-category n is 25–70, so differences of ~1 point within a column are within noise.</text>
 </svg>

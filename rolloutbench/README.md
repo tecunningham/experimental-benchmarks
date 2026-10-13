@@ -5,18 +5,22 @@ hide the result and ask the model to predict it.
 
 [← all benchmarks](../README.md) · [how it compares](../docs/comparison.md)
 
-<p align="center"><img src="figures/headline.svg" alt="RolloutBench on 249 real-world tool calls: judge score 3.2 / 4.4 / 5.3 out of 10 and outcome right 65% / 74% / 80% for Haiku / Sonnet / Opus, with 95% CIs" width="100%"></p>
+<p align="center"><img src="figures/headline.svg" alt="RolloutBench, 14 Claude models on 249 real-world tool calls: exact question score and independent judge score, with 95% CIs" width="100%"></p>
 
 ## Takeaways
 
-- **On real-world traces, predicting tool results is far from solved.** Across 249 tool calls from real agent
-  sessions (a person's workstation, an ML agent running GPU jobs), the best model scores 5.3/10. The spread
-  is wide: Haiku 3.2, Sonnet 4.4, Opus 5.3.
-- **Outcomes are easier than details.** Opus gets the basic outcome (succeeded or failed, found or not found)
-  right 80% of the time, but the specific numbers, names and contents much less often. That is the
-  continuous headroom.
+- **Predicting tool results on real-world traces is far from solved, and it separates models well.** Across
+  249 tool calls from real agent sessions, 14 Claude models span 46–74% accuracy on factual questions about
+  the result. Judge scores run from 3.1 to 5.1 out of 10, and newer generations score clearly higher.
+- **It tracks general capability closely.** Across the 13 models with an Epoch Capabilities Index score, the
+  correlation with ECI is r = 0.93 for the exact question score and r = 0.97 for the judge score.
+- **Graded exactly, no judge needed.** The main score comes from multiple-choice questions written from each
+  real result before any model predicts. The models answer with probabilities, and scoring is exact, as in
+  ReplyBench.
+  - The independent LLM judge gives the same ranking, and shows no favouritism to its own model family.
+  - A questions-only baseline shows how much the wording of the questions gives away.
 - **The live world is the hard part.** API responses and web content score lowest. In a synthetic sandbox
-  pilot, outputs that follow from code were nearly solved (similarity ≈ 0.9). This is why real-world traces
+  pilot, outputs that follow from code were nearly solved (similarity ≈ 0.9). That is why real-world traces
   matter, and it's the key difference from AgentWorldBench, which uses benchmark-task trajectories.
 
 ## Why
@@ -33,7 +37,7 @@ perfectly wouldn't need the tools at all; it could plan entirely in its head.
 
 | | |
 |---|---|
-| **Cheap** | It needs only one forward pass per tool call and no live environment. The real-trace test costs about $5–10 per model. |
+| **Cheap** | It needs only one forward pass per tool call and no live environment: a few hundred calls per model. |
 | **Real-world** | The traces come from real use, so the score measures exactly the predictions that matter for real decisions. |
 | **Unsaturatable** | A slightly better prediction is always possible. Scores are continuous, and the ceiling is the world's own noise, not 100%. |
 | **Decision-relevant** | A model that predicts better in a situation should be able to make better decisions there. |
@@ -86,60 +90,85 @@ people's actual work, not benchmark tasks:
     results are shown truncated to 600 characters.
   - The date.
   - The tool call itself.
-- **What it predicts.** The result the call returned, with no tools or internet.
-- **How it's graded.** A blind judge (Opus 5.5) sees the real result and all three predictions, shuffled and
-  anonymised. It scores each one 0–10 on the information that matters for the agent's next decision, and
-  marks whether the basic outcome is right (succeeded or failed, found or not found). String similarity is
-  reported as a check that doesn't rely on a judge.
-- **"Novel" items.** Agents often re-run the same call, for example polling a job's logs. To separate real
-  prediction from copying, the scorer adds a baseline that copies the last result from the same tool. "Novel"
-  items are the 202 where that baseline fails (similarity < 0.5).
+  - Never the result, and no tools or internet.
+- **Two ways of scoring.**
+  1. **Questions (main score, exact).**
+     - *Writing the questions.* Before any model predicts, Opus 5.5 reads each real result and writes 2–4
+       multiple-choice questions about what matters for the agent's next step: did it succeed, which error,
+       how many results, which item appears. That gives 930 questions in total, with the correct answer's
+       position shuffled.
+     - *Answering.* Each model gives a probability for every option.
+     - *Scoring.* Brier skill against uniform guessing (0 = chance, 1 = perfect) and accuracy, scored exactly
+       against the answer key ([`real/score_questions.py`](real/score_questions.py)).
+  2. **Free-text prediction plus judge (secondary).** Each model writes out the full predicted result. A judge
+     (Opus 5.5) grades each prediction *on its own* against the real result, 0–10, and marks whether the basic
+     outcome was right. Grades are cached per model, so adding a model never changes anyone else's score.
+- **Leakage check.** Opus 5.5 answers the questions with *no* session and *no* tool call. It gets 62% right,
+  so question wording and plausible-option priors give a fair amount away.
+  - We therefore also report a **hard-question** subset: the 454 questions where that questions-only
+    predictor puts less than 50% on the right answer.
+  - That subset is chosen using an Opus model, which may slightly understate Opus models' scores on it.
+- **"Novel" items.** Agents often re-run the same call, for example polling a job's logs. A "copy the last
+  result from the same tool" baseline flags the 202 items where the answer can't simply be copied from the
+  history. Judge scores on these novel items are in [`real/scores.md`](real/scores.md).
 
-| predictor | judge score, all (n=249) | judge score, novel (n=202) | outcome right (novel) | similarity (novel) |
-|---|---|---|---|---|
-| baseline: copy last result of same tool | – | – | – | 0.10 |
-| claude-haiku-5-5 | 3.16 ± 0.19 | 3.05 ± 0.19 | 67% | 0.32 |
-| claude-sonnet-5-5 | 4.39 ± 0.21 | 3.88 ± 0.21 | 72% | 0.41 |
-| claude-opus-5-5 | **5.27 ± 0.21** | **4.87 ± 0.22** | **78%** | **0.45** |
+**Results, 14 models** (95% bootstrap CIs over tool calls; best in bold):
 
-<p align="center"><img src="figures/by_tool.svg" alt="Judge score by tool category for three models: GPU job and sub-agent highest, API call lowest" width="100%"></p>
+| model | questions: Brier skill | questions: accuracy | hard questions: Brier skill | judge score (0–10) | outcome right |
+|---|---|---|---|---|---|
+| Haiku 4.5 | 0.08 [0.01, 0.14] | 46% [42%, 50%] | -0.06 [-0.15, 0.03] | 3.1 [2.8, 3.5] | 67% |
+| Haiku 5.5 | 0.15 [0.08, 0.21] | 51% [47%, 55%] | 0.04 [-0.05, 0.12] | 3.6 [3.2, 4.0] | 65% |
+| Sonnet 4.5 | 0.15 [0.08, 0.22] | 52% [48%, 56%] | 0.04 [-0.06, 0.12] | 3.5 [3.1, 3.9] | 68% |
+| Sonnet 4.6 | 0.21 [0.15, 0.27] | 55% [51%, 59%] | 0.07 [-0.02, 0.15] | 3.8 [3.4, 4.2] | 69% |
+| Sonnet 5 | 0.20 [0.15, 0.26] | 55% [51%, 59%] | 0.07 [0.00, 0.14] | 4.1 [3.7, 4.5] | 73% |
+| Sonnet 5.5 | 0.36 [0.30, 0.43] | 65% [61%, 69%] | 0.14 [0.06, 0.23] | 4.6 [4.2, 5.0] | 74% |
+| Opus 4.5 | 0.21 [0.15, 0.27] | 55% [51%, 59%] | 0.08 [0.00, 0.16] | 3.6 [3.3, 4.0] | 71% |
+| Opus 4.6 | 0.17 [0.11, 0.24] | 52% [48%, 56%] | 0.02 [-0.07, 0.11] | 3.8 [3.5, 4.2] | 70% |
+| Opus 4.7 | 0.25 [0.19, 0.32] | 58% [54%, 62%] | 0.08 [-0.00, 0.16] | 4.1 [3.7, 4.5] | 70% |
+| Opus 4.8 | 0.23 [0.18, 0.30] | 58% [54%, 62%] | 0.08 [0.01, 0.16] | 4.1 [3.7, 4.5] | 69% |
+| Opus 5 | 0.38 [0.32, 0.43] | 67% [63%, 71%] | 0.21 [0.14, 0.29] | 4.3 [4.0, 4.7] | 74% |
+| Opus 5.5 | **0.49 [0.44, 0.55]** | 74% [70%, 77%] | 0.23 [0.16, 0.31] | **5.1 [4.7, 5.5]** | 79% |
+| Fable 5 | 0.40 [0.34, 0.45] | 67% [63%, 71%] | 0.22 [0.15, 0.29] | 4.5 [4.1, 4.9] | 74% |
+| Fable 5.1 | 0.46 [0.41, 0.52] | 73% [69%, 77%] | **0.28 [0.21, 0.35]** | 4.7 [4.3, 5.1] | 77% |
+| *questions only (Opus 5.5, no session or call)* | 0.33 [0.28, 0.38] | 62% [58%, 66%] | -0.12 [-0.17, -0.08] | – | – |
 
-The same breakdown restricted to novel items (where the answer can't be copied from the history):
+**Correlation with general capability.** Across the 13 models with an Epoch Capabilities Index (ECI) score:
 
-| predictor | shell (59) | API call (35) | web (29) | GPU job (27) | sub-agent (26) | file read (24) | human reply (2) |
-|---|---|---|---|---|---|---|---|
-| claude-haiku-5-5 | 2.7 | 1.9 | 2.2 | 4.8 | 4.5 | 3.4 | 1.0 |
-| claude-sonnet-5-5 | 4.0 | 2.3 | 3.4 | 5.2 | 5.1 | 3.8 | 1.0 |
-| claude-opus-5-5 | 4.9 | 3.1 | 5.0 | 5.7 | 6.3 | 4.8 | 3.5 |
+<p align="center"><img src="figures/eci.svg" alt="RolloutBench question score and judge score against ECI across 13 Claude models: Pearson r 0.93 and 0.97" width="100%"></p>
 
-**Examples (Opus 5.5).**
+**By kind of tool call** (judge score):
+
+<p align="center"><img src="figures/by_tool.svg" alt="Heatmap of judge score by model and tool category: GPU job and sub-agent highest, API call and web lowest" width="100%"></p>
+
+**Examples (Opus 5.5, free-text prediction).**
 - ✅ `WebFetch` of a GitHub API directory listing for Hyprland v0.54.3 → it predicted the single file
   `SetUtils.hpp`. Score 10.
 - ✅ Fetching a Hugging Face docs page → it predicted the HTTP 429 rate-limit error, inferred from the recent
   history. Score 10.
 - ❌ `hf_jobs ps` → it predicted a table with one running job. In fact there were "No running jobs found",
   which is exactly the fact that matters for the next decision. Score 0.
-- ❌ `grep` for profiles in `~/.codex/config.toml` → it predicted plausible profile blocks. The real output was
-  empty. Score 0.
 
 **What this shows.**
-- **Far from saturated, and well spread.** On real traces the best model scores about 5/10, and the gap from
-  Haiku to Opus (3.2 → 5.3) is many times the standard error. Compare the sandbox pilot below, where computation
-  steps were nearly solved.
-- **Outcomes are easier than details.** Opus gets the basic outcome right 78% of the time, but the specific
-  numbers, names and contents much less often. That is the continuous headroom.
-- **Hardest categories.** API calls (Hub search results, repo details) and web content need knowledge of the
-  current state of the world, so all models score lowest there.
-- **Easiest categories.** Sub-agent reports and GPU-job status messages are more templated, so all models
-  score highest there.
-- **The two metrics agree.** The judge and string similarity rank the models the same way.
+- **Well spread, and the spread tracks capability.**
+  - The 5.x generation (Sonnet 5.5, Opus 5 and 5.5, Fable 5 and 5.1) is clearly ahead of the 4.x models on
+    every metric.
+  - Within a generation, larger tiers usually score higher.
+- **Outcomes are easier than details.** Even the best models get the basic outcome right only about 80% of
+  the time, and the specific facts far less often.
+- **On hard questions, Fable 5.1 leads** (Brier skill 0.28), ahead of Opus 5.5 (0.23) and Fable 5 (0.22).
+  Older models are near chance there.
+- **No judge self-preference.** Across models, the judge score correlates with the judge-free string
+  similarity at r = 0.95. The Opus judge's own family sits exactly on that line (mean residual 0.00).
 
 Reproduce:
 ```bash
-python3 rolloutbench/real/build.py                       # download pinned sources, build items
-python3 rolloutbench/real/run.py --model claude-opus-5-5  # predict (repeat per model)
-python3 rolloutbench/real/judge.py                       # blind judge over all models' predictions
-python3 rolloutbench/real/score.py                       # tables above
+python3 rolloutbench/real/build.py                                  # download pinned sources, build items
+python3 rolloutbench/real/make_questions.py                         # write questions from the real results
+python3 rolloutbench/real/run_questions.py --model claude-opus-5-5   # answer questions (repeat per model; --blind for the leakage check)
+python3 rolloutbench/real/score_questions.py                        # exact question scores
+python3 rolloutbench/real/run.py --model claude-opus-5-5             # free-text predictions (repeat per model)
+python3 rolloutbench/real/judge.py && python3 rolloutbench/real/score.py   # independent judge grades + scores
+python3 common/eci_summary.py && python3 rolloutbench/make_figures.py      # ECI correlations, figures
 ```
 
 ## Sandbox pilot (synthetic traces)
@@ -149,12 +178,9 @@ The first prototype used traces from a Claude agent (Haiku 5.5, Bash only) worki
 
 <p align="center"><img src="figures/sandbox.svg" alt="Sandbox pilot: similarity about 0.9 for outputs that follow from code, 0.59-0.74 for outputs that depend on the machine" width="100%"></p>
 
-| model | similarity (all) | similarity (non-trivial) | exact (all) |
-|---|---|---|---|
-| baseline: always "(no output)" | 0.372 | 0.117 | 0.289 |
-| claude-haiku-5-5 | 0.735 | 0.756 | 0.461 |
-| claude-sonnet-5-5 | 0.834 | 0.766 | 0.553 |
-| claude-opus-5-5 | **0.881** | **0.832** | 0.553 |
+All 14 models (similarity on the 54 non-trivial steps): Haiku 4.5 0.67, Haiku 5.5 0.76, Sonnet 4.5 0.72,
+Sonnet 4.6 0.77, Sonnet 5 0.69, Sonnet 5.5 0.77, Opus 4.5 0.75, Opus 4.6 0.71, Opus 4.7 0.75, Opus 4.8 0.75,
+Opus 5 0.78, Opus 5.5 **0.83**, Fable 5 0.82, Fable 5.1 0.80. Full table: [`results/scores.md`](results/scores.md).
 
 **What it showed.**
 - When the output follows from code in the trace (SQL aggregates, the sum of primes below 10⁶), all models
@@ -209,14 +235,17 @@ ground truth from **real-world** agent sessions.
 2. **Fill in the missing tools.** Many more human replies (emails, review comments) using ReplyBench
    scoring; biology, via partner labs' electronic lab notebooks; GPU jobs scored on final metrics (loss,
    accuracy) rather than status messages.
-3. **Score facts, not strings.** Long outputs such as web pages and logs need structured targets: the exit
-   code, key numbers, pass/fail, the gist of a reply. Use probabilistic answers scored by log score, with an
-   LLM judge for free text. Weight each step by how surprising it is to a weak baseline, and drop trivial steps
-   such as file writes.
+3. **Sharpen the questions.** Exact question-based scoring is in place; the questions themselves can be
+   better.
+   - Filter out questions that a questions-only model can answer, at generation time.
+   - Use a question-writer from another model family.
+   - Run a questions-only baseline for every model, not just Opus 5.5.
+   - Add numeric questions scored with a log score.
 4. **Measure the noise ceiling.** Re-run reproducible calls to measure irreducible nondeterminism (timestamps,
    hashes, noise between training seeds). Report each score as a fraction of the ceiling.
-5. **Validate the claim.** Check that RolloutBench scores across models predict real agentic success, such as
-   task time horizon. A stronger test: run agents on *simulated* tool results and see how far they get.
+5. **Validate the claim further.** The scores already track ECI closely (r = 0.93–0.97). Next, check them
+   against agentic success directly (e.g. METR time horizon), and run agents on *simulated* tool results to
+   see how far they get.
 6. **Report a cost curve.** Plot score against thinking budget, and against offline retrieval over a frozen
    snapshot of the world before the trace's date.
 
@@ -224,8 +253,15 @@ ground truth from **real-world** agent sessions.
 
 - **Small, narrow sources.** 249 calls come from two sources, one of them a single person's workstation.
   There are only 4 human replies.
-- **Judge bias.** The judge is Opus 5.5, so it may favour Opus-style predictions. String similarity gives the
-  same ranking, but the scores should be cross-checked with a judge from another model family.
+- **One model writes the questions and judges.** Opus 5.5 writes the questions, judges the free-text
+  predictions, and is the questions-only baseline. We found no judge self-preference (see above), but the
+  questions could still suit its way of thinking. A question-writer from another model family would be a good
+  cross-check.
+- **Question leakage.** Questions-only Opus 5.5 gets 62% right, so part of the "all questions" score is
+  multiple-choice skill and calibration rather than knowledge of the result. The hard-question subset and the
+  judge score are the cleaner measures.
+- **Only Claude models.** No other providers' models are available in this environment, and ECI correlations
+  over 13 models from one family have wide intervals.
 - **Truncation.** Long results are cut to 4,000 characters for grading and earlier results to 600 characters
   in the context. The model sometimes can't see information that the real agent saw.
 - **Contamination.** The sessions were public on Hugging Face from June 2026, around the training cutoff.
@@ -234,4 +270,3 @@ ground truth from **real-world** agent sessions.
   different dates.
 
 Reproduce the sandbox pilot with `rolloutbench/make_traces.py`, `run.py` and `score.py`.
-Regenerate the figures with `python3 rolloutbench/make_figures.py`.

@@ -1,16 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="720" height="342" viewBox="0 0 720 342" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="760" viewBox="0 0 720 760" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">
 <style>
 .bg{fill:#fcfcfb}.t1{fill:#0b0b0b}.t2{fill:#52514e}.t3{fill:#8a8984}.grid{stroke:#e4e3df}
 .s1{fill:#2a78d6}.s2{fill:#eb6834}.s3{fill:#1baf7a}.neutral{fill:#b9b8b2}.ref{stroke:#52514e}.ci{stroke:#0b0b0b;stroke-width:1.5;fill:none}
 .s4{fill:#eda100}.line-s1{stroke:#2a78d6}.line-s2{stroke:#eb6834}.line-s3{stroke:#1baf7a}.line-s4{stroke:#eda100}
-.heat{fill:#2a78d6}.tw{fill:#ffffff}
+.heat{fill:#2a78d6}.tw{fill:#ffffff}.cil{stroke:#8a8984;stroke-width:1}
 .d1{fill:#2a78d6;stroke:#fcfcfb}.d2{fill:#eb6834;stroke:#fcfcfb}.d3{fill:#1baf7a;stroke:#fcfcfb}.d4{fill:#eda100;stroke:#fcfcfb}
 @media (prefers-color-scheme: dark){.bg{fill:#1a1a19}.t1{fill:#f0efec}.t2{fill:#c3c2b7}.t3{fill:#8f8e88}
-.grid{stroke:#33332f}.s1{fill:#3987e5}.s2{fill:#d95926}.s3{fill:#199e70}.neutral{fill:#5a5954}.ref{stroke:#c3c2b7}.ci{stroke:#f0efec}.line-s1{stroke:#3987e5}.line-s2{stroke:#d95926}.line-s3{stroke:#199e70}.s4{fill:#c98500}.line-s4{stroke:#c98500}.heat{fill:#3987e5}
+.grid{stroke:#33332f}.s1{fill:#3987e5}.s2{fill:#d95926}.s3{fill:#199e70}.neutral{fill:#5a5954}.ref{stroke:#c3c2b7}.ci{stroke:#f0efec}.line-s1{stroke:#3987e5}.line-s2{stroke:#d95926}.line-s3{stroke:#199e70}.s4{fill:#c98500}.line-s4{stroke:#c98500}.heat{fill:#3987e5}.cil{stroke:#8f8e88}
 .d1{fill:#3987e5;stroke:#1a1a19}.d2{fill:#d95926;stroke:#1a1a19}.d3{fill:#199e70;stroke:#1a1a19}.d4{fill:#c98500;stroke:#1a1a19}}
 text{font-size:12px}.h{font-size:15px;font-weight:600}.v{font-size:11px;font-weight:600}.tick{font-size:10px}
 </style>
-<rect class="bg" width="720" height="342" rx="8"/>
+<rect class="bg" width="720" height="760" rx="8"/>
 <text class="h t1" x="24.0" y="30.0" text-anchor="start" >Ranking: does the model know which ones?</text>
 <text class="t2" x="24.0" y="48.0" text-anchor="start" >AUC · 0.5 = chance</text>
 <rect class="s1" x="470" y="21" width="10" height="10" rx="2"/>
@@ -19,121 +19,387 @@ text{font-size:12px}.h{font-size:15px;font-weight:600}.v{font-size:11px;font-wei
 <text class="t2" x="543.0" y="30.0" text-anchor="start" >Sonnet</text>
 <rect class="s3" x="595" y="21" width="10" height="10" rx="2"/>
 <text class="t2" x="609.0" y="30.0" text-anchor="start" >Opus</text>
+<rect class="s4" x="647" y="21" width="10" height="10" rx="2"/>
+<text class="t2" x="661.0" y="30.0" text-anchor="start" >Fable</text>
 <text class="t1" x="108.0" y="74.0" text-anchor="start" font-weight="600">Email: anyone replies?</text>
-<line class="grid" x1="108.0" x2="108.0" y1="80" y2="139"/>
-<text class="tick t3" x="108.0" y="153.0" text-anchor="middle" >0.50</text>
-<line class="grid" x1="184.0" x2="184.0" y1="80" y2="139"/>
-<text class="tick t3" x="184.0" y="153.0" text-anchor="middle" >0.75</text>
-<line class="grid" x1="260.0" x2="260.0" y1="80" y2="139"/>
-<text class="tick t3" x="260.0" y="153.0" text-anchor="middle" >1.00</text>
-<text class="t2" x="100.0" y="94.5" text-anchor="end" >Haiku 5.5</text>
-<path class="s1" d="M108.0,84.0 h97.9 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-97.9 z"/>
-<path class="ci" d="M190.5,90.5 H227.6 M190.5,86.5 V94.5 M227.6,86.5 V94.5"/>
-<text class="v t1" x="233.6" y="94.5" text-anchor="start" >0.84</text>
-<text class="t2" x="100.0" y="113.5" text-anchor="end" >Sonnet 5.5</text>
-<path class="s2" d="M108.0,103.0 h108.0 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-108.0 z"/>
-<path class="ci" d="M203.1,109.5 H234.8 M203.1,105.5 V113.5 M234.8,105.5 V113.5"/>
-<text class="v t1" x="240.8" y="113.5" text-anchor="start" >0.87</text>
-<text class="t2" x="100.0" y="132.5" text-anchor="end" >Opus 5.5</text>
-<path class="s3" d="M108.0,122.0 h111.6 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-111.6 z"/>
-<path class="ci" d="M208.2,128.5 H237.7 M208.2,124.5 V132.5 M237.7,124.5 V132.5"/>
-<text class="v t1" x="243.7" y="132.5" text-anchor="start" >0.88</text>
+<line class="grid" x1="108.0" x2="108.0" y1="80" y2="348"/>
+<text class="tick t3" x="108.0" y="362.0" text-anchor="middle" >0.50</text>
+<line class="grid" x1="177.0" x2="177.0" y1="80" y2="348"/>
+<text class="tick t3" x="177.0" y="362.0" text-anchor="middle" >0.75</text>
+<line class="grid" x1="246.0" x2="246.0" y1="80" y2="348"/>
+<text class="tick t3" x="246.0" y="362.0" text-anchor="middle" >1.00</text>
+<text class="t2" x="100.0" y="94.5" text-anchor="end" >Haiku 4.5</text>
+<path class="s1" d="M108.0,84.0 h66.3 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-66.3 z"/>
+<path class="ci" d="M158.3,90.5 H197.4 M158.3,86.5 V94.5 M197.4,86.5 V94.5"/>
+<text class="v t1" x="203.4" y="94.5" text-anchor="start" >0.75</text>
+<text class="t2" x="100.0" y="113.5" text-anchor="end" >Haiku 5.5</text>
+<path class="s1" d="M108.0,103.0 h88.5 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-88.5 z"/>
+<path class="ci" d="M182.9,109.5 H216.6 M182.9,105.5 V113.5 M216.6,105.5 V113.5"/>
+<text class="v t1" x="222.6" y="113.5" text-anchor="start" >0.84</text>
+<text class="t2" x="100.0" y="132.5" text-anchor="end" >Sonnet 4.5</text>
+<path class="s2" d="M108.0,122.0 h89.4 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-89.4 z"/>
+<path class="ci" d="M185.3,128.5 H216.4 M185.3,124.5 V132.5 M216.4,124.5 V132.5"/>
+<text class="v t1" x="222.4" y="132.5" text-anchor="start" >0.84</text>
+<text class="t2" x="100.0" y="151.5" text-anchor="end" >Sonnet 4.6</text>
+<path class="s2" d="M108.0,141.0 h84.9 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-84.9 z"/>
+<path class="ci" d="M180.0,147.5 H213.2 M180.0,143.5 V151.5 M213.2,143.5 V151.5"/>
+<text class="v t1" x="219.2" y="151.5" text-anchor="start" >0.82</text>
+<text class="t2" x="100.0" y="170.5" text-anchor="end" >Sonnet 5</text>
+<path class="s2" d="M108.0,160.0 h88.2 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-88.2 z"/>
+<path class="ci" d="M183.6,166.5 H215.8 M183.6,162.5 V170.5 M215.8,162.5 V170.5"/>
+<text class="v t1" x="221.8" y="170.5" text-anchor="start" >0.83</text>
+<text class="t2" x="100.0" y="189.5" text-anchor="end" >Sonnet 5.5</text>
+<path class="s2" d="M108.0,179.0 h97.7 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-97.7 z"/>
+<path class="ci" d="M194.3,185.5 H223.2 M194.3,181.5 V189.5 M223.2,181.5 V189.5"/>
+<text class="v t1" x="229.2" y="189.5" text-anchor="start" >0.87</text>
+<text class="t2" x="100.0" y="208.5" text-anchor="end" >Opus 4.5</text>
+<path class="s3" d="M108.0,198.0 h88.8 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-88.8 z"/>
+<path class="ci" d="M184.0,204.5 H216.5 M184.0,200.5 V208.5 M216.5,200.5 V208.5"/>
+<text class="v t1" x="222.5" y="208.5" text-anchor="start" >0.84</text>
+<text class="t2" x="100.0" y="227.5" text-anchor="end" >Opus 4.6</text>
+<path class="s3" d="M108.0,217.0 h90.0 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-90.0 z"/>
+<path class="ci" d="M186.1,223.5 H217.3 M186.1,219.5 V227.5 M217.3,219.5 V227.5"/>
+<text class="v t1" x="223.3" y="227.5" text-anchor="start" >0.84</text>
+<text class="t2" x="100.0" y="246.5" text-anchor="end" >Opus 4.7</text>
+<path class="s3" d="M108.0,236.0 h90.8 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-90.8 z"/>
+<path class="ci" d="M185.8,242.5 H217.8 M185.8,238.5 V246.5 M217.8,238.5 V246.5"/>
+<text class="v t1" x="223.8" y="246.5" text-anchor="start" >0.84</text>
+<text class="t2" x="100.0" y="265.5" text-anchor="end" >Opus 4.8</text>
+<path class="s3" d="M108.0,255.0 h92.8 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-92.8 z"/>
+<path class="ci" d="M189.1,261.5 H219.4 M189.1,257.5 V265.5 M219.4,257.5 V265.5"/>
+<text class="v t1" x="225.4" y="265.5" text-anchor="start" >0.85</text>
+<text class="t2" x="100.0" y="284.5" text-anchor="end" >Opus 5</text>
+<path class="s3" d="M108.0,274.0 h95.0 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-95.0 z"/>
+<path class="ci" d="M191.5,280.5 H220.6 M191.5,276.5 V284.5 M220.6,276.5 V284.5"/>
+<text class="v t1" x="226.6" y="284.5" text-anchor="start" >0.86</text>
+<text class="t2" x="100.0" y="303.5" text-anchor="end" >Opus 5.5</text>
+<path class="s3" d="M108.0,293.0 h101.0 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-101.0 z"/>
+<path class="ci" d="M198.9,299.5 H225.7 M198.9,295.5 V303.5 M225.7,295.5 V303.5"/>
+<text class="v t1" x="231.7" y="303.5" text-anchor="start" >0.88</text>
+<text class="t2" x="100.0" y="322.5" text-anchor="end" >Fable 5</text>
+<path class="s4" d="M108.0,312.0 h95.8 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-95.8 z"/>
+<path class="ci" d="M192.8,318.5 H222.1 M192.8,314.5 V322.5 M222.1,314.5 V322.5"/>
+<text class="v t1" x="228.1" y="322.5" text-anchor="start" >0.86</text>
+<text class="t2" x="100.0" y="341.5" text-anchor="end" >Fable 5.1</text>
+<path class="s4" d="M108.0,331.0 h97.6 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-97.6 z"/>
+<path class="ci" d="M194.4,337.5 H223.5 M194.4,333.5 V341.5 M223.5,333.5 V341.5"/>
+<text class="v t1" x="229.5" y="341.5" text-anchor="start" >0.87</text>
 <text class="t1" x="304.0" y="74.0" text-anchor="start" font-weight="600">PR: merged in 30 days?</text>
-<line class="grid" x1="304.0" x2="304.0" y1="80" y2="139"/>
-<text class="tick t3" x="304.0" y="153.0" text-anchor="middle" >0.50</text>
-<line class="grid" x1="380.0" x2="380.0" y1="80" y2="139"/>
-<text class="tick t3" x="380.0" y="153.0" text-anchor="middle" >0.75</text>
-<line class="grid" x1="456.0" x2="456.0" y1="80" y2="139"/>
-<text class="tick t3" x="456.0" y="153.0" text-anchor="middle" >1.00</text>
+<line class="grid" x1="304.0" x2="304.0" y1="80" y2="348"/>
+<text class="tick t3" x="304.0" y="362.0" text-anchor="middle" >0.50</text>
+<line class="grid" x1="373.0" x2="373.0" y1="80" y2="348"/>
+<text class="tick t3" x="373.0" y="362.0" text-anchor="middle" >0.75</text>
+<line class="grid" x1="442.0" x2="442.0" y1="80" y2="348"/>
+<text class="tick t3" x="442.0" y="362.0" text-anchor="middle" >1.00</text>
 <text class="t2" x="296.0" y="94.5" text-anchor="end" ></text>
-<path class="s1" d="M304.0,84.0 h77.5 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-77.5 z"/>
-<path class="ci" d="M364.4,90.5 H404.7 M364.4,86.5 V94.5 M404.7,86.5 V94.5"/>
-<text class="v t1" x="410.7" y="94.5" text-anchor="start" >0.77</text>
+<path class="s1" d="M304.0,84.0 h48.9 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-48.9 z"/>
+<path class="ci" d="M336.0,90.5 H376.5 M336.0,86.5 V94.5 M376.5,86.5 V94.5"/>
+<text class="v t1" x="382.5" y="94.5" text-anchor="start" >0.69</text>
 <text class="t2" x="296.0" y="113.5" text-anchor="end" ></text>
-<path class="s2" d="M304.0,103.0 h74.8 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-74.8 z"/>
-<path class="ci" d="M363.2,109.5 H402.0 M363.2,105.5 V113.5 M402.0,105.5 V113.5"/>
-<text class="v t1" x="408.0" y="113.5" text-anchor="start" >0.76</text>
+<path class="s1" d="M304.0,103.0 h70.0 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-70.0 z"/>
+<path class="ci" d="M358.9,109.5 H395.4 M358.9,105.5 V113.5 M395.4,105.5 V113.5"/>
+<text class="v t1" x="401.4" y="113.5" text-anchor="start" >0.77</text>
 <text class="t2" x="296.0" y="132.5" text-anchor="end" ></text>
-<path class="s3" d="M304.0,122.0 h84.4 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-84.4 z"/>
-<path class="ci" d="M373.6,128.5 H410.3 M373.6,124.5 V132.5 M410.3,124.5 V132.5"/>
-<text class="v t1" x="416.3" y="132.5" text-anchor="start" >0.79</text>
+<path class="s2" d="M304.0,122.0 h50.9 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-50.9 z"/>
+<path class="ci" d="M338.5,128.5 H377.7 M338.5,124.5 V132.5 M377.7,124.5 V132.5"/>
+<text class="v t1" x="383.7" y="132.5" text-anchor="start" >0.70</text>
+<text class="t2" x="296.0" y="151.5" text-anchor="end" ></text>
+<path class="s2" d="M304.0,141.0 h57.2 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-57.2 z"/>
+<path class="ci" d="M346.3,147.5 H383.4 M346.3,143.5 V151.5 M383.4,143.5 V151.5"/>
+<text class="v t1" x="389.4" y="151.5" text-anchor="start" >0.72</text>
+<text class="t2" x="296.0" y="170.5" text-anchor="end" ></text>
+<path class="s2" d="M304.0,160.0 h61.2 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-61.2 z"/>
+<path class="ci" d="M350.1,166.5 H387.7 M350.1,162.5 V170.5 M387.7,162.5 V170.5"/>
+<text class="v t1" x="393.7" y="170.5" text-anchor="start" >0.74</text>
+<text class="t2" x="296.0" y="189.5" text-anchor="end" ></text>
+<path class="s2" d="M304.0,179.0 h67.6 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-67.6 z"/>
+<path class="ci" d="M357.7,185.5 H393.0 M357.7,181.5 V189.5 M393.0,181.5 V189.5"/>
+<text class="v t1" x="399.0" y="189.5" text-anchor="start" >0.76</text>
+<text class="t2" x="296.0" y="208.5" text-anchor="end" ></text>
+<path class="s3" d="M304.0,198.0 h63.0 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-63.0 z"/>
+<path class="ci" d="M352.3,204.5 H388.9 M352.3,200.5 V208.5 M388.9,200.5 V208.5"/>
+<text class="v t1" x="394.9" y="208.5" text-anchor="start" >0.74</text>
+<text class="t2" x="296.0" y="227.5" text-anchor="end" ></text>
+<path class="s3" d="M304.0,217.0 h68.0 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-68.0 z"/>
+<path class="ci" d="M357.4,223.5 H393.5 M357.4,219.5 V227.5 M393.5,219.5 V227.5"/>
+<text class="v t1" x="399.5" y="227.5" text-anchor="start" >0.76</text>
+<text class="t2" x="296.0" y="246.5" text-anchor="end" ></text>
+<path class="s3" d="M304.0,236.0 h65.9 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-65.9 z"/>
+<path class="ci" d="M354.7,242.5 H391.6 M354.7,238.5 V246.5 M391.6,238.5 V246.5"/>
+<text class="v t1" x="397.6" y="246.5" text-anchor="start" >0.75</text>
+<text class="t2" x="296.0" y="265.5" text-anchor="end" ></text>
+<path class="s3" d="M304.0,255.0 h70.5 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-70.5 z"/>
+<path class="ci" d="M360.3,261.5 H395.3 M360.3,257.5 V265.5 M395.3,257.5 V265.5"/>
+<text class="v t1" x="401.3" y="265.5" text-anchor="start" >0.77</text>
+<text class="t2" x="296.0" y="284.5" text-anchor="end" ></text>
+<path class="s3" d="M304.0,274.0 h74.4 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-74.4 z"/>
+<path class="ci" d="M364.5,280.5 H398.9 M364.5,276.5 V284.5 M398.9,276.5 V284.5"/>
+<text class="v t1" x="404.9" y="284.5" text-anchor="start" >0.78</text>
+<text class="t2" x="296.0" y="303.5" text-anchor="end" ></text>
+<path class="s3" d="M304.0,293.0 h76.2 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-76.2 z"/>
+<path class="ci" d="M367.2,299.5 H400.5 M367.2,295.5 V303.5 M400.5,295.5 V303.5"/>
+<text class="v t1" x="406.5" y="303.5" text-anchor="start" >0.79</text>
+<text class="t2" x="296.0" y="322.5" text-anchor="end" ></text>
+<path class="s4" d="M304.0,312.0 h68.7 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-68.7 z"/>
+<path class="ci" d="M358.5,318.5 H394.1 M358.5,314.5 V322.5 M394.1,314.5 V322.5"/>
+<text class="v t1" x="400.1" y="322.5" text-anchor="start" >0.76</text>
+<text class="t2" x="296.0" y="341.5" text-anchor="end" ></text>
+<path class="s4" d="M304.0,331.0 h80.2 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-80.2 z"/>
+<path class="ci" d="M371.2,337.5 H404.1 M371.2,333.5 V341.5 M404.1,333.5 V341.5"/>
+<text class="v t1" x="410.1" y="341.5" text-anchor="start" >0.81</text>
 <text class="t1" x="500.0" y="74.0" text-anchor="start" font-weight="600">HN: reaches 50 points?</text>
-<line class="grid" x1="500.0" x2="500.0" y1="80" y2="139"/>
-<text class="tick t3" x="500.0" y="153.0" text-anchor="middle" >0.50</text>
-<line class="grid" x1="576.0" x2="576.0" y1="80" y2="139"/>
-<text class="tick t3" x="576.0" y="153.0" text-anchor="middle" >0.75</text>
-<line class="grid" x1="652.0" x2="652.0" y1="80" y2="139"/>
-<text class="tick t3" x="652.0" y="153.0" text-anchor="middle" >1.00</text>
+<line class="grid" x1="500.0" x2="500.0" y1="80" y2="348"/>
+<text class="tick t3" x="500.0" y="362.0" text-anchor="middle" >0.50</text>
+<line class="grid" x1="569.0" x2="569.0" y1="80" y2="348"/>
+<text class="tick t3" x="569.0" y="362.0" text-anchor="middle" >0.75</text>
+<line class="grid" x1="638.0" x2="638.0" y1="80" y2="348"/>
+<text class="tick t3" x="638.0" y="362.0" text-anchor="middle" >1.00</text>
 <text class="t2" x="492.0" y="94.5" text-anchor="end" ></text>
-<path class="s1" d="M500.0,84.0 h69.6 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-69.6 z"/>
-<path class="ci" d="M527.2,90.5 H614.9 M527.2,86.5 V94.5 M614.9,86.5 V94.5"/>
-<text class="v t1" x="620.9" y="94.5" text-anchor="start" >0.74</text>
+<path class="s1" d="M500.0,84.0 h46.0 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-46.0 z"/>
+<path class="ci" d="M512.9,90.5 H587.1 M512.9,86.5 V94.5 M587.1,86.5 V94.5"/>
+<text class="v t1" x="593.1" y="94.5" text-anchor="start" >0.68</text>
 <text class="t2" x="492.0" y="113.5" text-anchor="end" ></text>
-<path class="s2" d="M500.0,103.0 h89.2 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-89.2 z"/>
-<path class="ci" d="M556.8,109.5 H625.3 M556.8,105.5 V113.5 M625.3,105.5 V113.5"/>
-<text class="v t1" x="631.3" y="113.5" text-anchor="start" >0.81</text>
+<path class="s1" d="M500.0,103.0 h62.9 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-62.9 z"/>
+<path class="ci" d="M524.7,109.5 H604.3 M524.7,105.5 V113.5 M604.3,105.5 V113.5"/>
+<text class="v t1" x="610.3" y="113.5" text-anchor="start" >0.74</text>
 <text class="t2" x="492.0" y="132.5" text-anchor="end" ></text>
-<path class="s3" d="M500.0,122.0 h93.4 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-93.4 z"/>
-<path class="ci" d="M560.4,128.5 H626.4 M560.4,124.5 V132.5 M626.4,124.5 V132.5"/>
-<text class="v t1" x="632.4" y="132.5" text-anchor="start" >0.82</text>
-<text class="h t1" x="24.0" y="187.0" text-anchor="start" >Calibration: does it beat the base rate?</text>
-<text class="t2" x="24.0" y="205.0" text-anchor="start" >Brier skill vs. always predicting the base rate · &gt; 0 beats it</text>
-<text class="t1" x="108.0" y="231.0" text-anchor="start" font-weight="600">Email: anyone replies?</text>
-<line class="grid" x1="108.0" x2="108.0" y1="237" y2="296"/>
-<text class="tick t3" x="108.0" y="310.0" text-anchor="middle" >-0.60</text>
-<line class="ref" x1="184.0" x2="184.0" y1="237" y2="296"/>
-<text class="tick t3" x="184.0" y="310.0" text-anchor="middle" >+0.00</text>
-<line class="grid" x1="260.0" x2="260.0" y1="237" y2="296"/>
-<text class="tick t3" x="260.0" y="310.0" text-anchor="middle" >+0.60</text>
-<text class="t2" x="100.0" y="251.5" text-anchor="end" >Haiku 5.5</text>
-<path class="s1" d="M184.0,241.0 h38.3 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-38.3 z"/>
-<path class="ci" d="M210.4,247.5 H240.7 M210.4,243.5 V251.5 M240.7,243.5 V251.5"/>
-<text class="v t1" x="246.7" y="251.5" text-anchor="start" >+0.33</text>
-<text class="t2" x="100.0" y="270.5" text-anchor="end" >Sonnet 5.5</text>
-<path class="s2" d="M184.0,260.0 h42.6 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-42.6 z"/>
-<path class="ci" d="M213.8,266.5 H244.3 M213.8,262.5 V270.5 M244.3,262.5 V270.5"/>
-<text class="v t1" x="250.3" y="270.5" text-anchor="start" >+0.37</text>
-<text class="t2" x="100.0" y="289.5" text-anchor="end" >Opus 5.5</text>
-<path class="s3" d="M184.0,279.0 h55.0 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-55.0 z"/>
-<path class="ci" d="M228.8,285.5 H255.8 M228.8,281.5 V289.5 M255.8,281.5 V289.5"/>
-<text class="v t1" x="261.8" y="289.5" text-anchor="start" >+0.47</text>
-<text class="t1" x="304.0" y="231.0" text-anchor="start" font-weight="600">PR: merged in 30 days?</text>
-<line class="grid" x1="304.0" x2="304.0" y1="237" y2="296"/>
-<text class="tick t3" x="304.0" y="310.0" text-anchor="middle" >-0.60</text>
-<line class="ref" x1="380.0" x2="380.0" y1="237" y2="296"/>
-<text class="tick t3" x="380.0" y="310.0" text-anchor="middle" >+0.00</text>
-<line class="grid" x1="456.0" x2="456.0" y1="237" y2="296"/>
-<text class="tick t3" x="456.0" y="310.0" text-anchor="middle" >+0.60</text>
-<text class="t2" x="296.0" y="251.5" text-anchor="end" ></text>
-<path class="s1" d="M380.0,241.0 h1.9 a1.9480467479674815,1.9480467479674815 0 0 1 1.9480467479674815,1.9480467479674815 v9.1 a1.9480467479674815,1.9480467479674815 0 0 1 -1.9480467479674815,1.9480467479674815 h-1.9 z"/>
-<path class="ci" d="M362.5,247.5 H400.2 M362.5,243.5 V251.5 M400.2,243.5 V251.5"/>
-<text class="v t1" x="406.2" y="251.5" text-anchor="start" >+0.03</text>
-<text class="t2" x="296.0" y="270.5" text-anchor="end" ></text>
-<path class="s2" d="M380.0,260.0 h14.2 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-14.2 z"/>
-<path class="ci" d="M380.4,266.5 H412.9 M380.4,262.5 V270.5 M412.9,262.5 V270.5"/>
-<text class="v t1" x="418.9" y="270.5" text-anchor="start" >+0.14</text>
-<text class="t2" x="296.0" y="289.5" text-anchor="end" ></text>
-<path class="s3" d="M380.0,279.0 h9.5 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-9.5 z"/>
-<path class="ci" d="M372.3,285.5 H409.7 M372.3,281.5 V289.5 M409.7,281.5 V289.5"/>
-<text class="v t1" x="415.7" y="289.5" text-anchor="start" >+0.11</text>
-<text class="t1" x="500.0" y="231.0" text-anchor="start" font-weight="600">HN: reaches 50 points?</text>
-<line class="grid" x1="500.0" x2="500.0" y1="237" y2="296"/>
-<text class="tick t3" x="500.0" y="310.0" text-anchor="middle" >-0.60</text>
-<line class="ref" x1="576.0" x2="576.0" y1="237" y2="296"/>
-<text class="tick t3" x="576.0" y="310.0" text-anchor="middle" >+0.00</text>
-<line class="grid" x1="652.0" x2="652.0" y1="237" y2="296"/>
-<text class="tick t3" x="652.0" y="310.0" text-anchor="middle" >+0.60</text>
-<text class="t2" x="492.0" y="251.5" text-anchor="end" ></text>
-<path class="s1" d="M576.0,241.0 h-30.6 a4,4 0 0 0 -4,4 v5.0 a4,4 0 0 0 4,4 h30.6 z"/>
-<path class="ci" d="M500.0,247.5 H587.3 M500.0,243.5 V251.5 M587.3,243.5 V251.5"/>
-<text class="v t1" x="593.3" y="251.5" text-anchor="start" >-0.27</text>
-<text class="t2" x="492.0" y="270.5" text-anchor="end" ></text>
-<path class="s2" d="M576.0,260.0 h-38.0 a4,4 0 0 0 -4,4 v5.0 a4,4 0 0 0 4,4 h38.0 z"/>
-<path class="ci" d="M500.0,266.5 H582.0 M500.0,262.5 V270.5 M582.0,262.5 V270.5"/>
-<text class="v t1" x="588.0" y="270.5" text-anchor="start" >-0.33</text>
-<text class="t2" x="492.0" y="289.5" text-anchor="end" ></text>
-<path class="s3" d="M576.0,279.0 h-3.4 a3.3658466312056703,3.3658466312056703 0 0 0 -3.3658466312056703,3.3658466312056703 v6.3 a3.3658466312056703,3.3658466312056703 0 0 0 3.3658466312056703,3.3658466312056703 h3.4 z"/>
-<path class="ci" d="M500.0,285.5 H601.8 M500.0,281.5 V289.5 M601.8,281.5 V289.5"/>
-<text class="v t1" x="607.8" y="289.5" text-anchor="start" >-0.05</text>
-<text class="t3" x="24.0" y="328.0" text-anchor="start" >Whiskers: 95% bootstrap CIs (clipped to axis). n = 191 emails, 234 MRs, 200 HN posts.</text>
+<path class="s2" d="M500.0,122.0 h65.2 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-65.2 z"/>
+<path class="ci" d="M526.4,128.5 H606.2 M526.4,124.5 V132.5 M606.2,124.5 V132.5"/>
+<text class="v t1" x="612.2" y="132.5" text-anchor="start" >0.75</text>
+<text class="t2" x="492.0" y="151.5" text-anchor="end" ></text>
+<path class="s2" d="M500.0,141.0 h68.2 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-68.2 z"/>
+<path class="ci" d="M534.1,147.5 H604.0 M534.1,143.5 V151.5 M604.0,143.5 V151.5"/>
+<text class="v t1" x="610.0" y="151.5" text-anchor="start" >0.76</text>
+<text class="t2" x="492.0" y="170.5" text-anchor="end" ></text>
+<path class="s2" d="M500.0,160.0 h71.4 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-71.4 z"/>
+<path class="ci" d="M541.7,166.5 H607.5 M541.7,162.5 V170.5 M607.5,162.5 V170.5"/>
+<text class="v t1" x="613.5" y="170.5" text-anchor="start" >0.77</text>
+<text class="t2" x="492.0" y="189.5" text-anchor="end" ></text>
+<path class="s2" d="M500.0,179.0 h80.6 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-80.6 z"/>
+<path class="ci" d="M551.6,185.5 H613.7 M551.6,181.5 V189.5 M613.7,181.5 V189.5"/>
+<text class="v t1" x="619.7" y="189.5" text-anchor="start" >0.81</text>
+<text class="t2" x="492.0" y="208.5" text-anchor="end" ></text>
+<path class="s3" d="M500.0,198.0 h65.2 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-65.2 z"/>
+<path class="ci" d="M518.4,204.5 H610.9 M518.4,200.5 V208.5 M610.9,200.5 V208.5"/>
+<text class="v t1" x="616.9" y="208.5" text-anchor="start" >0.75</text>
+<text class="t2" x="492.0" y="227.5" text-anchor="end" ></text>
+<path class="s3" d="M500.0,217.0 h74.0 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-74.0 z"/>
+<path class="ci" d="M532.2,223.5 H611.0 M532.2,219.5 V227.5 M611.0,219.5 V227.5"/>
+<text class="v t1" x="617.0" y="227.5" text-anchor="start" >0.78</text>
+<text class="t2" x="492.0" y="246.5" text-anchor="end" ></text>
+<path class="s3" d="M500.0,236.0 h76.2 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-76.2 z"/>
+<path class="ci" d="M537.9,242.5 H613.8 M537.9,238.5 V246.5 M613.8,238.5 V246.5"/>
+<text class="v t1" x="619.8" y="246.5" text-anchor="start" >0.79</text>
+<text class="t2" x="492.0" y="265.5" text-anchor="end" ></text>
+<path class="s3" d="M500.0,255.0 h73.1 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-73.1 z"/>
+<path class="ci" d="M534.7,261.5 H610.0 M534.7,257.5 V265.5 M610.0,257.5 V265.5"/>
+<text class="v t1" x="616.0" y="265.5" text-anchor="start" >0.78</text>
+<text class="t2" x="492.0" y="284.5" text-anchor="end" ></text>
+<path class="s3" d="M500.0,274.0 h81.8 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-81.8 z"/>
+<path class="ci" d="M543.9,280.5 H617.1 M543.9,276.5 V284.5 M617.1,276.5 V284.5"/>
+<text class="v t1" x="623.1" y="284.5" text-anchor="start" >0.81</text>
+<text class="t2" x="492.0" y="303.5" text-anchor="end" ></text>
+<path class="s3" d="M500.0,293.0 h84.4 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-84.4 z"/>
+<path class="ci" d="M554.9,299.5 H614.7 M554.9,295.5 V303.5 M614.7,295.5 V303.5"/>
+<text class="v t1" x="620.7" y="303.5" text-anchor="start" >0.82</text>
+<text class="t2" x="492.0" y="322.5" text-anchor="end" ></text>
+<path class="s4" d="M500.0,312.0 h81.1 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-81.1 z"/>
+<path class="ci" d="M551.4,318.5 H611.9 M551.4,314.5 V322.5 M611.9,314.5 V322.5"/>
+<text class="v t1" x="617.9" y="322.5" text-anchor="start" >0.81</text>
+<text class="t2" x="492.0" y="341.5" text-anchor="end" ></text>
+<path class="s4" d="M500.0,331.0 h83.2 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-83.2 z"/>
+<path class="ci" d="M547.4,337.5 H616.8 M547.4,333.5 V341.5 M616.8,333.5 V341.5"/>
+<text class="v t1" x="622.8" y="341.5" text-anchor="start" >0.82</text>
+<text class="h t1" x="24.0" y="396.0" text-anchor="start" >Calibration: does it beat the base rate?</text>
+<text class="t2" x="24.0" y="414.0" text-anchor="start" >Brier skill vs. always predicting the base rate · &gt; 0 beats it</text>
+<text class="t1" x="108.0" y="440.0" text-anchor="start" font-weight="600">Email: anyone replies?</text>
+<line class="grid" x1="108.0" x2="108.0" y1="446" y2="714"/>
+<text class="tick t3" x="108.0" y="728.0" text-anchor="middle" >-0.60</text>
+<line class="ref" x1="177.0" x2="177.0" y1="446" y2="714"/>
+<text class="tick t3" x="177.0" y="728.0" text-anchor="middle" >+0.00</text>
+<line class="grid" x1="246.0" x2="246.0" y1="446" y2="714"/>
+<text class="tick t3" x="246.0" y="728.0" text-anchor="middle" >+0.60</text>
+<text class="t2" x="100.0" y="460.5" text-anchor="end" >Haiku 4.5</text>
+<path class="s1" d="M177.0,450.0 h20.5 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-20.5 z"/>
+<path class="ci" d="M187.7,456.5 H214.2 M187.7,452.5 V460.5 M214.2,452.5 V460.5"/>
+<text class="v t1" x="220.2" y="460.5" text-anchor="start" >+0.21</text>
+<text class="t2" x="100.0" y="479.5" text-anchor="end" >Haiku 5.5</text>
+<path class="s1" d="M177.0,469.0 h34.4 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-34.4 z"/>
+<path class="ci" d="M200.9,475.5 H228.5 M200.9,471.5 V479.5 M228.5,471.5 V479.5"/>
+<text class="v t1" x="234.5" y="479.5" text-anchor="start" >+0.33</text>
+<text class="t2" x="100.0" y="498.5" text-anchor="end" >Sonnet 4.5</text>
+<path class="s2" d="M177.0,488.0 h33.3 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-33.3 z"/>
+<path class="ci" d="M200.4,494.5 H226.7 M200.4,490.5 V498.5 M226.7,490.5 V498.5"/>
+<text class="v t1" x="232.7" y="498.5" text-anchor="start" >+0.32</text>
+<text class="t2" x="100.0" y="517.5" text-anchor="end" >Sonnet 4.6</text>
+<path class="s2" d="M177.0,507.0 h27.4 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-27.4 z"/>
+<path class="ci" d="M193.7,513.5 H221.5 M193.7,509.5 V517.5 M221.5,509.5 V517.5"/>
+<text class="v t1" x="227.5" y="517.5" text-anchor="start" >+0.27</text>
+<text class="t2" x="100.0" y="536.5" text-anchor="end" >Sonnet 5</text>
+<path class="s2" d="M177.0,526.0 h38.9 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-38.9 z"/>
+<path class="ci" d="M206.8,532.5 H232.1 M206.8,528.5 V536.5 M232.1,528.5 V536.5"/>
+<text class="v t1" x="238.1" y="536.5" text-anchor="start" >+0.37</text>
+<text class="t2" x="100.0" y="555.5" text-anchor="end" >Sonnet 5.5</text>
+<path class="s2" d="M177.0,545.0 h38.3 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-38.3 z"/>
+<path class="ci" d="M204.1,551.5 H231.8 M204.1,547.5 V555.5 M231.8,547.5 V555.5"/>
+<text class="v t1" x="237.8" y="555.5" text-anchor="start" >+0.37</text>
+<text class="t2" x="100.0" y="574.5" text-anchor="end" >Opus 4.5</text>
+<path class="s3" d="M177.0,564.0 h39.3 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-39.3 z"/>
+<path class="ci" d="M206.7,570.5 H232.5 M206.7,566.5 V574.5 M232.5,566.5 V574.5"/>
+<text class="v t1" x="238.5" y="574.5" text-anchor="start" >+0.38</text>
+<text class="t2" x="100.0" y="593.5" text-anchor="end" >Opus 4.6</text>
+<path class="s3" d="M177.0,583.0 h38.6 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-38.6 z"/>
+<path class="ci" d="M204.9,589.5 H232.8 M204.9,585.5 V593.5 M232.8,585.5 V593.5"/>
+<text class="v t1" x="238.8" y="593.5" text-anchor="start" >+0.37</text>
+<text class="t2" x="100.0" y="612.5" text-anchor="end" >Opus 4.7</text>
+<path class="s3" d="M177.0,602.0 h41.5 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-41.5 z"/>
+<path class="ci" d="M207.7,608.5 H236.1 M207.7,604.5 V612.5 M236.1,604.5 V612.5"/>
+<text class="v t1" x="242.1" y="612.5" text-anchor="start" >+0.40</text>
+<text class="t2" x="100.0" y="631.5" text-anchor="end" >Opus 4.8</text>
+<path class="s3" d="M177.0,621.0 h40.5 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-40.5 z"/>
+<path class="ci" d="M207.5,627.5 H234.2 M207.5,623.5 V631.5 M234.2,623.5 V631.5"/>
+<text class="v t1" x="240.2" y="631.5" text-anchor="start" >+0.39</text>
+<text class="t2" x="100.0" y="650.5" text-anchor="end" >Opus 5</text>
+<path class="s3" d="M177.0,640.0 h43.9 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-43.9 z"/>
+<path class="ci" d="M210.2,646.5 H237.7 M210.2,642.5 V650.5 M237.7,642.5 V650.5"/>
+<text class="v t1" x="243.7" y="650.5" text-anchor="start" >+0.42</text>
+<text class="t2" x="100.0" y="669.5" text-anchor="end" >Opus 5.5</text>
+<path class="s3" d="M177.0,659.0 h49.6 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-49.6 z"/>
+<path class="ci" d="M217.7,665.5 H242.2 M217.7,661.5 V669.5 M242.2,661.5 V669.5"/>
+<text class="v t1" x="248.2" y="669.5" text-anchor="start" >+0.47</text>
+<text class="t2" x="100.0" y="688.5" text-anchor="end" >Fable 5</text>
+<path class="s4" d="M177.0,678.0 h46.1 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-46.1 z"/>
+<path class="ci" d="M212.9,684.5 H240.2 M212.9,680.5 V688.5 M240.2,680.5 V688.5"/>
+<text class="v t1" x="246.2" y="688.5" text-anchor="start" >+0.44</text>
+<text class="t2" x="100.0" y="707.5" text-anchor="end" >Fable 5.1</text>
+<path class="s4" d="M177.0,697.0 h48.8 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-48.8 z"/>
+<path class="ci" d="M215.4,703.5 H242.3 M215.4,699.5 V707.5 M242.3,699.5 V707.5"/>
+<text class="v t1" x="248.3" y="707.5" text-anchor="start" >+0.46</text>
+<text class="t1" x="304.0" y="440.0" text-anchor="start" font-weight="600">PR: merged in 30 days?</text>
+<line class="grid" x1="304.0" x2="304.0" y1="446" y2="714"/>
+<text class="tick t3" x="304.0" y="728.0" text-anchor="middle" >-0.60</text>
+<line class="ref" x1="373.0" x2="373.0" y1="446" y2="714"/>
+<text class="tick t3" x="373.0" y="728.0" text-anchor="middle" >+0.00</text>
+<line class="grid" x1="442.0" x2="442.0" y1="446" y2="714"/>
+<text class="tick t3" x="442.0" y="728.0" text-anchor="middle" >+0.60</text>
+<text class="t2" x="296.0" y="460.5" text-anchor="end" ></text>
+<path class="s1" d="M373.0,450.0 h9.8 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-9.8 z"/>
+<path class="ci" d="M376.3,456.5 H395.8 M376.3,452.5 V460.5 M395.8,452.5 V460.5"/>
+<text class="v t1" x="401.8" y="460.5" text-anchor="start" >+0.12</text>
+<text class="t2" x="296.0" y="479.5" text-anchor="end" ></text>
+<path class="s1" d="M373.0,469.0 h1.8 a1.7686213896020604,1.7686213896020604 0 0 1 1.7686213896020604,1.7686213896020604 v9.5 a1.7686213896020604,1.7686213896020604 0 0 1 -1.7686213896020604,1.7686213896020604 h-1.8 z"/>
+<path class="ci" d="M357.1,475.5 H391.4 M357.1,471.5 V479.5 M391.4,471.5 V479.5"/>
+<text class="v t1" x="397.4" y="479.5" text-anchor="start" >+0.03</text>
+<text class="t2" x="296.0" y="498.5" text-anchor="end" ></text>
+<path class="s2" d="M373.0,488.0 h9.2 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-9.2 z"/>
+<path class="ci" d="M372.7,494.5 H397.1 M372.7,490.5 V498.5 M397.1,490.5 V498.5"/>
+<text class="v t1" x="403.1" y="498.5" text-anchor="start" >+0.11</text>
+<text class="t2" x="296.0" y="517.5" text-anchor="end" ></text>
+<path class="s2" d="M373.0,507.0 h5.1 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-5.1 z"/>
+<path class="ci" d="M365.6,513.5 H395.8 M365.6,509.5 V517.5 M395.8,509.5 V517.5"/>
+<text class="v t1" x="401.8" y="517.5" text-anchor="start" >+0.08</text>
+<text class="t2" x="296.0" y="536.5" text-anchor="end" ></text>
+<path class="s2" d="M373.0,526.0 h15.0 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-15.0 z"/>
+<path class="ci" d="M378.3,532.5 H404.6 M378.3,528.5 V536.5 M404.6,528.5 V536.5"/>
+<text class="v t1" x="410.6" y="536.5" text-anchor="start" >+0.17</text>
+<text class="t2" x="296.0" y="555.5" text-anchor="end" ></text>
+<path class="s2" d="M373.0,545.0 h12.5 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-12.5 z"/>
+<path class="ci" d="M373.4,551.5 H402.9 M373.4,547.5 V555.5 M402.9,547.5 V555.5"/>
+<text class="v t1" x="408.9" y="555.5" text-anchor="start" >+0.14</text>
+<text class="t2" x="296.0" y="574.5" text-anchor="end" ></text>
+<path class="s3" d="M373.0,564.0 h17.6 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-17.6 z"/>
+<path class="ci" d="M383.9,570.5 H404.4 M383.9,566.5 V574.5 M404.4,566.5 V574.5"/>
+<text class="v t1" x="410.4" y="574.5" text-anchor="start" >+0.19</text>
+<text class="t2" x="296.0" y="593.5" text-anchor="end" ></text>
+<path class="s3" d="M373.0,583.0 h16.8 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-16.8 z"/>
+<path class="ci" d="M379.1,589.5 H407.1 M379.1,585.5 V593.5 M407.1,585.5 V593.5"/>
+<text class="v t1" x="413.1" y="593.5" text-anchor="start" >+0.18</text>
+<text class="t2" x="296.0" y="612.5" text-anchor="end" ></text>
+<path class="s3" d="M373.0,602.0 h12.8 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-12.8 z"/>
+<path class="ci" d="M373.7,608.5 H403.8 M373.7,604.5 V612.5 M403.8,604.5 V612.5"/>
+<text class="v t1" x="409.8" y="612.5" text-anchor="start" >+0.15</text>
+<text class="t2" x="296.0" y="631.5" text-anchor="end" ></text>
+<path class="s3" d="M373.0,621.0 h13.3 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-13.3 z"/>
+<path class="ci" d="M374.7,627.5 H402.9 M374.7,623.5 V631.5 M402.9,623.5 V631.5"/>
+<text class="v t1" x="408.9" y="631.5" text-anchor="start" >+0.15</text>
+<text class="t2" x="296.0" y="650.5" text-anchor="end" ></text>
+<path class="s3" d="M373.0,640.0 h14.5 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-14.5 z"/>
+<path class="ci" d="M373.7,646.5 H406.6 M373.7,642.5 V650.5 M406.6,642.5 V650.5"/>
+<text class="v t1" x="412.6" y="650.5" text-anchor="start" >+0.16</text>
+<text class="t2" x="296.0" y="669.5" text-anchor="end" ></text>
+<path class="s3" d="M373.0,659.0 h8.2 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-8.2 z"/>
+<path class="ci" d="M366.0,665.5 H400.0 M366.0,661.5 V669.5 M400.0,661.5 V669.5"/>
+<text class="v t1" x="406.0" y="669.5" text-anchor="start" >+0.11</text>
+<text class="t2" x="296.0" y="688.5" text-anchor="end" ></text>
+<path class="s4" d="M373.0,678.0 h13.8 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-13.8 z"/>
+<path class="ci" d="M374.2,684.5 H405.6 M374.2,680.5 V688.5 M405.6,680.5 V688.5"/>
+<text class="v t1" x="411.6" y="688.5" text-anchor="start" >+0.15</text>
+<text class="t2" x="296.0" y="707.5" text-anchor="end" ></text>
+<path class="s4" d="M373.0,697.0 h25.1 a4,4 0 0 1 4,4 v5.0 a4,4 0 0 1 -4,4 h-25.1 z"/>
+<path class="ci" d="M388.4,703.5 H414.0 M388.4,699.5 V707.5 M414.0,699.5 V707.5"/>
+<text class="v t1" x="420.0" y="707.5" text-anchor="start" >+0.25</text>
+<text class="t1" x="500.0" y="440.0" text-anchor="start" font-weight="600">HN: reaches 50 points?</text>
+<line class="grid" x1="500.0" x2="500.0" y1="446" y2="714"/>
+<text class="tick t3" x="500.0" y="728.0" text-anchor="middle" >-0.60</text>
+<line class="ref" x1="569.0" x2="569.0" y1="446" y2="714"/>
+<text class="tick t3" x="569.0" y="728.0" text-anchor="middle" >+0.00</text>
+<line class="grid" x1="638.0" x2="638.0" y1="446" y2="714"/>
+<text class="tick t3" x="638.0" y="728.0" text-anchor="middle" >+0.60</text>
+<text class="t2" x="492.0" y="460.5" text-anchor="end" ></text>
+<path class="s1" d="M569.0,450.0 h-65.0 a4,4 0 0 0 -4,4 v5.0 a4,4 0 0 0 4,4 h65.0 z"/>
+<path class="ci" d="M500.0,456.5 H500.0 M500.0,452.5 V460.5 M500.0,452.5 V460.5"/>
+<text class="v t1" x="575.0" y="460.5" text-anchor="start" >-5.69</text>
+<text class="t2" x="492.0" y="479.5" text-anchor="end" ></text>
+<path class="s1" d="M569.0,469.0 h-27.5 a4,4 0 0 0 -4,4 v5.0 a4,4 0 0 0 4,4 h27.5 z"/>
+<path class="ci" d="M500.0,475.5 H579.2 M500.0,471.5 V479.5 M579.2,471.5 V479.5"/>
+<text class="v t1" x="585.2" y="479.5" text-anchor="start" >-0.27</text>
+<text class="t2" x="492.0" y="498.5" text-anchor="end" ></text>
+<path class="s2" d="M569.0,488.0 h-65.0 a4,4 0 0 0 -4,4 v5.0 a4,4 0 0 0 4,4 h65.0 z"/>
+<path class="ci" d="M500.0,494.5 H500.0 M500.0,490.5 V498.5 M500.0,490.5 V498.5"/>
+<text class="v t1" x="575.0" y="498.5" text-anchor="start" >-2.01</text>
+<text class="t2" x="492.0" y="517.5" text-anchor="end" ></text>
+<path class="s2" d="M569.0,507.0 h-65.0 a4,4 0 0 0 -4,4 v5.0 a4,4 0 0 0 4,4 h65.0 z"/>
+<path class="ci" d="M500.0,513.5 H500.0 M500.0,509.5 V517.5 M500.0,509.5 V517.5"/>
+<text class="v t1" x="575.0" y="517.5" text-anchor="start" >-2.26</text>
+<text class="t2" x="492.0" y="536.5" text-anchor="end" ></text>
+<path class="s2" d="M569.0,526.0 h-65.0 a4,4 0 0 0 -4,4 v5.0 a4,4 0 0 0 4,4 h65.0 z"/>
+<path class="ci" d="M500.0,532.5 H500.0 M500.0,528.5 V536.5 M500.0,528.5 V536.5"/>
+<text class="v t1" x="575.0" y="536.5" text-anchor="start" >-2.34</text>
+<text class="t2" x="492.0" y="555.5" text-anchor="end" ></text>
+<path class="s2" d="M569.0,545.0 h-34.1 a4,4 0 0 0 -4,4 v5.0 a4,4 0 0 0 4,4 h34.1 z"/>
+<path class="ci" d="M500.0,551.5 H574.4 M500.0,547.5 V555.5 M574.4,547.5 V555.5"/>
+<text class="v t1" x="580.4" y="555.5" text-anchor="start" >-0.33</text>
+<text class="t2" x="492.0" y="574.5" text-anchor="end" ></text>
+<path class="s3" d="M569.0,564.0 h-65.0 a4,4 0 0 0 -4,4 v5.0 a4,4 0 0 0 4,4 h65.0 z"/>
+<path class="ci" d="M500.0,570.5 H546.8 M500.0,566.5 V574.5 M546.8,566.5 V574.5"/>
+<text class="v t1" x="575.0" y="574.5" text-anchor="start" >-0.78</text>
+<text class="t2" x="492.0" y="593.5" text-anchor="end" ></text>
+<path class="s3" d="M569.0,583.0 h-50.5 a4,4 0 0 0 -4,4 v5.0 a4,4 0 0 0 4,4 h50.5 z"/>
+<path class="ci" d="M500.0,589.5 H569.1 M500.0,585.5 V593.5 M569.1,585.5 V593.5"/>
+<text class="v t1" x="575.1" y="593.5" text-anchor="start" >-0.47</text>
+<text class="t2" x="492.0" y="612.5" text-anchor="end" ></text>
+<path class="s3" d="M569.0,602.0 h-65.0 a4,4 0 0 0 -4,4 v5.0 a4,4 0 0 0 4,4 h65.0 z"/>
+<path class="ci" d="M500.0,608.5 H533.3 M500.0,604.5 V612.5 M533.3,604.5 V612.5"/>
+<text class="v t1" x="575.0" y="612.5" text-anchor="start" >-0.99</text>
+<text class="t2" x="492.0" y="631.5" text-anchor="end" ></text>
+<path class="s3" d="M569.0,621.0 h-57.2 a4,4 0 0 0 -4,4 v5.0 a4,4 0 0 0 4,4 h57.2 z"/>
+<path class="ci" d="M500.0,627.5 H560.8 M500.0,623.5 V631.5 M560.8,623.5 V631.5"/>
+<text class="v t1" x="575.0" y="631.5" text-anchor="start" >-0.53</text>
+<text class="t2" x="492.0" y="650.5" text-anchor="end" ></text>
+<path class="s3" d="M569.0,640.0 h-58.7 a4,4 0 0 0 -4,4 v5.0 a4,4 0 0 0 4,4 h58.7 z"/>
+<path class="ci" d="M500.0,646.5 H563.6 M500.0,642.5 V650.5 M563.6,642.5 V650.5"/>
+<text class="v t1" x="575.0" y="650.5" text-anchor="start" >-0.55</text>
+<text class="t2" x="492.0" y="669.5" text-anchor="end" ></text>
+<path class="s3" d="M569.0,659.0 h-3.1 a3.055834441489367,3.055834441489367 0 0 0 -3.055834441489367,3.055834441489367 v6.9 a3.055834441489367,3.055834441489367 0 0 0 3.055834441489367,3.055834441489367 h3.1 z"/>
+<path class="ci" d="M500.0,665.5 H592.4 M500.0,661.5 V669.5 M592.4,661.5 V669.5"/>
+<text class="v t1" x="598.4" y="669.5" text-anchor="start" >-0.05</text>
+<text class="t2" x="492.0" y="688.5" text-anchor="end" ></text>
+<path class="s4" d="M569.0,678.0 h-3.8 a3.773182624113474,3.773182624113474 0 0 0 -3.773182624113474,3.773182624113474 v5.5 a3.773182624113474,3.773182624113474 0 0 0 3.773182624113474,3.773182624113474 h3.8 z"/>
+<path class="ci" d="M500.6,684.5 H588.5 M500.6,680.5 V688.5 M588.5,680.5 V688.5"/>
+<text class="v t1" x="594.5" y="688.5" text-anchor="start" >-0.07</text>
+<text class="t2" x="492.0" y="707.5" text-anchor="end" ></text>
+<path class="s4" d="M569.0,697.0 h-1.0 a1.0,1.0 0 0 0 -1.0,1.0 v11.0 a1.0,1.0 0 0 0 1.0,1.0 h1.0 z"/>
+<path class="ci" d="M504.9,703.5 H596.4 M504.9,699.5 V707.5 M596.4,699.5 V707.5"/>
+<text class="v t1" x="602.4" y="707.5" text-anchor="start" >-0.01</text>
+<text class="t3" x="24.0" y="746.0" text-anchor="start" >Whiskers: 95% bootstrap CIs (clipped to axis). n = 191 emails, 234 MRs, 200 HN posts.</text>
 </svg>

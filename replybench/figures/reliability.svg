@@ -3,10 +3,10 @@
 .bg{fill:#fcfcfb}.t1{fill:#0b0b0b}.t2{fill:#52514e}.t3{fill:#8a8984}.grid{stroke:#e4e3df}
 .s1{fill:#2a78d6}.s2{fill:#eb6834}.s3{fill:#1baf7a}.neutral{fill:#b9b8b2}.ref{stroke:#52514e}.ci{stroke:#0b0b0b;stroke-width:1.5;fill:none}
 .s4{fill:#eda100}.line-s1{stroke:#2a78d6}.line-s2{stroke:#eb6834}.line-s3{stroke:#1baf7a}.line-s4{stroke:#eda100}
-.heat{fill:#2a78d6}.tw{fill:#ffffff}
+.heat{fill:#2a78d6}.tw{fill:#ffffff}.cil{stroke:#8a8984;stroke-width:1}
 .d1{fill:#2a78d6;stroke:#fcfcfb}.d2{fill:#eb6834;stroke:#fcfcfb}.d3{fill:#1baf7a;stroke:#fcfcfb}.d4{fill:#eda100;stroke:#fcfcfb}
 @media (prefers-color-scheme: dark){.bg{fill:#1a1a19}.t1{fill:#f0efec}.t2{fill:#c3c2b7}.t3{fill:#8f8e88}
-.grid{stroke:#33332f}.s1{fill:#3987e5}.s2{fill:#d95926}.s3{fill:#199e70}.neutral{fill:#5a5954}.ref{stroke:#c3c2b7}.ci{stroke:#f0efec}.line-s1{stroke:#3987e5}.line-s2{stroke:#d95926}.line-s3{stroke:#199e70}.s4{fill:#c98500}.line-s4{stroke:#c98500}.heat{fill:#3987e5}
+.grid{stroke:#33332f}.s1{fill:#3987e5}.s2{fill:#d95926}.s3{fill:#199e70}.neutral{fill:#5a5954}.ref{stroke:#c3c2b7}.ci{stroke:#f0efec}.line-s1{stroke:#3987e5}.line-s2{stroke:#d95926}.line-s3{stroke:#199e70}.s4{fill:#c98500}.line-s4{stroke:#c98500}.heat{fill:#3987e5}.cil{stroke:#8f8e88}
 .d1{fill:#3987e5;stroke:#1a1a19}.d2{fill:#d95926;stroke:#1a1a19}.d3{fill:#199e70;stroke:#1a1a19}.d4{fill:#c98500;stroke:#1a1a19}}
 text{font-size:12px}.h{font-size:15px;font-weight:600}.v{font-size:11px;font-weight:600}.tick{font-size:10px}
 </style>
@@ -19,6 +19,8 @@ text{font-size:12px}.h{font-size:15px;font-weight:600}.v{font-size:11px;font-wei
 <text class="t2" x="125.0" y="68.0" text-anchor="start" >Sonnet 5.5</text>
 <rect class="s3" x="205" y="59" width="10" height="10" rx="2"/>
 <text class="t2" x="219.0" y="68.0" text-anchor="start" >Opus 5.5</text>
+<rect class="s4" x="285" y="59" width="10" height="10" rx="2"/>
+<text class="t2" x="299.0" y="68.0" text-anchor="start" >Fable 5.1</text>
 <text class="t1" x="70.0" y="90.0" text-anchor="start" font-weight="600">Email: anyone replies?</text>
 <line class="grid" x1="70.0" x2="70.0" y1="100" y2="290"/>
 <line class="grid" x1="70" x2="260" y1="290.0" y2="290.0"/>
@@ -59,6 +61,12 @@ text{font-size:12px}.h{font-size:15px;font-weight:600}.v{font-size:11px;font-wei
 <circle class="d3" cx="170.0" cy="155.0" r="6.1" stroke-width="2"/>
 <circle class="d3" cx="199.8" cy="123.8" r="6.2" stroke-width="2"/>
 <circle class="d3" cx="239.6" cy="127.5" r="6.9" stroke-width="2"/>
+<path class="line-s4" d="M89.4,279.7 L127.6,277.3 L168.9,191.7 L202.4,135.2 L240.3,129.9" fill="none" stroke-width="2"/>
+<circle class="d4" cx="89.4" cy="279.7" r="6.0" stroke-width="2"/>
+<circle class="d4" cx="127.6" cy="277.3" r="4.9" stroke-width="2"/>
+<circle class="d4" cx="168.9" cy="191.7" r="5.7" stroke-width="2"/>
+<circle class="d4" cx="202.4" cy="135.2" r="5.6" stroke-width="2"/>
+<circle class="d4" cx="240.3" cy="129.9" r="6.9" stroke-width="2"/>
 <text class="tick t3" x="165.0" y="320.0" text-anchor="middle" >predicted probability</text>
 <text class="t1" x="410.0" y="90.0" text-anchor="start" font-weight="600">PR: merged in 30 days?</text>
 <line class="grid" x1="410.0" x2="410.0" y1="100" y2="290"/>
@@ -100,6 +108,12 @@ text{font-size:12px}.h{font-size:15px;font-weight:600}.v{font-size:11px;font-wei
 <circle class="d3" cx="506.1" cy="146.9" r="6.9" stroke-width="2"/>
 <circle class="d3" cx="536.3" cy="130.4" r="6.5" stroke-width="2"/>
 <circle class="d3" cx="573.8" cy="110.9" r="6.0" stroke-width="2"/>
+<path class="line-s4" d="M427.4,268.9 L470.0,216.5 L505.5,185.6 L537.8,134.3 L576.2,117.0" fill="none" stroke-width="2"/>
+<circle class="d4" cx="427.4" cy="268.9" r="5.1" stroke-width="2"/>
+<circle class="d4" cx="470.0" cy="216.5" r="5.8" stroke-width="2"/>
+<circle class="d4" cx="505.5" cy="185.6" r="6.9" stroke-width="2"/>
+<circle class="d4" cx="537.8" cy="134.3" r="6.9" stroke-width="2"/>
+<circle class="d4" cx="576.2" cy="117.0" r="6.9" stroke-width="2"/>
 <text class="tick t3" x="505.0" y="320.0" text-anchor="middle" >predicted probability</text>
 <text class="tick t3" x="30.0" y="195.0" text-anchor="middle" transform="rotate(-90 30 195)">observed rate</text>
 </svg>
