@@ -149,6 +149,9 @@ def main():
                     "date": e["ts"][:10], "history": history([x for x in evs[:k] if x is not e["call"]]),
                     "call": e["call"]["input"],
                     "target": trunc(e["text"], TARGET_CHARS), "is_error": e["is_error"],
+                    # baseline: the most recent earlier result from the same tool in this session
+                    "copy_baseline": next((trunc(x["text"], TARGET_CHARS) for x in reversed(evs[:k]) if
+                                           x["kind"] == "result" and x["call"]["name"] == e["call"]["name"]), ""),
                 })
     rng = random.Random(a.seed)
     rng.shuffle(pool)
