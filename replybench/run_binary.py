@@ -58,9 +58,13 @@ def run_batch(batch, task, model):
             by_id = {str(p["id"]): float(p[t["field"]]) for p in preds}
             if all(str(x["id"]) in by_id for x in batch):
                 return [{"id": x["id"], "p": min(max(by_id[str(x["id"])], 0.0), 1.0)} for x in batch]
+            print("retry: ids missing from answer", file=sys.stderr)
         except Exception as e:
             print("retry:", e, file=sys.stderr)
-    raise RuntimeError("batch failed")
+    if len(batch) > 1:  # fall back to one item per call
+        print(f"splitting batch of {len(batch)}", file=sys.stderr)
+        return [r for x in batch for r in run_batch([x], task, model)]
+    raise RuntimeError(f"item {batch[0]['id']} failed")
 
 
 def main():
