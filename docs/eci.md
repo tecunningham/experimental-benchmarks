@@ -13,7 +13,7 @@ with ~13 models they are wide.
 | PR merge · Brier skill | ReplyBench | 13 | +0.31 [-0.35, +0.73] | +0.09 [-0.61, +0.69] |
 | HN 50+ points · AUC | ReplyBench | 13 | +0.94 [+0.92, +0.98] | +0.94 [+0.73, +1.00] |
 | HN points · Spearman | ReplyBench | 13 | +0.60 [-0.10, +0.90] | +0.51 [-0.15, +0.94] |
-| Tool result · judge score | RolloutBench | 2 | +1.00 [+0.00, +1.00] | +1.00 [+0.00, +1.00] |
-| Tool result · outcome right | RolloutBench | 2 | +1.00 [+0.00, +1.00] | +1.00 [+0.00, +1.00] |
+| Tool result · judge score | RolloutBench | 13 | +0.97 [+0.95, +0.99] | +0.98 [+0.90, +1.00] |
+| Tool result · outcome right | RolloutBench | 13 | +0.88 [+0.75, +0.96] | +0.84 [+0.50, +0.97] |
 
 ECI source: Epoch AI, [benchmark data](https://epoch.ai/data/benchmark_data.zip) (`eci_scores.csv`), fetched by [`common/fetch_eci.py`](../common/fetch_eci.py).
