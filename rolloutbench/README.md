@@ -5,7 +5,7 @@ hide the result and ask the model to predict it.
 
 [← all benchmarks](../README.md) · [how it compares](../docs/comparison.md)
 
-<p align="center"><img src="figures/headline.svg" alt="RolloutBench on 249 real-world tool calls: judge score 3.2 / 4.4 / 5.3 out of 10 and outcome right 65% / 74% / 80% for Haiku / Sonnet / Opus" width="100%"></p>
+<p align="center"><img src="figures/headline.svg" alt="RolloutBench on 249 real-world tool calls: judge score 3.2 / 4.4 / 5.3 out of 10 and outcome right 65% / 74% / 80% for Haiku / Sonnet / Opus, with 95% CIs" width="100%"></p>
 
 ## Takeaways
 

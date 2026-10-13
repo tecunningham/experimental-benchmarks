@@ -11,21 +11,24 @@ a few dollars per model to run.
 
 | Benchmark | Question | Prototype data | Headline result | |
 |---|---|---|---|---|
-| **[ReplyBench](replybench/)** | How will *people* respond to an action? | 200 Hacker News posts after the training cutoff | Models rank posts well (AUC up to 0.82) but are worse calibrated than a constant base rate | [Landing page →](replybench/) |
+| **[ReplyBench](replybench/)** | How will *people* respond to an action? | 191 Apache mailing-list threads, 234 GitLab merge requests, 200 Hacker News posts, all after the training cutoff | Reply prediction is strong (AUC 0.84–0.88); merge prediction only slightly beats a per-project prior; HN calibration is poor | [Landing page →](replybench/) |
 | **[RolloutBench](rolloutbench/)** | What will a *tool call* return? | 249 tool calls from 75 real-world agent sessions | Best model scores 5.3/10; live web and API results are hardest | [Landing page →](rolloutbench/) |
 
 ---
 
 ## [ReplyBench](replybench/): predicting how people respond
 
-Show a model an action (an email, a PR, a post, a paper) and ask it to predict the response: a reply, a
-merge, an upvote. The prototype predicts the fate of random Hacker News submissions.
+Show a model an action and ask it to predict the response. Three tasks: will anyone reply to this email
+thread? Will this merge request be merged within 30 days? How many points will this HN post get?
 
-<a href="replybench/"><img src="replybench/figures/headline.svg" alt="ReplyBench results: AUC 0.74 / 0.81 / 0.82 but Brier scores worse than the base rate" width="100%"></a>
+<a href="replybench/"><img src="replybench/figures/headline.svg" alt="ReplyBench: AUC and Brier skill with 95% CIs across email, PR and HN tasks" width="100%"></a>
 
-- **Ranking is good, calibration is bad.** Opus 5.5 picks out future 50-point stories with AUC 0.82, yet
-  every model expects far more attention than the typical post gets (the median post gets 2 points).
-- **Next step:** private data (METR's own PRs, email, Slack) and causal A/B-test data.
+- **Replies are predictable, merges less so.** Reply prediction is strong (AUC 0.84–0.88, well ahead of the
+  base rate). Merge prediction (AUC 0.76–0.79) beats a per-project merge-rate prior on ranking, but only
+  slightly on calibration.
+- **Calibration flips with the setting.** On HN the models are over-confident; on email and MRs they're
+  under-confident.
+- **Next step:** 1,000+ items per task, and private data (METR's own PRs, email, Slack).
 
 ## [RolloutBench](rolloutbench/): predicting what tools return
 
@@ -46,8 +49,8 @@ GPU job logs, sub-agent reports, human replies. The model, which has no internet
 - **Unseen ground truth.** Data comes from after the training cutoff, or is private, so nothing has to
   resolve in the future, unlike forecasting benchmarks. See the
   [comparison with FutureSim, ForecastBench, PredictionArena and AgentWorldBench](docs/comparison.md).
-- **Continuous scores.** Rank correlations, Brier scores and judge scores rather than pass/fail, so
-  improvements show up smoothly.
+- **Continuous scores with uncertainty.** Rank correlations, Brier scores and judge scores rather than
+  pass/fail, so improvements show up smoothly. Every model comparison has a 95% bootstrap CI.
 - **No tools for the predictor.** Models predict from context alone. [`common/llm.py`](common/llm.py) calls
   the Anthropic API when `ANTHROPIC_API_KEY` is set, and otherwise uses the `claude` CLI with tools disabled.
 - **One look for all charts.** [`common/svg.py`](common/svg.py) renders dependency-free SVG figures that work
@@ -58,7 +61,7 @@ GPU job logs, sub-agent reports, human replies. The model, which has no internet
 ```
 common/          model interface, stats, SVG chart helpers
 docs/            comparison with existing prediction benchmarks
-replybench/      README (landing page), fetch_hn.py, run.py, score.py, make_figures.py, figures/
+replybench/      README (landing page), email/ pr/ hn/ tasks, run_binary.py, score_binary.py, make_figures.py
 rolloutbench/    README (landing page), real/ (real-world traces), sandbox pilot, make_figures.py, figures/
 ```
 

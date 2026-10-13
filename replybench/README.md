@@ -1,88 +1,135 @@
 # ReplyBench
 
 **Can a model predict how people will respond to what it does?** Show the model an action (an email, a
-pull request, a post, a paper) and ask it to predict the response: a click, a reply, a merge, an upvote, a
-referee's verdict. The ground truth already sits in a dataset the model hasn't seen.
+merge request, a post) and ask it to predict the response: will anyone reply, will it be merged, will
+people upvote it? The ground truth already sits in public data from after the model's training cutoff, so
+nothing has to resolve in the future.
 
 [← all benchmarks](../README.md) · [how it compares](../docs/comparison.md)
 
-<p align="center"><img src="figures/headline.svg" alt="ReplyBench: AUC 0.74 / 0.81 / 0.82 for Haiku / Sonnet / Opus, but Brier scores of 0.072 / 0.075 / 0.059 are all worse than the base rate's 0.056" width="100%"></p>
+| Task | The action | The response to predict | Data | n |
+|---|---|---|---|---|
+| **Email** | A new thread on an Apache mailing list | Does anyone other than the sender reply? | 66 public `@apache.org` lists, Aug – mid-Sep 2026 | 191 |
+| **PR** | A merge request on an open-source project | Is it merged within 30 days? | 20 GitLab projects (Mesa, GTK, KDE Plasma, Inkscape, KiCad, …), opened Jul–Aug 2026 | 234 |
+| **HN** | A Hacker News submission | Points, comments, P(≥ 50 points) | Random HN stories, 1–6 Oct 2026 | 200 |
+
+<p align="center"><img src="figures/headline.svg" alt="AUC and Brier skill with 95% CIs for Haiku, Sonnet and Opus on the email, PR and HN tasks" width="100%"></p>
 
 ## Takeaways
 
-- **Models know what Hacker News likes…** All three rank stories well above chance. Opus 5.5 picks out the
-  stories that go on to reach 50 points with an AUC of 0.82.
-- **…but not how little it cares.** Every model's probabilities are *worse* than a constant base rate. A
-  typical submission gets 2 points; the models' median guesses are 6–8.5 points, even though the prompt says
-  the sample is random.
-- **This is the "off-distribution" worry, made concrete.** Models are tuned to the visible, successful part of
-  the distribution (front-page stories) and overestimate attention everywhere else. Telling good from bad is
-  one skill; knowing the absolute level is another.
+- **Models are good at predicting whether people will reply to an email.** On real thread starters (a
+  call for votes, a design proposal, a newcomer's question) the AUC is 0.84–0.88, and the probabilities beat
+  the base rate by a wide margin (Brier skill +0.33 to +0.47). It isn't just the subject tags: on emails
+  without a `[VOTE]`/`[DISCUSS]`-style tag, AUC is about 0.89.
+- **Merge prediction is harder, and only slightly better than a simple prior.** AUC is 0.76–0.79, against
+  0.70 for a baseline that just uses each project's merge rate. On Brier score, only Sonnet's Brier skill
+  (+0.14, CI [0.00, 0.26]) edges past that baseline (+0.11), and its interval overlaps it. Most of what
+  models know is "which projects merge things"; the content of the MR adds a little.
+- **Calibration depends on the setting.** On HN, models expect far more attention than a typical post gets,
+  so they're *worse* than the base rate. On email and MRs they're under-confident: they hedge, and the
+  things they rate as likely happen more often than they predict (see the reliability chart below).
+- **Differences between models are small relative to the noise.** Opus is best or tied on most metrics, but
+  at n ≈ 200 most of the confidence intervals overlap. Separating models will need about 1,000+ items per
+  task.
 
-<p align="center"><img src="figures/calibration.svg" alt="Scatter plots of predicted vs actual HN points for three models; most dots lie below the diagonal, meaning stories were over-predicted" width="100%"></p>
+<p align="center"><img src="figures/reliability.svg" alt="Reliability diagrams for email and PR tasks: curves lie above the diagonal, meaning models are under-confident" width="100%"></p>
 
 ## Why this matters
 
 An agent pursuing a goal, whether that's persuading, organising, selling or attacking, has to predict how
-people and systems will react to each thing it does. Accurately predicting the effects of actions is a
-prerequisite for taking good actions. ReplyBench measures that ability directly, cheaply, and without
-anyone having to take the actions.
+people will react to each thing it does. Accurately predicting the effects of actions is a prerequisite for
+taking good actions. ReplyBench measures that directly and cheaply, without anyone having to take the
+actions.
 
-The response being predicted could be:
+## The three tasks
 
-| Action | Response to predict | Data source |
-|---|---|---|
-| A post or ad | Points, comments, clicks, shares | **Hacker News (this prototype)**, Reddit, A/B-test archives |
-| An email or Slack message | Reply? How fast? Yes or no to the ask? | Private mailboxes and workspaces |
-| A pull request | Merged? Review rounds? | GitHub |
-| A paper | Referee scores, citations | OpenReview, Semantic Scholar |
-| A support ticket or bug report | Resolved? How long? | Issue trackers |
+### Email: will anyone reply? ([`email/`](email/))
 
-## The prototype: Hacker News
+- **Data.** All Apache Software Foundation mailing lists are public. We took the 80 most active `user@`,
+  `users@` and `dev@` lists, collected every human-written email that started a thread between 1 Aug and
+  15 Sep 2026, and sampled up to 6 per list. Bot traffic is filtered out: JIRA, GitHub, CI and git-commit
+  notifications.
+- **Label.** Whether anyone other than the sender replied, checked about 6 weeks later. 58% got a reply.
+- **Inputs.** The model sees the list, sender, date, subject and body, and gives P(reply).
+- **Examples (Opus 5.5).**
+  - "[VOTE] Release Apache Avro 1.12.2 RC2" (dev@avro): Opus said 95% reply, but nobody replied. The RC was
+    superseded by RC3, the kind of context a model can't see.
+  - Votes and design discussions are rated highly and usually do get replies. Announcements and board
+    reports are rated low.
 
-- **Data.** 200 stories drawn uniformly at random from all 4,687 HN submissions between 1 and 6 Oct 2026,
-  after the models' training cutoff. Ground truth is each story's score and comment count, read from the
-  official API 6+ days later, when they had settled.
-- **Inputs.** The model sees the title, domain, author and posting time (and the text, for text posts).
-- **Outputs.** It predicts the final points, the comment count, and P(points ≥ 50).
-- **Batching.** Stories are batched 25 per call, so a full run is 8 calls per model, under $1.
+| predictor | AUC [95% CI] | Brier [95% CI] | Brier skill [95% CI] |
+|---|---|---|---|
+| baseline: base rate | – | 0.243 | 0 |
+| claude-haiku-5-5 | 0.84 [0.77, 0.89] | 0.162 [0.134, 0.191] | +0.33 [+0.21, +0.45] |
+| claude-sonnet-5-5 | 0.87 [0.81, 0.92] | 0.154 [0.128, 0.181] | +0.37 [+0.24, +0.48] |
+| claude-opus-5-5 | **0.88** [0.83, 0.93] | **0.130** [0.103, 0.158] | **+0.47** [+0.35, +0.57] |
 
-| model | Spearman (points) | Spearman (comments) | MAE log(1+points) | Brier P(≥50) | AUC P(≥50) |
-|---|---|---|---|---|---|
-| baseline: constant median / base rate | 0 | 0 | **0.626** | **0.0564** | 0.5 |
-| claude-haiku-5-5 | 0.274 | 0.186 | 1.278 | 0.0718 | 0.742 |
-| claude-sonnet-5-5 | 0.321 | 0.218 | 1.320 | 0.0751 | 0.807 |
-| claude-opus-5-5 | **0.363** | **0.288** | 1.113 | 0.0594 | **0.820** |
+### PR: merged within 30 days? ([`pr/`](pr/))
 
-Two examples from Opus 5.5:
-- “Cops Can Bypass iPhone's Automatic Reboot to Get into Locked Phones” (404media): predicted 150 points,
-  actual **293**. The direction was right.
-- “Official Proton Drive CLI” (proton.me): predicted 120 points, actual **1**.
+- **Data.** GitHub's API isn't reachable from our environment, so this uses four public GitLab instances:
+  GitLab.com, freedesktop, GNOME and KDE.
+  - Up to 12 human-authored MRs were sampled per project from *all* MRs opened between 15 July and
+    31 Aug 2026, whatever happened to them, so there's no survivorship bias.
+  - Label: merged within 30 days. 65% were.
+- **Inputs.** The model sees the project, author, title, description, draft flag, the number of files
+  changed and the first ~1,500 characters of the diff, and gives P(merge).
+- **Examples (Opus 5.5).**
+  - "Draft: Test merge request, please ignore." (GTK): 2%, correct.
+  - "Qt: Add packet list column freezing and row pinning" (Wireshark): 12%, but it was merged. A large UI
+    feature from an outside contributor looks risky, yet Wireshark merges nearly everything.
+
+| predictor | AUC [95% CI] | Brier [95% CI] | Brier skill [95% CI] |
+|---|---|---|---|
+| baseline: base rate | – | 0.228 | 0 |
+| baseline: project merge rate (leave-one-out) | 0.70 [0.63, 0.77] | 0.202 [0.176, 0.227] | +0.11 [+0.01, +0.21] |
+| claude-haiku-5-5 | 0.77 [0.70, 0.83] | 0.221 [0.199, 0.244] | +0.03 [−0.14, +0.16] |
+| claude-sonnet-5-5 | 0.76 [0.69, 0.82] | **0.195** [0.171, 0.220] | **+0.14** [+0.00, +0.26] |
+| claude-opus-5-5 | **0.79** [0.73, 0.85] | 0.203 [0.179, 0.228] | +0.11 [−0.06, +0.23] |
+
+### HN: how much attention will a post get? ([`hn/`](hn/))
+
+- **Data.** 200 stories drawn uniformly at random from all 4,687 HN submissions between 1 and 6 Oct 2026.
+- **Inputs and outputs.** The model sees the title, domain, author and time, and predicts points, comments
+  and P(≥ 50 points).
+
+| predictor | Spearman (points) [95% CI] | AUC P(≥50) [95% CI] | Brier skill [95% CI] |
+|---|---|---|---|
+| baseline: median / base rate | 0 | 0.5 | 0 |
+| claude-haiku-5-5 | 0.27 [0.14, 0.40] | 0.74 [0.59, 0.88] | −0.27 [−1.16, +0.09] |
+| claude-sonnet-5-5 | 0.32 [0.19, 0.45] | 0.81 [0.69, 0.91] | −0.33 [−1.33, +0.05] |
+| claude-opus-5-5 | **0.36** [0.23, 0.49] | **0.82** [0.70, 0.92] | **−0.05** [−0.66, +0.20] |
+
+<p align="center"><img src="figures/calibration.svg" alt="Scatter plots of predicted vs actual HN points for three models; most dots lie below the diagonal, meaning stories were over-predicted" width="100%"></p>
 
 ## Next steps
 
-1. **Use private data.** This is the biggest lever. METR's own PRs, Slack and email, and issue trackers are
-   contamination-proof by construction, and they are exactly "the response to an action".
-2. **Get causal data.** A/B-test archives answer the observational-not-causal objection: "which of these two
-   variants won?" with the audience held fixed. The Upworthy archive could be a development set, with fresh
-   private A/B results as the test set.
-3. **Refresh monthly from public streams:** Hacker News, Reddit, PR outcomes in public repos, OpenReview
-   scores.
-4. **Measure the noise ceiling.** HN reposts of the same URL show how predictable an outcome is at all.
-5. **Score full distributions** (quantiles, log score). Report ranking and calibration separately, and plot
-   spend against score with retrieval and thinking budgets.
+1. **Scale each task to 1,000+ items** so that differences between models fall outside the CIs.
+2. **Use private data.** METR's own email, Slack and PRs are contamination-proof and are exactly "the
+   response to an action". Gmail and Slack connectors exist, but only with the people involved agreeing.
+3. **Get causal data.** A/B-test archives answer the observational-not-causal objection: "which of two
+   variants won?", with the audience held fixed.
+4. **Predict richer responses:** time to reply, the content of the reply, review comments, and the
+   reviewer's verdict.
+5. **Add GitHub PRs** where API access is available. GH Archive is reachable and could provide outcomes at
+   scale.
 
 ## Caveats
 
-- **Sample size.** n = 200, so the standard error on Spearman ρ is about 0.07.
-- **Batching.** Stories are predicted 25 per call, so a model can calibrate them against each other.
-- **Observational data.** The author and timing confound the effect of the content itself.
+- **Observational data.** The sender's identity, the timing and the project all confound the effect of the
+  content itself.
+- **Batching.** Items are predicted in batches (10 emails, 5 MRs, or 25 HN stories per call), so a model can
+  calibrate them against each other.
+- **Email selection.** The most active lists are mostly `dev@` lists, so email covers developer
+  communication more than user questions.
+- **Not every bot is caught.** Nine automated git-commit emails slipped past the first filter; they were
+  removed and the filter fixed.
 
 ## Running
 
 ```bash
-python3 replybench/fetch_hn.py --start 2026-10-01 --end 2026-10-06 --n 200   # sample stories + outcomes
-python3 replybench/run.py --model claude-opus-5-5                             # predict
-python3 replybench/score.py                                                   # tables
-python3 replybench/make_figures.py                                            # figures/
+python3 replybench/email/fetch.py && python3 replybench/pr/fetch.py      # build datasets
+python3 replybench/run_binary.py --task email --model claude-opus-5-5     # predict (also --task pr)
+python3 replybench/score_binary.py --task email                           # scores + CIs (also --task pr)
+python3 replybench/hn/fetch.py && python3 replybench/hn/run.py --model claude-opus-5-5 && python3 replybench/hn/score.py
+python3 replybench/make_figures.py                                        # figures/
 ```

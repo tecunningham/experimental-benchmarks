@@ -1,10 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="720" height="230" viewBox="0 0 720 230" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">
 <style>
 .bg{fill:#fcfcfb}.t1{fill:#0b0b0b}.t2{fill:#52514e}.t3{fill:#8a8984}.grid{stroke:#e4e3df}
-.s1{fill:#2a78d6}.s2{fill:#eb6834}.s3{fill:#1baf7a}.neutral{fill:#b9b8b2}.ref{stroke:#52514e}
+.s1{fill:#2a78d6}.s2{fill:#eb6834}.s3{fill:#1baf7a}.neutral{fill:#b9b8b2}.ref{stroke:#52514e}.ci{stroke:#0b0b0b;stroke-width:1.5;fill:none}
+.line-s1{stroke:#2a78d6}.line-s2{stroke:#eb6834}.line-s3{stroke:#1baf7a}
 .d1{fill:#2a78d6;stroke:#fcfcfb}.d2{fill:#eb6834;stroke:#fcfcfb}.d3{fill:#1baf7a;stroke:#fcfcfb}
 @media (prefers-color-scheme: dark){.bg{fill:#1a1a19}.t1{fill:#f0efec}.t2{fill:#c3c2b7}.t3{fill:#8f8e88}
-.grid{stroke:#33332f}.s1{fill:#3987e5}.s2{fill:#d95926}.s3{fill:#199e70}.neutral{fill:#5a5954}.ref{stroke:#c3c2b7}
+.grid{stroke:#33332f}.s1{fill:#3987e5}.s2{fill:#d95926}.s3{fill:#199e70}.neutral{fill:#5a5954}.ref{stroke:#c3c2b7}.ci{stroke:#f0efec}.line-s1{stroke:#3987e5}.line-s2{stroke:#d95926}.line-s3{stroke:#199e70}
 .d1{fill:#3987e5;stroke:#1a1a19}.d2{fill:#d95926;stroke:#1a1a19}.d3{fill:#199e70;stroke:#1a1a19}}
 text{font-size:12px}.h{font-size:15px;font-weight:600}.v{font-size:11px;font-weight:600}.tick{font-size:10px}
 </style>
@@ -23,13 +24,16 @@ text{font-size:12px}.h{font-size:15px;font-weight:600}.v{font-size:11px;font-wei
 <text class="tick t3" x="310.0" y="192.0" text-anchor="middle" >10.0</text>
 <text class="t2" x="100.0" y="94.0" text-anchor="end" >Haiku 5.5</text>
 <path class="s1" d="M108.0,78.0 h59.9 a4,4 0 0 1 4,4 v16.0 a4,4 0 0 1 -4,4 h-59.9 z"/>
-<text class="v t1" x="177.9" y="94.0" text-anchor="start" >3.2</text>
+<path class="ci" d="M164.7,90.0 H179.4 M164.7,86.0 V94.0 M179.4,86.0 V94.0"/>
+<text class="v t1" x="185.4" y="94.0" text-anchor="start" >3.2</text>
 <text class="t2" x="100.0" y="130.0" text-anchor="end" >Sonnet 5.5</text>
 <path class="s2" d="M108.0,114.0 h84.8 a4,4 0 0 1 4,4 v16.0 a4,4 0 0 1 -4,4 h-84.8 z"/>
-<text class="v t1" x="202.8" y="130.0" text-anchor="start" >4.4</text>
+<path class="ci" d="M188.8,126.0 H205.2 M188.8,122.0 V130.0 M205.2,122.0 V130.0"/>
+<text class="v t1" x="211.2" y="130.0" text-anchor="start" >4.4</text>
 <text class="t2" x="100.0" y="166.0" text-anchor="end" >Opus 5.5</text>
 <path class="s3" d="M108.0,150.0 h102.4 a4,4 0 0 1 4,4 v16.0 a4,4 0 0 1 -4,4 h-102.4 z"/>
-<text class="v t1" x="220.4" y="166.0" text-anchor="start" >5.3</text>
+<path class="ci" d="M206.5,162.0 H222.3 M206.5,158.0 V166.0 M222.3,158.0 V166.0"/>
+<text class="v t1" x="228.3" y="166.0" text-anchor="start" >5.3</text>
 <text class="h t1" x="374.0" y="34.0" text-anchor="start" >Is the basic outcome right?</text>
 <text class="t2" x="374.0" y="52.0" text-anchor="start" >Succeeded/failed, found/not found, …</text>
 <line class="grid" x1="458.0" x2="458.0" y1="74" y2="178"/>
@@ -44,12 +48,15 @@ text{font-size:12px}.h{font-size:15px;font-weight:600}.v{font-size:11px;font-wei
 <text class="tick t3" x="660.0" y="192.0" text-anchor="middle" >100%</text>
 <text class="t2" x="450.0" y="94.0" text-anchor="end" >Haiku 5.5</text>
 <path class="s1" d="M458.0,78.0 h127.4 a4,4 0 0 1 4,4 v16.0 a4,4 0 0 1 -4,4 h-127.4 z"/>
-<text class="v t1" x="595.4" y="94.0" text-anchor="start" >65%</text>
+<path class="ci" d="M578.1,90.0 H601.6 M578.1,86.0 V94.0 M601.6,86.0 V94.0"/>
+<text class="v t1" x="607.6" y="94.0" text-anchor="start" >65%</text>
 <text class="t2" x="450.0" y="130.0" text-anchor="end" >Sonnet 5.5</text>
 <path class="s2" d="M458.0,114.0 h146.1 a4,4 0 0 1 4,4 v16.0 a4,4 0 0 1 -4,4 h-146.1 z"/>
-<text class="v t1" x="614.1" y="130.0" text-anchor="start" >74%</text>
+<path class="ci" d="M596.7,126.0 H618.6 M596.7,122.0 V130.0 M618.6,122.0 V130.0"/>
+<text class="v t1" x="624.6" y="130.0" text-anchor="start" >74%</text>
 <text class="t2" x="450.0" y="166.0" text-anchor="end" >Opus 5.5</text>
 <path class="s3" d="M458.0,150.0 h156.6 a4,4 0 0 1 4,4 v16.0 a4,4 0 0 1 -4,4 h-156.6 z"/>
-<text class="v t1" x="624.6" y="166.0" text-anchor="start" >80%</text>
-<text class="t3" x="24.0" y="212.0" text-anchor="start" >249 tool calls from 75 real agent sessions (Jun–Sep 2026); models get no tools or internet.</text>
+<path class="ci" d="M608.9,162.0 H627.6 M608.9,158.0 V166.0 M627.6,158.0 V166.0"/>
+<text class="v t1" x="633.6" y="166.0" text-anchor="start" >80%</text>
+<text class="t3" x="24.0" y="212.0" text-anchor="start" >249 tool calls from 75 real agent sessions (Jun–Sep 2026). Whiskers: 95% bootstrap CIs.</text>
 </svg>

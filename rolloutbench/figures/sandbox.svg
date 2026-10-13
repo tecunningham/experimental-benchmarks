@@ -1,14 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="720" height="212" viewBox="0 0 720 212" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="230" viewBox="0 0 720 230" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">
 <style>
 .bg{fill:#fcfcfb}.t1{fill:#0b0b0b}.t2{fill:#52514e}.t3{fill:#8a8984}.grid{stroke:#e4e3df}
-.s1{fill:#2a78d6}.s2{fill:#eb6834}.s3{fill:#1baf7a}.neutral{fill:#b9b8b2}.ref{stroke:#52514e}
+.s1{fill:#2a78d6}.s2{fill:#eb6834}.s3{fill:#1baf7a}.neutral{fill:#b9b8b2}.ref{stroke:#52514e}.ci{stroke:#0b0b0b;stroke-width:1.5;fill:none}
+.line-s1{stroke:#2a78d6}.line-s2{stroke:#eb6834}.line-s3{stroke:#1baf7a}
 .d1{fill:#2a78d6;stroke:#fcfcfb}.d2{fill:#eb6834;stroke:#fcfcfb}.d3{fill:#1baf7a;stroke:#fcfcfb}
 @media (prefers-color-scheme: dark){.bg{fill:#1a1a19}.t1{fill:#f0efec}.t2{fill:#c3c2b7}.t3{fill:#8f8e88}
-.grid{stroke:#33332f}.s1{fill:#3987e5}.s2{fill:#d95926}.s3{fill:#199e70}.neutral{fill:#5a5954}.ref{stroke:#c3c2b7}
+.grid{stroke:#33332f}.s1{fill:#3987e5}.s2{fill:#d95926}.s3{fill:#199e70}.neutral{fill:#5a5954}.ref{stroke:#c3c2b7}.ci{stroke:#f0efec}.line-s1{stroke:#3987e5}.line-s2{stroke:#d95926}.line-s3{stroke:#199e70}
 .d1{fill:#3987e5;stroke:#1a1a19}.d2{fill:#d95926;stroke:#1a1a19}.d3{fill:#199e70;stroke:#1a1a19}}
 text{font-size:12px}.h{font-size:15px;font-weight:600}.v{font-size:11px;font-weight:600}.tick{font-size:10px}
 </style>
-<rect class="bg" width="720" height="212" rx="8"/>
+<rect class="bg" width="720" height="230" rx="8"/>
 <text class="h t1" x="24.0" y="34.0" text-anchor="start" >Sandbox pilot: code is easy, the machine is not</text>
 <text class="t2" x="24.0" y="52.0" text-anchor="start" >Similarity of predicted vs. real shell output (76 calls from 8 synthetic tasks)</text>
 <rect class="s1" x="24" y="71" width="10" height="10" rx="2"/>
@@ -29,16 +30,23 @@ text{font-size:12px}.h{font-size:15px;font-weight:600}.v{font-size:11px;font-wei
 <text class="tick t3" x="664.0" y="200.0" text-anchor="middle" >1.00</text>
 <text class="t2" x="156.0" y="121.0" text-anchor="end" >follows from code</text>
 <path class="s1" d="M164.0,100.0 h459.1 a4,4 0 0 1 4,4 v2.0 a4,4 0 0 1 -4,4 h-459.1 z"/>
-<text class="tick t2" x="632.1" y="109.0" text-anchor="start" >0.93</text>
+<path class="ci" d="M590.9,105.0 H652.4 M590.9,102.0 V108.0 M652.4,102.0 V108.0"/>
+<text class="tick t2" x="657.4" y="109.0" text-anchor="start" >0.93</text>
 <path class="s2" d="M164.0,112.0 h435.7 a4,4 0 0 1 4,4 v2.0 a4,4 0 0 1 -4,4 h-435.7 z"/>
-<text class="tick t2" x="608.7" y="121.0" text-anchor="start" >0.88</text>
+<path class="ci" d="M551.5,117.0 H643.3 M551.5,114.0 V120.0 M643.3,114.0 V120.0"/>
+<text class="tick t2" x="648.3" y="121.0" text-anchor="start" >0.88</text>
 <path class="s3" d="M164.0,124.0 h457.8 a4,4 0 0 1 4,4 v2.0 a4,4 0 0 1 -4,4 h-457.8 z"/>
-<text class="tick t2" x="630.8" y="133.0" text-anchor="start" >0.92</text>
+<path class="ci" d="M589.2,129.0 H651.2 M589.2,126.0 V132.0 M651.2,126.0 V132.0"/>
+<text class="tick t2" x="656.2" y="133.0" text-anchor="start" >0.92</text>
 <text class="t2" x="156.0" y="169.0" text-anchor="end" >depends on machine</text>
 <path class="s1" d="M164.0,148.0 h289.2 a4,4 0 0 1 4,4 v2.0 a4,4 0 0 1 -4,4 h-289.2 z"/>
-<text class="tick t2" x="462.2" y="157.0" text-anchor="start" >0.59</text>
+<path class="ci" d="M389.6,153.0 H520.9 M389.6,150.0 V156.0 M520.9,150.0 V156.0"/>
+<text class="tick t2" x="525.9" y="157.0" text-anchor="start" >0.59</text>
 <path class="s2" d="M164.0,160.0 h322.7 a4,4 0 0 1 4,4 v2.0 a4,4 0 0 1 -4,4 h-322.7 z"/>
-<text class="tick t2" x="495.7" y="169.0" text-anchor="start" >0.65</text>
+<path class="ci" d="M427.9,165.0 H549.7 M427.9,162.0 V168.0 M549.7,162.0 V168.0"/>
+<text class="tick t2" x="554.7" y="169.0" text-anchor="start" >0.65</text>
 <path class="s3" d="M164.0,172.0 h366.4 a4,4 0 0 1 4,4 v2.0 a4,4 0 0 1 -4,4 h-366.4 z"/>
-<text class="tick t2" x="539.4" y="181.0" text-anchor="start" >0.74</text>
+<path class="ci" d="M475.5,177.0 H585.8 M475.5,174.0 V180.0 M585.8,174.0 V180.0"/>
+<text class="tick t2" x="590.8" y="181.0" text-anchor="start" >0.74</text>
+<text class="t3" x="24.0" y="220.0" text-anchor="start" >27 calls in each group. Whiskers: 95% bootstrap CIs.</text>
 </svg>

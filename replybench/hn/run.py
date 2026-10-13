@@ -10,7 +10,7 @@ import sys
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from common.llm import complete
 
 SYSTEM = "You are an expert forecaster of online community behaviour. You have no internet access."
@@ -56,7 +56,7 @@ def run_batch(batch, model):
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--model", required=True)
-    p.add_argument("--data", default="replybench/data/hn_stories.jsonl")
+    p.add_argument("--data", default="replybench/hn/data/hn_stories.jsonl")
     p.add_argument("--batch", type=int, default=25)
     a = p.parse_args()
 
@@ -64,7 +64,7 @@ def main():
     batches = [stories[i:i + a.batch] for i in range(0, len(stories), a.batch)]
     with ThreadPoolExecutor(4) as ex:
         preds = [p for b in ex.map(lambda b: run_batch(b, a.model), batches) for p in b]
-    out = Path(f"replybench/results/{a.model}.jsonl")
+    out = Path(f"replybench/hn/results/{a.model}.jsonl")
     with open(out, "w") as f:
         for p in preds:
             f.write(json.dumps(p) + "\n")

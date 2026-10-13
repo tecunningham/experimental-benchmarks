@@ -34,7 +34,7 @@ def main():
     p.add_argument("--end", default="2026-10-06")
     p.add_argument("--n", type=int, default=200)
     p.add_argument("--seed", type=int, default=0)
-    p.add_argument("--out", default="replybench/data/hn_stories.jsonl")
+    p.add_argument("--out", default="replybench/hn/data/hn_stories.jsonl")
     a = p.parse_args()
 
     ts = lambda s: int(datetime.fromisoformat(s).replace(tzinfo=timezone.utc).timestamp())

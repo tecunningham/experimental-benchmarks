@@ -34,3 +34,18 @@ def auc(scores, labels):
     if not pos or not neg:
         return float("nan")
     return sum((p > n) + 0.5 * (p == n) for p in pos for n in neg) / (len(pos) * len(neg))
+
+
+def bootstrap_ci(metric, n, B=2000, seed=0, alpha=0.05):
+    """Percentile bootstrap CI for metric(idx) over n items resampled with replacement."""
+    import random
+    rng = random.Random(seed)
+    vals = sorted(metric([rng.randrange(n) for _ in range(n)]) for _ in range(B))
+    vals = [v for v in vals if v == v]  # drop NaN (e.g. AUC on a one-class resample)
+    return vals[int(alpha / 2 * len(vals))], vals[int((1 - alpha / 2) * len(vals)) - 1]
+
+
+def mean_ci(xs, B=2000, seed=0):
+    m = sum(xs) / len(xs)
+    lo, hi = bootstrap_ci(lambda idx: sum(xs[i] for i in idx) / len(idx), len(xs), B, seed)
+    return m, lo, hi
