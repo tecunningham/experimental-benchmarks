@@ -22,15 +22,15 @@ for f, name in MODELS:
     p50 = [min(max(float(pr[i]["p50"]), 0), 1) for i in ids]
     rb.append((name, auc(p50, hit), statistics.mean((p - h) ** 2 for p, h in zip(p50, hit))))
 
-# --- BenchBench numbers: similarity on non-trivial steps, split by what the output depends on
+# --- RolloutBench numbers: similarity on non-trivial steps, split by what the output depends on
 EMPTY = "(Bash completed with no output)"
 MACHINE = {"sysinfo", "pystdlib"}  # outputs depend on this machine's state, not just the code
-traces = [json.loads(l) for l in open("benchbench/data/traces.jsonl")]
+traces = [json.loads(l) for l in open("rolloutbench/data/traces.jsonl")]
 truth_bb = {(t["task_id"], k): s["output"] for t in traces for k, s in enumerate(t["steps"])}
 sim = lambda a, b: difflib.SequenceMatcher(None, a.strip()[:3000], b.strip()[:3000], autojunk=False).ratio()
 bb = []
 for f, name in MODELS:
-    pr = {(p["task_id"], p["step"]): p["prediction"] for p in map(json.loads, open(f"benchbench/results/{f}.jsonl"))}
+    pr = {(p["task_id"], p["step"]): p["prediction"] for p in map(json.loads, open(f"rolloutbench/results/{f}.jsonl"))}
     groups = {"code": [], "machine": []}
     for k, v in truth_bb.items():
         if v.strip() != EMPTY:
@@ -83,9 +83,9 @@ hbars(334, 34, 290, "ReplyBench · calibration", "Brier score for the same quest
       [(n, b, "neutral" if n == "Base rate" else "s1") for n, _, b in rb], 0.08, lambda v: f"{v:.3f}",
       note="Lower is better · all models lose to the base rate", ref=rb[0][2])
 
-# grouped bars for BenchBench
+# grouped bars for RolloutBench
 x0, y0, w = 644, 34, 300
-a(f'<text class="h t1" x="{x0}" y="{y0}">BenchBench · predict tool output</text>')
+a(f'<text class="h t1" x="{x0}" y="{y0}">RolloutBench · predict tool output</text>')
 a(f'<text class="sub t2" x="{x0}" y="{y0 + 18}">Similarity of predicted vs. real output</text>')
 lab, top, bh, gap = 78, y0 + 44, 12, 14
 pw = w - lab - 44

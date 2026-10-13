@@ -1,4 +1,4 @@
-"""Record agent traces for BenchBench: a Claude agent (Bash tool only) works each task in an
+"""Record agent traces for RolloutBench: a Claude agent (Bash tool only) works each task in an
 empty sandbox dir; we keep every (command, output) pair.
 """
 import argparse
@@ -18,7 +18,7 @@ STYLE = ("IMPORTANT: Work incrementally. Make a separate Bash call for every ste
 
 
 def run_task(task, model):
-    with tempfile.TemporaryDirectory(prefix="bb_") as d:
+    with tempfile.TemporaryDirectory(prefix="rollout_") as d:
         cmd = ["claude", "-p", task["prompt"] + "\n\n" + STYLE, "--model", model, "--tools", "Bash",
                "--permission-mode", "bypassPermissions", "--setting-sources", "",
                "--no-session-persistence", "--output-format", "stream-json", "--verbose",
@@ -51,9 +51,9 @@ def run_task(task, model):
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--model", default="claude-haiku-5-5")
-    p.add_argument("--out", default="benchbench/data/traces.jsonl")
+    p.add_argument("--out", default="rolloutbench/data/traces.jsonl")
     a = p.parse_args()
-    tasks = json.load(open("benchbench/tasks.json"))
+    tasks = json.load(open("rolloutbench/tasks.json"))
     with ThreadPoolExecutor(4) as ex:
         traces = list(ex.map(lambda t: run_task(t, a.model), tasks))
     with open(a.out, "w") as f:

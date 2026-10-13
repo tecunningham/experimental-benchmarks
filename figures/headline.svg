@@ -58,7 +58,7 @@ text{font-size:12px}.h{font-size:15px;font-weight:600}.sub{font-size:12px}.v{fon
 <text class="v t1" x="545.7" y="209.0">0.059</text>
 <line class="ref" stroke-dasharray="3 3" x1="533.3" x2="533.3" y1="70" y2="222"/>
 <text class="t2" x="334" y="262" font-size="11">Lower is better · all models lose to the base rate</text>
-<text class="h t1" x="644" y="34">BenchBench · predict tool output</text>
+<text class="h t1" x="644" y="34">RolloutBench · predict tool output</text>
 <text class="sub t2" x="644" y="52">Similarity of predicted vs. real output</text>
 <line class="grid" x1="722.0" x2="722.0" y1="74" y2="188"/>
 <text class="t3" x="722.0" y="210" text-anchor="middle" font-size="10">0.00</text>

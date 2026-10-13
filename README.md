@@ -4,7 +4,11 @@
 Both are scored instantly from data the model has never seen, use continuous metrics, and cost under $1 per
 model to run.
 
-<p align="center"><img src="figures/headline.svg" alt="Results: ReplyBench AUC 0.74–0.82 but worse-than-base-rate Brier; BenchBench similarity ~0.9 when output follows from code, 0.59–0.74 when it depends on machine state" width="100%"></p>
+> Evals of whether a model can *achieve* real-world outcomes (exfiltrate, cause harm, make money) are expensive
+> and dangerous. To act well, a model has to know what its actions will do, so prediction is a cheap, safe and
+> unsaturatable proxy.
+
+<p align="center"><img src="figures/headline.svg" alt="Results: ReplyBench AUC 0.74–0.82 but worse-than-base-rate Brier; RolloutBench similarity ~0.9 when output follows from code, 0.59–0.74 when it depends on machine state" width="100%"></p>
 
 ## Takeaways
 
@@ -23,15 +27,16 @@ model to run.
 
 ## The two benchmarks
 
-| | **ReplyBench** | **BenchBench** |
+| | **ReplyBench** | **RolloutBench** |
 |---|---|---|
 | Question | *How will people respond to this action?* | *What will this tool call return?* |
+| Idea | Predict how a person or system responds to an input (an email, a PR, a post, a paper) | Take a trace from a real model run and predict the result of every tool call (shell, web fetch, GPU run, API call, email, sub-agent), with no internet |
 | Prototype | Hacker News submissions after the training cutoff: predict points, comments, P(≥50 points) | Agent shell traces: given the trace so far, predict the next command's exact output |
 | Example | “Cops Can Bypass iPhone's Automatic Reboot…” (404media) → Opus 5.5 predicted 150 points, actual **293**. “Official Proton Drive CLI” → predicted 120, actual **1**. | `find /usr/lib/python3.13 -name '*.py' \| wc -l` → Haiku 5.5 predicted 537, actual **591** |
 | Size | 200 stories, 3 models | 8 traces, 76 tool calls, 3 models |
-| Code | [`replybench/`](replybench/) | [`benchbench/`](benchbench/) |
+| More | [`replybench/`](replybench/) | **[RolloutBench page →](rolloutbench/README.md)** |
 
-| | FutureSim | ForecastBench | PredictionArena | **ReplyBench** | **BenchBench** |
+| | FutureSim | ForecastBench | PredictionArena | **ReplyBench** | **RolloutBench** |
 |---|---|---|---|---|---|
 | Predicts | World events | World events | World events, through trading | Response to an action | Effect of an agent's own action |
 | Time to score | 0, but goes stale | Weeks to years | Days to weeks | Instant | Instant |
@@ -67,32 +72,18 @@ an action**, and **a known noise ceiling**.
 6. **Plot compute against score.** Give an agent an offline corpus (the author's history, similar past
    posts) and a thinking budget, and plot spend vs. score, as the design doc recommends.
 
-### BenchBench
+### RolloutBench
 
-1. **Use real agent transcripts.** METR has thousands of runs across diverse tasks with many tool types:
-   long traces, real environments, and outputs that matter. Most of the value is here. Before sending
-   transcripts of held-out tasks to model APIs, check the data-handling rules for eval data.
-2. **Broaden the tools:**
-   - Web fetches served from a frozen cache.
-   - Test suites and compiler errors.
-   - ML experiments (loss after N steps) and API responses.
-3. **Score only what is informative.**
-   - Drop trivial steps, such as file writes.
-   - Weight each step by how surprising it is to a weak baseline.
-   - Swap raw string similarity for checks on the key facts (exit code, numbers, pass/fail), with
-     probabilistic answers.
-4. **Measure the ceiling.** Re-run each command to quantify irreducible nondeterminism (timestamps, hashes,
-   memory).
-5. **Validate the core claim:**
-   - Correlate BenchBench scores with agentic task success (e.g. time horizon) across models.
-   - Run agents on *simulated* tool outputs and see how far they still get. If you score 100% on BenchBench,
-     you don't need the tools.
+The biggest step is moving from sandbox traces to **real-world traces**: staff agent sessions, research-agent
+runs with web fetches and GPU jobs. After that, add the other tool types (web, API, email, sub-agents, lab
+experiments), score key facts rather than raw strings, measure the noise ceiling, and check that scores
+predict real agentic success. Details are in the [RolloutBench page](rolloutbench/README.md#next-steps).
 
 ### Shared
 
 - Port to [Inspect](https://inspect.aisi.org.uk/) and run non-Claude models (GPT, Gemini, open weights).
 - Keep a public dev split and a private, rotating test split.
-- Grow ReplyBench to ≥2k items and BenchBench to ≥1k steps, so that model differences fall outside the noise
+- Grow ReplyBench to ≥2k items and RolloutBench to ≥1k steps, so that model differences fall outside the noise
   (the current error bar on Spearman ρ is about ±0.07).
 
 ---
@@ -105,10 +96,10 @@ pip install anthropic                     # optional: used if ANTHROPIC_API_KEY 
 python3 replybench/fetch_hn.py --start 2026-10-01 --end 2026-10-06 --n 200
 python3 replybench/run.py --model claude-opus-5-5
 python3 replybench/score.py
-# BenchBench
-python3 benchbench/make_traces.py --model claude-haiku-5-5   # records agent traces for benchbench/tasks.json
-python3 benchbench/run.py --model claude-opus-5-5
-python3 benchbench/score.py
+# RolloutBench
+python3 rolloutbench/make_traces.py --model claude-haiku-5-5   # records agent traces for rolloutbench/tasks.json
+python3 rolloutbench/run.py --model claude-opus-5-5
+python3 rolloutbench/score.py
 ```
 
 `common/llm.py` is the only model interface. Outside the Anthropic API path, it runs `claude -p` with no
@@ -143,64 +134,9 @@ sample is uniform over all submissions.
 - **Next step.** A calibration step (e.g. isotonic regression on a held-out split), or telling the model the
   empirical distribution, would separate the two skills.
 
-## BenchBench
-
-**Data.**
-- **Traces.** A Claude agent (Haiku 5.5, Bash only, no internet needed) worked each of 8 small tasks in
-  `benchbench/tasks.json`: Collatz statistics, machine info, SQLite queries, a C prime sieve, building a git
-  repo, text statistics, a unittest bugfix, and exploring the Python stdlib.
-- **One command per step.** The agent was told to make one Bash call per step. Without that instruction it
-  bundled each task into a single script run.
-- **Size.** 76 tool calls in total. 54 of them have non-empty output; the rest are things like file writes
-  that print nothing.
-- **Path cleanup.** The random sandbox path is rewritten to `/sandbox`.
-
-**Protocol.** For step *k*, the model sees the task, steps 1..*k*−1 with their true outputs (each truncated to
-1,500 characters), and command *k*. It then writes the predicted output. That is one call per step, so 76
-calls per model.
-
-**Scoring.**
-- `similarity` is the difflib ratio between the predicted and true output, over the first 3,000 characters,
-  on a 0–1 scale.
-- `exact` is an exact string match after stripping whitespace.
-- "Non-trivial" excludes steps whose true output is the no-output marker.
-
-| model | similarity (all) | similarity (non-trivial) | exact (all) | exact (non-trivial) |
-|---|---|---|---|---|
-| baseline: always "(no output)" | 0.372 | 0.117 | 0.289 | 0 |
-| baseline: repeat previous output | 0.297 | 0.135 | 0.184 | 0 |
-| claude-haiku-5-5 | 0.735 | 0.756 | 0.461 | 0.37 |
-| claude-sonnet-5-5 | 0.834 | 0.766 | 0.553 | 0.37 |
-| claude-opus-5-5 | **0.881** | **0.832** | 0.553 | 0.37 |
-
-Mean similarity on non-trivial steps, by task:
-
-| model | collatz | sysinfo | sqlite | c_program | git_repo | text_stats | bugfix | pystdlib |
-|---|---|---|---|---|---|---|---|---|
-| claude-haiku-5-5 | 0.87 | 0.59 | 1.00 | 1.00 | 0.88 | 1.00 | 0.95 | 0.57 |
-| claude-sonnet-5-5 | 0.84 | 0.65 | 1.00 | 1.00 | 0.85 | 0.97 | 0.78 | 0.66 |
-| claude-opus-5-5 | 0.85 | 0.74 | 1.00 | 1.00 | 0.88 | 0.99 | 0.96 | 0.73 |
-
-**Reading.** The benchmark splits cleanly into two kinds of step.
-
-- **Pure computation is already nearly solved.** Examples are the SQLite aggregates, the sum of primes below
-  10⁶ (37550402023), and unittest output. All three models reproduce these exactly; they "run the code in
-  their head".
-- **Environment state is where the headroom is.** Examples are the Python version, the stdlib file count,
-  `wc -l` of `typing.py`, and `free -h`. On these, models guess plausible but wrong values; Haiku, for
-  instance, guessed Python 3.13.5 and the path `/usr/local/lib/python3.12`.
-- **Spread.** Larger models are better at inferring environment details from earlier outputs in the trace,
-  which is where most of the gap between models comes from.
-
-**Making it harder and more informative.**
-- Use longer, real agent traces. Raw METR task transcripts would be ideal.
-- Include tools whose results are less deterministic, such as web fetches from a frozen cache, test suites,
-  and experiments.
-- Weight steps by how hard they are to guess, e.g. by the information content of the output.
-
 ## Full comparison with existing prediction benchmarks
 
-| | **FutureSim** (Goel et al. 2026) | **ForecastBench** (Karger et al.) | **PredictionArena** (Zhang et al. 2026) | **ReplyBench-HN** (this repo) | **BenchBench** (this repo) |
+| | **FutureSim** (Goel et al. 2026) | **ForecastBench** (Karger et al.) | **PredictionArena** (Zhang et al. 2026) | **ReplyBench-HN** (this repo) | **RolloutBench** (this repo) |
 |---|---|---|---|---|---|
 | What is predicted | Short-answer questions about world events. An agent replays the news day by day (24 Dec 2025 – Mar 2026) and updates its forecasts. | Binary probabilities on future events: market questions plus questions generated from time-series data (FRED, ACLED, Wikipedia, …) | Nothing stated explicitly. Agents trade Kalshi and Polymarket markets with real money ($10k each). | Community response to a post: points, comments, P(≥50 points) | Exact output of the next tool call in an agent trace |
 | Source of ground truth | 330 questions generated from Al Jazeera articles in CCNews | Market resolutions and data releases | Market settlements | HN API | Recorded tool outputs |
@@ -213,7 +149,7 @@ Mean similarity on non-trivial steps, by task:
 | Saturation risk | Medium (accuracy ~25%) | Near-saturated relative to the human reference | Noisy, so hard to tell | Low: irreducible noise caps achievable ρ well below 1 | Low if traces include genuinely unpredictable environment state |
 
 **Takeaways.**
-- **Prediction target.** All three existing benchmarks predict *world events*. ReplyBench and BenchBench
+- **Prediction target.** All three existing benchmarks predict *world events*. ReplyBench and RolloutBench
   instead predict the *consequences of a specific action*, which is the capability that matters for an agent
   pursuing goals.
 - **Scoring delay.** The existing benchmarks have to wait for the world to resolve (ForecastBench,
@@ -231,9 +167,7 @@ Mean similarity on non-trivial steps, by task:
 
 - **Sample size.** Both benchmarks are small, so differences between models are noisy. For example, the
   standard error on Spearman ρ with n = 200 is about 0.07.
-- **Leakage between traces and the predictor.** The same model family (Claude Haiku) generated the BenchBench
-  traces, so commands are in a style the predictors find familiar.
-- **Nondeterministic outputs.** Timestamps and memory figures put a ceiling on achievable similarity, and the
-  benchmark doesn't measure that ceiling yet. Re-running each command would estimate it.
+- **RolloutBench traces are synthetic.** They come from sandbox tasks, not real-world use; see
+  [its caveats](rolloutbench/README.md#caveats).
 - **Batched predictions.** ReplyBench predicts 25 stories per call, so the model can calibrate them against
   each other within a batch.

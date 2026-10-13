@@ -1,4 +1,4 @@
-"""Score BenchBench predictions.
+"""Score RolloutBench predictions.
 
 similarity: difflib ratio between predicted and true output (first 3000 chars), in [0, 1].
 exact: prediction == truth after stripping whitespace.
@@ -17,7 +17,7 @@ def sim(a, b):
     return difflib.SequenceMatcher(None, a.strip()[:N], b.strip()[:N], autojunk=False).ratio()
 
 
-traces = [json.loads(l) for l in open("benchbench/data/traces.jsonl")]
+traces = [json.loads(l) for l in open("rolloutbench/data/traces.jsonl")]
 truth = {(t["task_id"], k): s["output"] for t in traces for k, s in enumerate(t["steps"])}
 keys = list(truth)
 nontriv = [k for k in keys if truth[k].strip() != EMPTY]
@@ -39,7 +39,7 @@ def row(name, pred):
 
 rows = [row("baseline: always empty-output marker", {k: EMPTY for k in keys}),
         row("baseline: repeat previous output", {(t, k): truth[(t, k - 1)] if k else EMPTY for t, k in keys})]
-for f in sorted(Path("benchbench/results").glob("*.jsonl")):
+for f in sorted(Path("rolloutbench/results").glob("*.jsonl")):
     pr = {(p["task_id"], p["step"]): p["prediction"] for p in map(json.loads, open(f))}
     rows.append(row(f.stem, pr))
 

@@ -1,4 +1,4 @@
-"""BenchBench: given an agent trace so far, predict the exact output of the next tool call.
+"""RolloutBench: given an agent trace so far, predict the exact output of the next tool call.
 
 For every step k of every trace the model sees the task, steps 1..k-1 with their true outputs,
 and the command for step k, and must write the output it expects. No tools, no internet.
@@ -66,13 +66,13 @@ def predict(item, model):
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--model", required=True)
-    p.add_argument("--data", default="benchbench/data/traces.jsonl")
+    p.add_argument("--data", default="rolloutbench/data/traces.jsonl")
     p.add_argument("--workers", type=int, default=8)
     a = p.parse_args()
     its = list(items(map(json.loads, open(a.data))))
     with ThreadPoolExecutor(a.workers) as ex:
         preds = list(ex.map(lambda it: predict(it, a.model), its))
-    out = Path(f"benchbench/results/{a.model}.jsonl")
+    out = Path(f"rolloutbench/results/{a.model}.jsonl")
     with open(out, "w") as f:
         for it, pr in zip(its, preds):
             f.write(json.dumps({"task_id": it["task_id"], "step": it["step"], "prediction": pr}) + "\n")
