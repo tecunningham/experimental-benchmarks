@@ -24,29 +24,29 @@ text{font-size:12px}.h{font-size:15px;font-weight:600}.v{font-size:11px;font-wei
 <line class="grid" x1="660.0" x2="660.0" y1="72" y2="306"/>
 <text class="tick t3" x="660.0" y="320.0" text-anchor="middle" >+1.00</text>
 <text class="t2" x="226.0" y="88.0" text-anchor="end" >Email reply · AUC</text>
-<path class="s1" d="M447.0,76.0 h206.0 a4,4 0 0 1 4,4 v8.0 a4,4 0 0 1 -4,4 h-206.0 z"/>
-<path class="ci" d="M447.0,84.0 H660.0 M447.0,80.0 V88.0 M660.0,80.0 V88.0"/>
-<text class="v t1" x="666.0" y="88.0" text-anchor="start" >+0.99</text>
+<path class="s1" d="M447.0,76.0 h182.2 a4,4 0 0 1 4,4 v8.0 a4,4 0 0 1 -4,4 h-182.2 z"/>
+<path class="ci" d="M612.3,84.0 H656.2 M612.3,80.0 V88.0 M656.2,80.0 V88.0"/>
+<text class="v t1" x="662.2" y="88.0" text-anchor="start" >+0.87</text>
 <text class="t2" x="226.0" y="118.0" text-anchor="end" >Email reply · Brier skill</text>
-<path class="s1" d="M447.0,106.0 h113.6 a4,4 0 0 1 4,4 v8.0 a4,4 0 0 1 -4,4 h-113.6 z"/>
-<path class="ci" d="M234.0,114.0 H660.0 M234.0,110.0 V118.0 M660.0,110.0 V118.0"/>
-<text class="v t1" x="666.0" y="118.0" text-anchor="start" >+0.55</text>
+<path class="s1" d="M447.0,106.0 h176.1 a4,4 0 0 1 4,4 v8.0 a4,4 0 0 1 -4,4 h-176.1 z"/>
+<path class="ci" d="M565.2,114.0 H653.6 M565.2,110.0 V118.0 M653.6,110.0 V118.0"/>
+<text class="v t1" x="659.6" y="118.0" text-anchor="start" >+0.85</text>
 <text class="t2" x="226.0" y="148.0" text-anchor="end" >PR merge · AUC</text>
-<path class="s1" d="M447.0,136.0 h76.0 a4,4 0 0 1 4,4 v8.0 a4,4 0 0 1 -4,4 h-76.0 z"/>
-<path class="ci" d="M234.0,144.0 H660.0 M234.0,140.0 V148.0 M660.0,140.0 V148.0"/>
-<text class="v t1" x="666.0" y="148.0" text-anchor="start" >+0.38</text>
+<path class="s1" d="M447.0,136.0 h188.6 a4,4 0 0 1 4,4 v8.0 a4,4 0 0 1 -4,4 h-188.6 z"/>
+<path class="ci" d="M604.7,144.0 H653.4 M604.7,140.0 V148.0 M653.4,140.0 V148.0"/>
+<text class="v t1" x="659.4" y="148.0" text-anchor="start" >+0.90</text>
 <text class="t2" x="226.0" y="178.0" text-anchor="end" >PR merge · Brier skill</text>
-<path class="s1" d="M447.0,166.0 h-17.4 a4,4 0 0 0 -4,4 v8.0 a4,4 0 0 0 4,4 h17.4 z"/>
-<path class="ci" d="M234.0,174.0 H660.0 M234.0,170.0 V178.0 M660.0,170.0 V178.0"/>
-<text class="v t1" x="666.0" y="178.0" text-anchor="start" >-0.10</text>
+<path class="s1" d="M447.0,166.0 h61.3 a4,4 0 0 1 4,4 v8.0 a4,4 0 0 1 -4,4 h-61.3 z"/>
+<path class="ci" d="M371.5,174.0 H602.0 M371.5,170.0 V178.0 M602.0,170.0 V178.0"/>
+<text class="v t1" x="608.0" y="178.0" text-anchor="start" >+0.31</text>
 <text class="t2" x="226.0" y="208.0" text-anchor="end" >HN 50+ points · AUC</text>
-<path class="s1" d="M447.0,196.0 h197.3 a4,4 0 0 1 4,4 v8.0 a4,4 0 0 1 -4,4 h-197.3 z"/>
-<path class="ci" d="M561.8,204.0 H660.0 M561.8,200.0 V208.0 M660.0,200.0 V208.0"/>
-<text class="v t1" x="666.0" y="208.0" text-anchor="start" >+0.94</text>
+<path class="s1" d="M447.0,196.0 h197.1 a4,4 0 0 1 4,4 v8.0 a4,4 0 0 1 -4,4 h-197.1 z"/>
+<path class="ci" d="M642.9,204.0 H656.6 M642.9,200.0 V208.0 M656.6,200.0 V208.0"/>
+<text class="v t1" x="662.6" y="208.0" text-anchor="start" >+0.94</text>
 <text class="t2" x="226.0" y="238.0" text-anchor="end" >HN points · Spearman</text>
-<path class="s1" d="M447.0,226.0 h13.3 a4,4 0 0 1 4,4 v8.0 a4,4 0 0 1 -4,4 h-13.3 z"/>
-<path class="ci" d="M234.0,234.0 H660.0 M234.0,230.0 V238.0 M660.0,230.0 V238.0"/>
-<text class="v t1" x="666.0" y="238.0" text-anchor="start" >+0.08</text>
+<path class="s1" d="M447.0,226.0 h124.0 a4,4 0 0 1 4,4 v8.0 a4,4 0 0 1 -4,4 h-124.0 z"/>
+<path class="ci" d="M425.0,234.0 H638.9 M425.0,230.0 V238.0 M638.9,230.0 V238.0"/>
+<text class="v t1" x="644.9" y="238.0" text-anchor="start" >+0.60</text>
 <text class="t2" x="226.0" y="268.0" text-anchor="end" >Tool result · judge score</text>
 <path class="s3" d="M447.0,256.0 h209.0 a4,4 0 0 1 4,4 v8.0 a4,4 0 0 1 -4,4 h-209.0 z"/>
 <path class="ci" d="M447.0,264.0 H660.0 M447.0,260.0 V268.0 M660.0,260.0 V268.0"/>

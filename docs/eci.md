@@ -7,12 +7,12 @@ with ~13 models they are wide.
 
 | metric | benchmark | models | Pearson r [95% CI] | Spearman ρ [95% CI] |
 |---|---|---|---|---|
-| Email reply · AUC | ReplyBench | 3 | +0.99 [+0.00, +1.00] | +1.00 [+0.00, +1.00] |
-| Email reply · Brier skill | ReplyBench | 3 | +0.55 [-1.00, +1.00] | +0.50 [-1.00, +1.00] |
-| PR merge · AUC | ReplyBench | 4 | +0.38 [-1.00, +1.00] | +0.00 [-1.00, +1.00] |
-| PR merge · Brier skill | ReplyBench | 4 | -0.10 [-1.00, +1.00] | -0.80 [-1.00, +1.00] |
-| HN 50+ points · AUC | ReplyBench | 5 | +0.94 [+0.54, +1.00] | +0.80 [+0.11, +1.00] |
-| HN points · Spearman | ReplyBench | 5 | +0.08 [-1.00, +1.00] | +0.50 [-1.00, +1.00] |
+| Email reply · AUC | ReplyBench | 13 | +0.87 [+0.78, +0.98] | +0.93 [+0.62, +1.00] |
+| Email reply · Brier skill | ReplyBench | 13 | +0.85 [+0.55, +0.97] | +0.74 [+0.21, +0.99] |
+| PR merge · AUC | ReplyBench | 13 | +0.90 [+0.74, +0.97] | +0.85 [+0.51, +0.99] |
+| PR merge · Brier skill | ReplyBench | 13 | +0.31 [-0.35, +0.73] | +0.09 [-0.61, +0.69] |
+| HN 50+ points · AUC | ReplyBench | 13 | +0.94 [+0.92, +0.98] | +0.94 [+0.73, +1.00] |
+| HN points · Spearman | ReplyBench | 13 | +0.60 [-0.10, +0.90] | +0.51 [-0.15, +0.94] |
 | Tool result · judge score | RolloutBench | 2 | +1.00 [+0.00, +1.00] | +1.00 [+0.00, +1.00] |
 | Tool result · outcome right | RolloutBench | 2 | +1.00 [+0.00, +1.00] | +1.00 [+0.00, +1.00] |
 
